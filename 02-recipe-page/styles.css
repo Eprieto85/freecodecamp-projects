@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.lang-bar {
+  background-color: #922b21;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  color: #f5b7b1;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid #f5b7b1;
+  color: #f5b7b1;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover, .lang-btn.active {
+  background-color: white;
+  border-color: white;
+  color: #922b21;
+  font-weight: bold;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: #fdf6ec;
+  color: #3a3a3a;
+  line-height: 1.7;
+}
+
+header {
+  background: linear-gradient(135deg, #c0392b, #922b21);
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.recipe-meta {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+main {
+  max-width: 750px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.recipe-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.hero-image {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 380px;
+  object-fit: cover;
+}
+
+.hero-image figcaption {
+  font-style: italic;
+  color: #888;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.intro {
+  font-size: 1.05rem;
+  color: #555;
+  border-left: 4px solid #c0392b;
+  padding-left: 16px;
+  margin-bottom: 32px;
+}
+
+section {
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: #c0392b;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f5cba7;
+}
+
+ul, ol {
+  padding-left: 24px;
+}
+
+li {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+ol li {
+  padding-left: 6px;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: #aaa;
+  font-size: 0.9rem;
+  font-style: italic;
+}

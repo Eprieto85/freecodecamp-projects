@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="HTML5 media player with curated video tutorials and music tracks." />
+    <title>My Media Player</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>🎬 <span data-i18n="site_title">My Media Player</span></h1>
+      <p data-i18n="site_subtitle">Videos and music, all in one place</p>
+    </header>
+
+    <main>
+      <section class="media-section">
+        <h2 data-i18n="video_title">Featured Video</h2>
+        <p class="media-desc" data-i18n="video_desc">Learn what the JavaScript map() method is and how to use it in your projects.</p>
+        <div class="video-wrapper">
+          <video controls width="640" poster="https://cdn.freecodecamp.org/curriculum/labs/past-event2.jpg">
+            <source src="https://cdn.freecodecamp.org/curriculum/labs/what-is-the-map-method-and-how-does-it-work.mp4" type="video/mp4" />
+            <source src="https://cdn.freecodecamp.org/curriculum/labs/mapmethod.webm" type="video/webm" />
+          </video>
+        </div>
+      </section>
+
+      <section class="media-section">
+        <h2 data-i18n="music_title">Music Player</h2>
+        <p class="media-desc" data-i18n="music_desc">Relax and code with these tracks by Quincy Larson.</p>
+
+        <div class="track-list">
+          <div class="track">
+            <div class="track-info">
+              <span class="track-title">Can't Stay Down</span>
+              <span class="track-artist">Quincy Larson</span>
+            </div>
+            <audio controls loop src="https://cdn.freecodecamp.org/curriculum/js-music-player/can't-stay-down.mp3"></audio>
+          </div>
+          <div class="track">
+            <div class="track-info">
+              <span class="track-title">Sailing Away</span>
+              <span class="track-artist">Quincy Larson</span>
+            </div>
+            <audio controls loop src="https://cdn.freecodecamp.org/curriculum/js-music-player/sailing-away.mp3"></audio>
+          </div>
+          <div class="track">
+            <div class="track-info">
+              <span class="track-title">Scratching the Surface</span>
+              <span class="track-artist">Quincy Larson</span>
+            </div>
+            <audio controls loop src="https://cdn.freecodecamp.org/curriculum/js-music-player/scratching-the-surface.mp3"></audio>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">Built with HTML5 audio &amp; video elements.</p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:",
+          site_title: "My Media Player",
+          site_subtitle: "Videos and music, all in one place",
+          video_title: "Featured Video",
+          video_desc: "Learn what the JavaScript map() method is and how to use it in your projects.",
+          music_title: "Music Player",
+          music_desc: "Relax and code with these tracks by Quincy Larson.",
+          footer: "Built with HTML5 audio & video elements."
+        },
+        es: {
+          lang_label: "Idioma:",
+          site_title: "Mi Reproductor",
+          site_subtitle: "Videos y música, todo en un solo lugar",
+          video_title: "Video Destacado",
+          video_desc: "Aprende qué es el método map() de JavaScript y cómo usarlo en tus proyectos.",
+          music_title: "Reproductor de Música",
+          music_desc: "Relájate y codifica con estas canciones de Quincy Larson.",
+          footer: "Construido con elementos de audio y video de HTML5."
+        },
+        fr: {
+          lang_label: "Langue :",
+          site_title: "Mon Lecteur Média",
+          site_subtitle: "Vidéos et musique, tout en un seul endroit",
+          video_title: "Vidéo à la Une",
+          video_desc: "Découvrez la méthode map() de JavaScript et comment l'utiliser dans vos projets.",
+          music_title: "Lecteur de Musique",
+          music_desc: "Détendez-vous et codez avec ces morceaux de Quincy Larson.",
+          footer: "Construit avec les éléments audio et vidéo HTML5."
+        }
+      };
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+
+      setLang('en');
+    </script>
+  </body>
+</html>

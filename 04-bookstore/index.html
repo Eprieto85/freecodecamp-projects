@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="XYZ Bookstore — Browse our curated collection of amazing books." />
+    <title>XYZ Bookstore Page</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>📚 <span data-i18n="store_name">XYZ Bookstore</span></h1>
+      <p data-i18n="store_tagline">Browse our collection of amazing books!</p>
+    </header>
+
+    <main>
+      <div class="card-container">
+        <div class="card" id="sally-adventure-book">
+          <div class="card-badge" data-i18n="badge1">SciFi</div>
+          <h2 data-i18n="book1_title">Sally's SciFi Adventure</h2>
+          <p data-i18n="book1_desc">An epic story of Sally and her dog Rex as they navigate through other worlds, facing incredible challenges and discovering new civilizations.</p>
+          <div class="card-footer">
+            <span class="price">$12.99</span>
+            <button class="btn" data-i18n="buy_btn">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="card" id="dave-cooking-book">
+          <div class="card-badge" data-i18n="badge2">Cooking</div>
+          <h2 data-i18n="book2_title">Dave's Cooking Adventure</h2>
+          <p data-i18n="book2_desc">The story of Dave as he learns to cook everything from pancakes to pasta, one recipe at a time, discovering the joy of food along the way.</p>
+          <div class="card-footer">
+            <span class="price">$9.99</span>
+            <button class="btn" data-i18n="buy_btn">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="card" id="maria-mystery-book">
+          <div class="card-badge" data-i18n="badge3">Mystery</div>
+          <h2 data-i18n="book3_title">Maria's Mystery</h2>
+          <p data-i18n="book3_desc">A thrilling detective story where Maria must solve the disappearance of a priceless artifact from a museum in just 48 hours.</p>
+          <div class="card-footer">
+            <span class="price">$11.49</span>
+            <button class="btn" data-i18n="buy_btn">Buy Now</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="checkout-text" data-i18n="checkout_text">Review your selections and continue to checkout.</p>
+      <div class="btn-container">
+        <button id="view-cart-btn" class="btn btn-secondary" data-i18n="view_cart">View Cart</button>
+        <button id="checkout-btn" class="btn" data-i18n="checkout">Checkout</button>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">© 2025 XYZ Bookstore — All rights reserved.</p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:",
+          store_name: "XYZ Bookstore",
+          store_tagline: "Browse our collection of amazing books!",
+          badge1: "SciFi", badge2: "Cooking", badge3: "Mystery",
+          book1_title: "Sally's SciFi Adventure",
+          book1_desc: "An epic story of Sally and her dog Rex as they navigate through other worlds, facing incredible challenges and discovering new civilizations.",
+          book2_title: "Dave's Cooking Adventure",
+          book2_desc: "The story of Dave as he learns to cook everything from pancakes to pasta, one recipe at a time, discovering the joy of food along the way.",
+          book3_title: "Maria's Mystery",
+          book3_desc: "A thrilling detective story where Maria must solve the disappearance of a priceless artifact from a museum in just 48 hours.",
+          buy_btn: "Buy Now",
+          checkout_text: "Review your selections and continue to checkout.",
+          view_cart: "View Cart",
+          checkout: "Checkout",
+          footer: "© 2025 XYZ Bookstore — All rights reserved."
+        },
+        es: {
+          lang_label: "Idioma:",
+          store_name: "Librería XYZ",
+          store_tagline: "¡Explora nuestra colección de libros increíbles!",
+          badge1: "Ciencia Ficción", badge2: "Cocina", badge3: "Misterio",
+          book1_title: "La Aventura SciFi de Sally",
+          book1_desc: "Una épica historia de Sally y su perro Rex mientras navegan por otros mundos, enfrentando desafíos increíbles y descubriendo nuevas civilizaciones.",
+          book2_title: "La Aventura Culinaria de Dave",
+          book2_desc: "La historia de Dave mientras aprende a cocinar de todo, desde panqueques hasta pasta, una receta a la vez, descubriendo la alegría de la comida.",
+          book3_title: "El Misterio de María",
+          book3_desc: "Una emocionante historia de detectives donde María debe resolver la desaparición de una pieza invaluable de un museo en solo 48 horas.",
+          buy_btn: "Comprar Ahora",
+          checkout_text: "Revisa tu selección y continúa al pago.",
+          view_cart: "Ver Carrito",
+          checkout: "Pagar",
+          footer: "© 2025 Librería XYZ — Todos los derechos reservados."
+        },
+        fr: {
+          lang_label: "Langue :",
+          store_name: "Librairie XYZ",
+          store_tagline: "Parcourez notre collection de livres incroyables !",
+          badge1: "Science-Fiction", badge2: "Cuisine", badge3: "Mystère",
+          book1_title: "L'Aventure SciFi de Sally",
+          book1_desc: "Une épopée de Sally et son chien Rex qui naviguent à travers d'autres mondes, faisant face à des défis incroyables et découvrant de nouvelles civilisations.",
+          book2_title: "L'Aventure Culinaire de Dave",
+          book2_desc: "L'histoire de Dave qui apprend à cuisiner de tout, des crêpes aux pâtes, une recette à la fois, en découvrant la joie de la cuisine.",
+          book3_title: "Le Mystère de Maria",
+          book3_desc: "Un thriller policier où Maria doit résoudre la disparition d'une pièce inestimable d'un musée en seulement 48 heures.",
+          buy_btn: "Acheter",
+          checkout_text: "Vérifiez vos sélections et passez à la caisse.",
+          view_cart: "Voir le Panier",
+          checkout: "Commander",
+          footer: "© 2025 Librairie XYZ — Tous droits réservés."
+        }
+      };
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+
+      setLang('en');
+    </script>
+  </body>
+</html>

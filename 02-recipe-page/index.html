@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Classic Spaghetti Bolognese recipe." />
+    <title>Classic Spaghetti Bolognese</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <div class="header-content">
+        <h1 data-i18n="title">Classic Spaghetti Bolognese</h1>
+        <div class="recipe-meta">
+          <span data-i18n="prep">⏱ Prep: 15 min</span>
+          <span data-i18n="cook">🍳 Cook: 30 min</span>
+          <span data-i18n="serves">🍽 Serves: 4</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="recipe-card">
+        <figure class="hero-image">
+          <img src="https://cdn.freecodecamp.org/curriculum/labs/recipe.jpg" alt="A plate of spaghetti bolognese" />
+          <figcaption data-i18n="img_caption">A comforting bowl of classic Bolognese</figcaption>
+        </figure>
+
+        <p class="intro" data-i18n="intro">A hearty Italian meat sauce served over perfectly cooked spaghetti. Simple, comforting, and absolutely delicious — perfect for weeknight dinners.</p>
+
+        <section id="ingredients">
+          <h2 data-i18n="ingredients_title">Ingredients</h2>
+          <ul>
+            <li data-i18n="ing1">400g spaghetti</li>
+            <li data-i18n="ing2">500g ground beef</li>
+            <li data-i18n="ing3">1 can (400g) crushed tomatoes</li>
+            <li data-i18n="ing4">1 onion, finely chopped</li>
+            <li data-i18n="ing5">3 cloves garlic, minced</li>
+            <li data-i18n="ing6">2 tablespoons olive oil</li>
+            <li data-i18n="ing7">1 teaspoon dried oregano</li>
+            <li data-i18n="ing8">Salt and black pepper to taste</li>
+            <li data-i18n="ing9">Fresh basil leaves to garnish</li>
+            <li data-i18n="ing10">Parmesan cheese, grated (optional)</li>
+          </ul>
+        </section>
+
+        <section id="instructions">
+          <h2 data-i18n="instructions_title">Instructions</h2>
+          <ol>
+            <li data-i18n="step1">Heat olive oil in a large pan over medium heat. Sauté the onion for about 5 minutes until translucent.</li>
+            <li data-i18n="step2">Add the minced garlic and cook for 1 more minute, stirring constantly.</li>
+            <li data-i18n="step3">Add the ground beef and cook until browned. Season with salt and pepper.</li>
+            <li data-i18n="step4">Pour in the crushed tomatoes, add oregano, stir well, and simmer on low heat for 20 minutes.</li>
+            <li data-i18n="step5">Cook the spaghetti in salted boiling water until al dente. Drain.</li>
+            <li data-i18n="step6">Serve the Bolognese sauce over the spaghetti. Garnish with fresh basil and Parmesan if desired.</li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">A recipe inspired by traditional Italian cooking.</p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:",
+          title: "Classic Spaghetti Bolognese",
+          prep: "⏱ Prep: 15 min",
+          cook: "🍳 Cook: 30 min",
+          serves: "🍽 Serves: 4",
+          img_caption: "A comforting bowl of classic Bolognese",
+          intro: "A hearty Italian meat sauce served over perfectly cooked spaghetti. Simple, comforting, and absolutely delicious — perfect for weeknight dinners.",
+          ingredients_title: "Ingredients",
+          ing1: "400g spaghetti",
+          ing2: "500g ground beef",
+          ing3: "1 can (400g) crushed tomatoes",
+          ing4: "1 onion, finely chopped",
+          ing5: "3 cloves garlic, minced",
+          ing6: "2 tablespoons olive oil",
+          ing7: "1 teaspoon dried oregano",
+          ing8: "Salt and black pepper to taste",
+          ing9: "Fresh basil leaves to garnish",
+          ing10: "Parmesan cheese, grated (optional)",
+          instructions_title: "Instructions",
+          step1: "Heat olive oil in a large pan over medium heat. Sauté the onion for about 5 minutes until translucent.",
+          step2: "Add the minced garlic and cook for 1 more minute, stirring constantly.",
+          step3: "Add the ground beef and cook until browned. Season with salt and pepper.",
+          step4: "Pour in the crushed tomatoes, add oregano, stir well, and simmer on low heat for 20 minutes.",
+          step5: "Cook the spaghetti in salted boiling water until al dente. Drain.",
+          step6: "Serve the Bolognese sauce over the spaghetti. Garnish with fresh basil and Parmesan if desired.",
+          footer: "A recipe inspired by traditional Italian cooking."
+        },
+        es: {
+          lang_label: "Idioma:",
+          title: "Espagueti Boloñesa Clásico",
+          prep: "⏱ Preparación: 15 min",
+          cook: "🍳 Cocción: 30 min",
+          serves: "🍽 Porciones: 4",
+          img_caption: "Un reconfortante plato de Boloñesa clásica",
+          intro: "Una sustanciosa salsa italiana de carne servida sobre espagueti perfectamente cocido. Sencilla, reconfortante y absolutamente deliciosa.",
+          ingredients_title: "Ingredientes",
+          ing1: "400g de espagueti",
+          ing2: "500g de carne molida",
+          ing3: "1 lata (400g) de tomates triturados",
+          ing4: "1 cebolla, finamente picada",
+          ing5: "3 dientes de ajo, picados",
+          ing6: "2 cucharadas de aceite de oliva",
+          ing7: "1 cucharadita de orégano seco",
+          ing8: "Sal y pimienta negra al gusto",
+          ing9: "Hojas de albahaca fresca para decorar",
+          ing10: "Queso parmesano rallado (opcional)",
+          instructions_title: "Instrucciones",
+          step1: "Calienta el aceite de oliva en una sartén grande a fuego medio. Sofríe la cebolla unos 5 minutos hasta que esté transparente.",
+          step2: "Agrega el ajo picado y cocina 1 minuto más, revolviendo constantemente.",
+          step3: "Agrega la carne molida y cocina hasta que esté dorada. Sazona con sal y pimienta.",
+          step4: "Vierte los tomates triturados, agrega orégano, mezcla bien y cocina a fuego lento 20 minutos.",
+          step5: "Cocina el espagueti en agua hirviendo con sal hasta que esté al dente. Escurre.",
+          step6: "Sirve la salsa boloñesa sobre el espagueti. Decora con albahaca fresca y parmesano si deseas.",
+          footer: "Una receta inspirada en la cocina italiana tradicional."
+        },
+        fr: {
+          lang_label: "Langue :",
+          title: "Spaghetti Bolognaise Classique",
+          prep: "⏱ Préparation : 15 min",
+          cook: "🍳 Cuisson : 30 min",
+          serves: "🍽 Portions : 4",
+          img_caption: "Un délicieux bol de bolognaise classique",
+          intro: "Une savoureuse sauce à la viande italienne servie sur des spaghettis parfaitement cuits. Simple, réconfortante et absolument délicieuse.",
+          ingredients_title: "Ingrédients",
+          ing1: "400g de spaghettis",
+          ing2: "500g de bœuf haché",
+          ing3: "1 boîte (400g) de tomates concassées",
+          ing4: "1 oignon, finement émincé",
+          ing5: "3 gousses d'ail, hachées",
+          ing6: "2 cuillères à soupe d'huile d'olive",
+          ing7: "1 cuillère à café d'origan séché",
+          ing8: "Sel et poivre noir selon le goût",
+          ing9: "Feuilles de basilic frais pour garnir",
+          ing10: "Parmesan râpé (facultatif)",
+          instructions_title: "Instructions",
+          step1: "Chauffez l'huile d'olive dans une grande poêle à feu moyen. Faites revenir l'oignon environ 5 minutes jusqu'à ce qu'il soit translucide.",
+          step2: "Ajoutez l'ail haché et faites cuire 1 minute de plus en remuant constamment.",
+          step3: "Ajoutez le bœuf haché et faites cuire jusqu'à ce qu'il soit doré. Assaisonnez avec du sel et du poivre.",
+          step4: "Versez les tomates concassées, ajoutez l'origan, mélangez bien et laissez mijoter à feu doux pendant 20 minutes.",
+          step5: "Faites cuire les spaghettis dans de l'eau bouillante salée jusqu'à ce qu'ils soient al dente. Égouttez.",
+          step6: "Servez la sauce bolognaise sur les spaghettis. Garnissez de basilic frais et de parmesan si désiré.",
+          footer: "Une recette inspirée de la cuisine italienne traditionnelle."
+        }
+      };
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+
+      setLang('en');
+    </script>
+  </body>
+</html>

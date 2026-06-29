@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A fun gallery showcasing adorable cat photos." />
+    <title>CatPhotoApp</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>CatPhotoApp</h1>
+      <p class="tagline" data-i18n="tagline">Because the internet runs on cats 🐱</p>
+    </header>
+
+    <main>
+      <section id="cat-photos">
+        <h2 data-i18n="photos_title">Cat Photos</h2>
+        <p data-i18n="photos_desc">Browse our collection of adorable cats from around the world.</p>
+        <p><span data-i18n="photos_more">See more</span> <a href="https://freecatphotoapp.com" target="_blank" data-i18n="photos_link">cat photos</a> <span data-i18n="photos_gallery">in our gallery.</span></p>
+        <a href="https://freecatphotoapp.com" target="_blank">
+          <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back" />
+        </a>
+      </section>
+
+      <section id="cat-lists">
+        <h2 data-i18n="lists_title">Cat Lists</h2>
+
+        <div class="list-group">
+          <h3 data-i18n="loves_title">Things cats love:</h3>
+          <ul>
+            <li data-i18n="love1">catnip</li>
+            <li data-i18n="love2">laser pointers</li>
+            <li data-i18n="love3">lasagna</li>
+          </ul>
+          <figure>
+            <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg" alt="A slice of lasagna on a plate" />
+            <figcaption><span data-i18n="loves_caption">Cats <em>love</em> lasagna.</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="list-group">
+          <h3 data-i18n="hates_title">Top 3 things cats hate:</h3>
+          <ol>
+            <li data-i18n="hate1">flea treatment</li>
+            <li data-i18n="hate2">thunder</li>
+            <li data-i18n="hate3">other cats</li>
+          </ol>
+          <figure>
+            <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg" alt="Two tabby kittens sleeping together on a couch" />
+            <figcaption><span data-i18n="hates_caption">Cats <strong>hate</strong> other cats.</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="cat-form">
+        <h2 data-i18n="form_title">Cat Form</h2>
+        <form action="https://freecatphotoapp.com/submit-cat-photo" method="post">
+          <fieldset>
+            <legend data-i18n="form_legend1">Is your cat an indoor or outdoor cat?</legend>
+            <label><input type="radio" name="indoor-outdoor" value="indoor" checked /> <span data-i18n="form_indoor">Indoor</span></label>
+            <label><input type="radio" name="indoor-outdoor" value="outdoor" /> <span data-i18n="form_outdoor">Outdoor</span></label>
+          </fieldset>
+          <fieldset>
+            <legend data-i18n="form_legend2">What's your cat's personality?</legend>
+            <label><input type="checkbox" name="personality" value="loving" checked /> <span data-i18n="form_loving">Loving</span></label>
+            <label><input type="checkbox" name="personality" value="lazy" /> <span data-i18n="form_lazy">Lazy</span></label>
+            <label><input type="checkbox" name="personality" value="energetic" /> <span data-i18n="form_energetic">Energetic</span></label>
+          </fieldset>
+          <label for="catphotourl" data-i18n="form_url_label">Cat Photo URL:</label>
+          <input type="text" id="catphotourl" name="catphotourl" placeholder="https://example.com/cat.jpg" required />
+          <button type="submit" data-i18n="form_submit">Submit</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>No Copyright - <a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp.org</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:",
+          tagline: "Because the internet runs on cats 🐱",
+          photos_title: "Cat Photos",
+          photos_desc: "Browse our collection of adorable cats from around the world.",
+          photos_more: "See more",
+          photos_link: "cat photos",
+          photos_gallery: "in our gallery.",
+          lists_title: "Cat Lists",
+          loves_title: "Things cats love:",
+          love1: "catnip",
+          love2: "laser pointers",
+          love3: "lasagna",
+          loves_caption: "Cats <em>love</em> lasagna.",
+          hates_title: "Top 3 things cats hate:",
+          hate1: "flea treatment",
+          hate2: "thunder",
+          hate3: "other cats",
+          hates_caption: "Cats <strong>hate</strong> other cats.",
+          form_title: "Cat Form",
+          form_legend1: "Is your cat an indoor or outdoor cat?",
+          form_indoor: "Indoor",
+          form_outdoor: "Outdoor",
+          form_legend2: "What's your cat's personality?",
+          form_loving: "Loving",
+          form_lazy: "Lazy",
+          form_energetic: "Energetic",
+          form_url_label: "Cat Photo URL:",
+          form_submit: "Submit"
+        },
+        es: {
+          lang_label: "Idioma:",
+          tagline: "Porque el internet corre sobre gatos 🐱",
+          photos_title: "Fotos de Gatos",
+          photos_desc: "Explora nuestra colección de adorables gatos de todo el mundo.",
+          photos_more: "Ver más",
+          photos_link: "fotos de gatos",
+          photos_gallery: "en nuestra galería.",
+          lists_title: "Listas de Gatos",
+          loves_title: "Cosas que los gatos aman:",
+          love1: "hierba gatera",
+          love2: "punteros láser",
+          love3: "lasaña",
+          loves_caption: "Los gatos <em>aman</em> la lasaña.",
+          hates_title: "Las 3 cosas que los gatos odian:",
+          hate1: "tratamiento antipulgas",
+          hate2: "truenos",
+          hate3: "otros gatos",
+          hates_caption: "Los gatos <strong>odian</strong> a otros gatos.",
+          form_title: "Formulario de Gatos",
+          form_legend1: "¿Tu gato es de interior o exterior?",
+          form_indoor: "Interior",
+          form_outdoor: "Exterior",
+          form_legend2: "¿Cuál es la personalidad de tu gato?",
+          form_loving: "Cariñoso",
+          form_lazy: "Perezoso",
+          form_energetic: "Energético",
+          form_url_label: "URL de la foto del gato:",
+          form_submit: "Enviar"
+        },
+        fr: {
+          lang_label: "Langue :",
+          tagline: "Parce qu'internet tourne grâce aux chats 🐱",
+          photos_title: "Photos de Chats",
+          photos_desc: "Parcourez notre collection de chats adorables du monde entier.",
+          photos_more: "Voir plus de",
+          photos_link: "photos de chats",
+          photos_gallery: "dans notre galerie.",
+          lists_title: "Listes de Chats",
+          loves_title: "Ce que les chats adorent :",
+          love1: "l'herbe à chat",
+          love2: "les pointeurs laser",
+          love3: "les lasagnes",
+          loves_caption: "Les chats <em>adorent</em> les lasagnes.",
+          hates_title: "Les 3 choses que les chats détestent :",
+          hate1: "le traitement contre les puces",
+          hate2: "le tonnerre",
+          hate3: "les autres chats",
+          hates_caption: "Les chats <strong>détestent</strong> les autres chats.",
+          form_title: "Formulaire Chat",
+          form_legend1: "Votre chat est-il d'intérieur ou d'extérieur ?",
+          form_indoor: "Intérieur",
+          form_outdoor: "Extérieur",
+          form_legend2: "Quelle est la personnalité de votre chat ?",
+          form_loving: "Affectueux",
+          form_lazy: "Paresseux",
+          form_energetic: "Énergique",
+          form_url_label: "URL de la photo du chat :",
+          form_submit: "Envoyer"
+        }
+      };
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+
+      setLang('en');
+    </script>
+  </body>
+</html>
