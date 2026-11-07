@@ -30,13 +30,21 @@ header p { color: #888; font-size: 0.95rem; margin-top: 6px; }
 
 #piano {
   background: linear-gradient(145deg, #2a1a0a, #1a0d05);
-  width: 992px;
+  width: fit-content;
   max-width: 95vw;
-  height: 290px;
+  height: auto;
   margin: 30px auto;
-  padding: 10px 0 0 10px;
+  padding: 0;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 4px #f5a623, 0 0 30px rgba(245,166,35,0.2);
+  overflow: hidden;
+}
+
+.piano-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 8px;
 }
 
 .piano-brand {
@@ -44,14 +52,19 @@ header p { color: #888; font-size: 0.95rem; margin-top: 6px; }
   font-size: 1.1rem;
   font-style: italic;
   letter-spacing: 4px;
-  text-align: right;
-  padding: 0 20px 8px 0;
-  opacity: 0.8;
+  opacity: 0.9;
+}
+
+.piano-model {
+  color: rgba(245,166,35,0.4);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
 }
 
 .keys {
   display: flex;
   flex-direction: row;
+  padding: 0 10px 10px;
 }
 
 .key {
