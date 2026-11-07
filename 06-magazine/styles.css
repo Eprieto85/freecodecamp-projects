@@ -1,0 +1,274 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ep-dark: #0a0a23;
+  --ep-accent: #f5a623;
+  --ep-light: #f5f6f7;
+  --ep-mid: #8b8b8b;
+  --ep-white: #ffffff;
+}
+
+.lang-bar {
+  background-color: var(--ep-dark);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  color: var(--ep-accent);
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--ep-accent);
+  color: var(--ep-accent);
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover, .lang-btn.active {
+  background-color: var(--ep-accent);
+  color: var(--ep-dark);
+  font-weight: bold;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+  color: var(--ep-dark);
+  background-color: var(--ep-light);
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(2rem, 1fr) minmax(min-content, 94rem) minmax(2rem, 1fr);
+  row-gap: 3rem;
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+}
+
+hr {
+  margin: 1.5rem 0;
+  border: 1px solid var(--ep-mid);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Anton', sans-serif;
+}
+
+a {
+  color: var(--ep-accent);
+}
+
+/* HEADING SECTION */
+.heading {
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 1.5rem;
+  border-bottom: 4px solid var(--ep-dark);
+}
+
+.hero {
+  grid-column: 1 / -1;
+  position: relative;
+}
+
+.hero-title {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 8rem;
+  letter-spacing: 0.5rem;
+  color: var(--ep-dark);
+  padding: 2rem;
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-size: 1.8rem;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--ep-mid);
+}
+
+.hero-img {
+  width: 100%;
+  max-height: 25rem;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.author {
+  padding-bottom: 2rem;
+}
+
+.author-name {
+  font-size: 2rem;
+  color: var(--ep-dark);
+}
+
+.author-name strong {
+  color: var(--ep-accent);
+}
+
+.publish-time {
+  color: var(--ep-mid);
+  font-size: 1.3rem;
+}
+
+.social-icons {
+  display: flex;
+  font-size: 3rem;
+  gap: 2.5rem;
+  align-self: center;
+  justify-content: flex-end;
+  padding-bottom: 2rem;
+}
+
+.social-icons a {
+  color: var(--ep-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.social-icons a:hover {
+  color: var(--ep-accent);
+}
+
+.first-paragraph::first-letter {
+  float: left;
+  font-size: 8rem;
+  line-height: 0.87;
+  font-weight: bold;
+  color: var(--ep-accent);
+  font-family: 'Anton', sans-serif;
+  margin-right: 1rem;
+}
+
+.heading p {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* TEXT SECTION */
+.text {
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3rem;
+}
+
+.text p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.text h2 {
+  font-size: 3.2rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  grid-column: 1 / -1;
+  color: var(--ep-dark);
+}
+
+blockquote {
+  grid-column: 1 / -1;
+  margin: 1rem 0;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--ep-accent);
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 0.05rem;
+  line-height: 1.4;
+}
+
+/* TEXT WITH IMAGES */
+.text-with-images {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 3rem;
+  grid-column: 2 / 3;
+}
+
+.image-and-title {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+  row-gap: 1.5rem;
+}
+
+.list-title {
+  font-size: 2.4rem;
+  color: var(--ep-dark);
+}
+
+.lists {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.lists li {
+  margin-bottom: 1.5rem;
+}
+
+.lists h4 {
+  font-size: 1.8rem;
+  color: var(--ep-accent);
+  margin-bottom: 0.4rem;
+}
+
+.lists p {
+  font-size: 1.4rem;
+  color: var(--ep-mid);
+  margin: 0;
+}
+
+footer {
+  grid-column: 1 / -1;
+  background-color: var(--ep-dark);
+  color: var(--ep-light);
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.4rem;
+}
+
+footer a {
+  color: var(--ep-accent);
+}
+
+@media only screen and (max-width: 720px) {
+  .text, .text-with-images {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 5rem;
+  }
+  .heading {
+    grid-template-columns: 1fr;
+  }
+  .social-icons {
+    justify-content: flex-start;
+  }
+}

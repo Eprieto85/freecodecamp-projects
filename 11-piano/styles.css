@@ -1,0 +1,124 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.lang-bar {
+  background-color: #0a0a23;
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: #f5a623;
+}
+.lang-btn {
+  background: transparent; border: 1px solid #f5a623; color: #f5a623;
+  padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+}
+.lang-btn:hover, .lang-btn.active { background-color: #f5a623; color: #000; font-weight: bold; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a23 100%);
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  text-align: center;
+  padding: 30px 20px 15px;
+}
+header h1 { font-size: 2.4rem; color: #f5a623; letter-spacing: 3px; }
+header p { color: #888; font-size: 0.95rem; margin-top: 6px; }
+
+#piano {
+  background: linear-gradient(145deg, #2a1a0a, #1a0d05);
+  width: 992px;
+  max-width: 95vw;
+  height: 290px;
+  margin: 30px auto;
+  padding: 10px 0 0 10px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 4px #f5a623, 0 0 30px rgba(245,166,35,0.2);
+}
+
+.piano-brand {
+  color: #f5a623;
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 4px;
+  text-align: right;
+  padding: 0 20px 8px 0;
+  opacity: 0.8;
+}
+
+.keys {
+  display: flex;
+  flex-direction: row;
+}
+
+.key {
+  background: linear-gradient(180deg, #f5f5f0 0%, #e8e8e0 100%);
+  position: relative;
+  width: 41px;
+  height: 255px;
+  margin: 0 2px;
+  float: left;
+  border-radius: 0 0 6px 6px;
+  box-shadow: inset -2px -6px 10px rgba(0,0,0,0.2), 2px 4px 8px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: background 0.1s, box-shadow 0.1s;
+  border: 1px solid #bbb;
+}
+
+.key:hover {
+  background: linear-gradient(180deg, #fff9e6 0%, #ffedb0 100%);
+  box-shadow: inset -2px -4px 8px rgba(0,0,0,0.15), 2px 4px 8px rgba(0,0,0,0.3);
+}
+
+.black--key {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  position: relative;
+  width: 32px;
+  height: 155px;
+  margin: 0 0 0 -18px;
+  float: left;
+  z-index: 2;
+  border-radius: 0 0 5px 5px;
+  box-shadow: inset -1px -4px 6px rgba(255,255,255,0.08), 2px 6px 12px rgba(0,0,0,0.6);
+  cursor: pointer;
+  border: 1px solid #000;
+  transition: background 0.1s;
+}
+
+.black--key:hover {
+  background: linear-gradient(180deg, #3a2a0a 0%, #2a1a05 100%);
+  box-shadow: inset -1px -4px 6px rgba(255,255,255,0.1), 2px 6px 12px rgba(0,0,0,0.5);
+}
+
+.info {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: 8px;
+  padding: 12px 20px;
+  max-width: 600px;
+  text-align: center;
+  margin: 10px 20px;
+  color: #aaa;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.info code {
+  background: rgba(245,166,35,0.15); color: #f5a623;
+  padding: 2px 5px; border-radius: 3px; font-size: 0.82rem;
+}
+
+footer {
+  text-align: center; padding: 20px; color: #555; font-size: 0.85rem;
+  border-top: 1px solid #1a1a2e; margin-top: 20px; width: 100%;
+}
+footer a { color: #f5a623; text-decoration: none; }
+footer strong { color: #e0e0e0; }
+
+@media (max-width: 768px) {
+  #piano { width: 358px; height: 150px; }
+  .key { width: 14.6px; height: 100px; }
+  .black--key { width: 11px; height: 65px; margin: 0 0 0 -6px; }
+}

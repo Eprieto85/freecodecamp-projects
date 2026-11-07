@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="EP City Skyline — CSS Variables by Edisson Prieto." />
+    <title>EP City Skyline</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <div class="sky">
+      <div class="stars-layer"></div>
+      <div class="moon"></div>
+
+      <div class="background-buildings">
+        <div class="bb1"><div class="bb1a bb1-window"></div><div class="bb1b"></div><div class="bb1c"></div><div class="bb1d"></div></div>
+        <div class="bb2"><div class="bb2a"></div><div class="bb2b"></div></div>
+        <div class="bb3"><div class="bb3a"></div></div>
+        <div class="bb4"><div class="bb4a"></div><div class="bb4b"></div></div>
+      </div>
+
+      <div class="foreground-buildings">
+        <div class="fb1"><div class="fb1a"></div><div class="fb1b"></div></div>
+        <div class="fb2"><div class="fb2a"></div><div class="fb2b"></div></div>
+        <div class="fb3"><div class="fb3a"></div><div class="fb3b"></div><div class="fb3c"></div></div>
+        <div class="fb4"><div class="fb4a"></div></div>
+        <div class="fb5"><div class="fb5a fb5-window"></div><div class="fb5b"></div></div>
+      </div>
+    </div>
+
+    <div class="info-bar">
+      <span data-i18n="info">CSS Variables Skyline · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
+    </div>
+
+    <script>
+      const translations = {
+        en: { lang_label: "Language:", info: "CSS Variables Skyline · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        es: { lang_label: "Idioma:", info: "Skyline con Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        fr: { lang_label: "Langue :", info: "Skyline avec Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

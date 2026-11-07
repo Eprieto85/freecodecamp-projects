@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Night Fair Ferris Wheel — CSS Animations by Edisson Prieto." />
+    <title>Night Fair — Ferris Wheel</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1 data-i18n="title">🎡 Night Fair</h1>
+      <p data-i18n="subtitle">CSS Animation — Ferris Wheel</p>
+    </header>
+
+    <main>
+      <div class="scene">
+        <div class="stars"></div>
+
+        <div class="wheel">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+
+          <div class="cabin" id="cabin1"></div>
+          <div class="cabin" id="cabin2"></div>
+          <div class="cabin" id="cabin3"></div>
+          <div class="cabin" id="cabin4"></div>
+          <div class="cabin" id="cabin5"></div>
+          <div class="cabin" id="cabin6"></div>
+        </div>
+
+        <div class="ground-strip"></div>
+      </div>
+
+      <div class="info-panel">
+        <h2 data-i18n="info_title">About this project</h2>
+        <p data-i18n="info_desc">This ferris wheel uses <strong>@keyframes</strong> CSS animations for continuous rotation. The wheel spins independently from the cabins, which counter-rotate to stay upright — simulating real physics with pure CSS.</p>
+        <ul>
+          <li data-i18n="tech1">🎨 CSS <code>@keyframes</code></li>
+          <li data-i18n="tech2">⏱ <code>animation-duration</code> &amp; <code>iteration-count</code></li>
+          <li data-i18n="tech3">🔄 Counter-rotation on cabins</li>
+          <li data-i18n="tech4">🌙 CSS gradient night sky</li>
+        </ul>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">Built with CSS Animations · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:",
+          title: "🎡 Night Fair",
+          subtitle: "CSS Animation — Ferris Wheel",
+          info_title: "About this project",
+          info_desc: "This ferris wheel uses <strong>@keyframes</strong> CSS animations for continuous rotation. The wheel spins independently from the cabins, which counter-rotate to stay upright — simulating real physics with pure CSS.",
+          tech1: "🎨 CSS <code>@keyframes</code>",
+          tech2: "⏱ <code>animation-duration</code> & <code>iteration-count</code>",
+          tech3: "🔄 Counter-rotation on cabins",
+          tech4: "🌙 CSS gradient night sky",
+          footer: "Built with CSS Animations · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:",
+          title: "🎡 Feria Nocturna",
+          subtitle: "Animación CSS — Rueda de la Fortuna",
+          info_title: "Sobre este proyecto",
+          info_desc: "Esta rueda de la fortuna usa animaciones CSS <strong>@keyframes</strong> para rotación continua. La rueda gira independientemente de las cabinas, que contra-rotan para mantenerse erguidas — simulando física real con CSS puro.",
+          tech1: "🎨 CSS <code>@keyframes</code>",
+          tech2: "⏱ <code>animation-duration</code> e <code>iteration-count</code>",
+          tech3: "🔄 Contra-rotación en cabinas",
+          tech4: "🌙 Cielo nocturno con gradiente CSS",
+          footer: "Construido con Animaciones CSS · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :",
+          title: "🎡 Foire Nocturne",
+          subtitle: "Animation CSS — Grande Roue",
+          info_title: "À propos de ce projet",
+          info_desc: "Cette grande roue utilise des animations CSS <strong>@keyframes</strong> pour une rotation continue. La roue tourne indépendamment des cabines, qui contre-tournent pour rester droites — simulant la physique réelle avec du CSS pur.",
+          tech1: "🎨 CSS <code>@keyframes</code>",
+          tech2: "⏱ <code>animation-duration</code> &amp; <code>iteration-count</code>",
+          tech3: "🔄 Contre-rotation sur les cabines",
+          tech4: "🌙 Ciel nocturne en dégradé CSS",
+          footer: "Construit avec des Animations CSS · Edisson Prieto · GitHub"
+        }
+      };
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="EP Penguin — CSS Transforms by Edisson Prieto." />
+    <title>EP Penguin — CSS Transforms</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1 data-i18n="title">🐧 Meet Pedro</h1>
+      <p data-i18n="subtitle">CSS Transforms &amp; Custom Properties</p>
+    </header>
+
+    <main>
+      <div class="scene">
+        <div class="penguin" onclick="this.classList.toggle('wave')">
+          <div class="penguin-top">
+            <div class="left-cheek"></div>
+            <div class="right-cheek"></div>
+            <div class="chin"></div>
+            <div class="penguin-head">
+              <div class="eye left"><div class="eyeball"></div></div>
+              <div class="eye right"><div class="eyeball"></div></div>
+              <div class="beak top"></div>
+              <div class="beak bottom"></div>
+            </div>
+          </div>
+          <div class="penguin-body">
+            <div class="penguin-belly"></div>
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+            <div class="foot left"></div>
+            <div class="foot right"></div>
+          </div>
+        </div>
+
+        <div class="ground"></div>
+        <div class="snowflakes">
+          <span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span>
+        </div>
+      </div>
+
+      <div class="caption">
+        <p data-i18n="caption">👆 <em data-i18n="click_hint">Click Pedro to make him wave!</em></p>
+        <p data-i18n="tech_note">Built with CSS <code>transform</code>, <code>:root</code> variables and geometric shapes.</p>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">CSS Transforms · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", title: "🐧 Meet Pedro", subtitle: "CSS Transforms & Custom Properties",
+          caption: "👆 <em>Click Pedro to make him wave!</em>",
+          click_hint: "Click Pedro to make him wave!",
+          tech_note: "Built with CSS <code>transform</code>, <code>:root</code> variables and geometric shapes.",
+          footer: "CSS Transforms · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", title: "🐧 Conoce a Pedro", subtitle: "Transformaciones CSS y Propiedades Personalizadas",
+          caption: "👆 <em>¡Haz clic en Pedro para que salude!</em>",
+          click_hint: "¡Haz clic en Pedro para que salude!",
+          tech_note: "Construido con CSS <code>transform</code>, variables <code>:root</code> y formas geométricas.",
+          footer: "Transformaciones CSS · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", title: "🐧 Rencontrez Pedro", subtitle: "Transformations CSS et Propriétés Personnalisées",
+          caption: "👆 <em>Cliquez sur Pedro pour le faire saluer !</em>",
+          click_hint: "Cliquez sur Pedro pour le faire saluer !",
+          tech_note: "Construit avec CSS <code>transform</code>, variables <code>:root</code> et formes géométriques.",
+          footer: "Transformations CSS · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>
