@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
     <div class="lang-bar">
       <span data-i18n="lang_label">Language:</span>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -15,72 +16,67 @@
       <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
     </div>
 
-    <header>
-      <h1 data-i18n="title">🐧 Meet Pedro</h1>
-      <p data-i18n="subtitle">CSS Transforms &amp; Custom Properties</p>
-    </header>
+    <div class="left-mountain"></div>
+    <div class="back-mountain"></div>
+    <div class="sun"></div>
 
-    <main>
-      <div class="scene">
-        <div class="penguin" onclick="this.classList.toggle('wave')">
-          <div class="penguin-top">
-            <div class="left-cheek"></div>
-            <div class="right-cheek"></div>
-            <div class="chin"></div>
-            <div class="penguin-head">
-              <div class="eye left"><div class="eyeball"></div></div>
-              <div class="eye right"><div class="eyeball"></div></div>
-              <div class="beak top"></div>
-              <div class="beak bottom"></div>
-            </div>
-          </div>
-          <div class="penguin-body">
-            <div class="penguin-belly"></div>
-            <div class="arm left"></div>
-            <div class="arm right"></div>
-            <div class="foot left"></div>
-            <div class="foot right"></div>
-          </div>
+    <div class="penguin" onclick="this.classList.toggle('wave')">
+      <div class="penguin-head">
+        <div class="face left"></div>
+        <div class="face right"></div>
+        <div class="chin"></div>
+        <div class="eye left">
+          <div class="eye-lid"></div>
         </div>
-
-        <div class="ground"></div>
-        <div class="snowflakes">
-          <span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span>
+        <div class="eye right">
+          <div class="eye-lid"></div>
         </div>
+        <div class="blush left"></div>
+        <div class="blush right"></div>
+        <div class="beak top"></div>
+        <div class="beak bottom"></div>
       </div>
-
-      <div class="caption">
-        <p data-i18n="caption">👆 <em data-i18n="click_hint">Click Pedro to make him wave!</em></p>
-        <p data-i18n="tech_note">Built with CSS <code>transform</code>, <code>:root</code> variables and geometric shapes.</p>
+      <div class="shirt">
+        <div>💜</div>
+        <p data-i18n="shirt_text">I CSS</p>
       </div>
-    </main>
+      <div class="penguin-body">
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="foot left"></div>
+        <div class="foot right"></div>
+      </div>
+    </div>
 
-    <footer>
-      <p data-i18n="footer">CSS Transforms · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
-    </footer>
+    <div class="ground"></div>
+
+    <div class="caption">
+      <p data-i18n="caption">👆 Click Pedro to make him wave!</p>
+    </div>
+
+    <div class="info-bar">
+      <span data-i18n="footer">CSS Transforms · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
+    </div>
 
     <script>
       const translations = {
         en: {
-          lang_label: "Language:", title: "🐧 Meet Pedro", subtitle: "CSS Transforms & Custom Properties",
-          caption: "👆 <em>Click Pedro to make him wave!</em>",
-          click_hint: "Click Pedro to make him wave!",
-          tech_note: "Built with CSS <code>transform</code>, <code>:root</code> variables and geometric shapes.",
-          footer: "CSS Transforms · Edisson Prieto · GitHub"
+          lang_label: "Language:",
+          shirt_text: "I CSS",
+          caption: "👆 Click Pedro to make him wave!",
+          footer: "CSS Transforms · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         es: {
-          lang_label: "Idioma:", title: "🐧 Conoce a Pedro", subtitle: "Transformaciones CSS y Propiedades Personalizadas",
-          caption: "👆 <em>¡Haz clic en Pedro para que salude!</em>",
-          click_hint: "¡Haz clic en Pedro para que salude!",
-          tech_note: "Construido con CSS <code>transform</code>, variables <code>:root</code> y formas geométricas.",
-          footer: "Transformaciones CSS · Edisson Prieto · GitHub"
+          lang_label: "Idioma:",
+          shirt_text: "Amo CSS",
+          caption: "👆 ¡Haz clic en Pedro para que salude!",
+          footer: "Transformaciones CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         fr: {
-          lang_label: "Langue :", title: "🐧 Rencontrez Pedro", subtitle: "Transformations CSS et Propriétés Personnalisées",
-          caption: "👆 <em>Cliquez sur Pedro pour le faire saluer !</em>",
-          click_hint: "Cliquez sur Pedro pour le faire saluer !",
-          tech_note: "Construit avec CSS <code>transform</code>, variables <code>:root</code> et formes géométriques.",
-          footer: "Transformations CSS · Edisson Prieto · GitHub"
+          lang_label: "Langue :",
+          shirt_text: "J'aime CSS",
+          caption: "👆 Cliquez sur Pedro pour le faire saluer !",
+          footer: "Transformations CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         }
       };
       function setLang(lang) {
@@ -88,7 +84,7 @@
           const key = el.getAttribute('data-i18n');
           if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
         });
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('btn-' + lang).classList.add('active');
         document.documentElement.lang = lang;
       }

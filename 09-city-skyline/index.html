@@ -3,18 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="EP City Skyline — CSS Variables by Edisson Prieto." />
-    <title>EP City Skyline</title>
+    <meta name="description" content="Bogotá Skyline — CSS Variables by Edisson Prieto." />
+    <title>Bogotá Skyline — EP</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="mode-night">
 
+    <!-- Controls -->
     <div class="top-controls">
       <div class="lang-bar">
         <span data-i18n="lang_label">Language:</span>
         <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
         <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
         <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+      </div>
+      <div class="city-title">
+        <span data-i18n="city_name">🏙 Bogotá</span>
       </div>
       <div class="mode-bar">
         <span data-i18n="mode_label">Time:</span>
@@ -24,37 +28,110 @@
       </div>
     </div>
 
-    <div class="sky">
-      <div class="stars-layer"></div>
-      <div class="sun"></div>
-      <div class="moon"></div>
-
-      <div class="background-buildings">
-        <div class="bb1"><div class="bb1a bb1-window"></div><div class="bb1b"></div><div class="bb1c"></div><div class="bb1d"></div></div>
-        <div class="bb2"><div class="bb2a"></div><div class="bb2b"></div></div>
-        <div class="bb3"><div class="bb3a"></div></div>
-        <div class="bb4"><div class="bb4a"></div><div class="bb4b"></div></div>
+    <!-- Original freeCodeCamp HTML structure — Bogotá edition -->
+    <div class="background-buildings sky">
+      <div></div>
+      <div></div>
+      <!-- bb1: Torres del Parque (Rogelio Salmona) — stepped brick towers -->
+      <div class="bb1 building-wrap">
+        <div class="bb1a bb1-window"></div>
+        <div class="bb1b bb1-window"></div>
+        <div class="bb1c bb1-window"></div>
+        <div class="bb1d"></div>
       </div>
-
-      <div class="foreground-buildings">
-        <div class="fb1"><div class="fb1a"></div><div class="fb1b fb-windows"></div></div>
-        <div class="fb2"><div class="fb2a"></div><div class="fb2b fb-windows"></div></div>
-        <div class="fb3"><div class="fb3a"></div><div class="fb3b"></div><div class="fb3c fb-windows"></div></div>
-        <div class="fb4"><div class="fb4a fb-windows"></div></div>
-        <div class="fb5"><div class="fb5a fb5-window"></div><div class="fb5b fb-windows"></div></div>
+      <!-- bb2: BD Bacatá — tallest in Colombia, glass green -->
+      <div class="bb2">
+        <div class="bb2a"></div>
+        <div class="bb2b"></div>
       </div>
+      <!-- bb3: Edificio de Telecomunicaciones ETB -->
+      <div class="bb3"></div>
+      <div></div>
+      <!-- bb4: Torre Colpatria — iconic blue tower with windows -->
+      <div class="bb4 building-wrap">
+        <div class="bb4a"></div>
+        <div class="bb4b"></div>
+        <div class="bb4c window-wrap">
+          <div class="bb4-window"></div>
+          <div class="bb4-window"></div>
+          <div class="bb4-window"></div>
+          <div class="bb4-window"></div>
+        </div>
+      </div>
+      <div></div>
+      <div></div>
     </div>
 
+    <div class="foreground-buildings">
+      <div></div>
+      <div></div>
+      <!-- fb1: Edificio Avianca — angular brutalist -->
+      <div class="fb1 building-wrap">
+        <div class="fb1a"></div>
+        <div class="fb1b"></div>
+        <div class="fb1c"></div>
+      </div>
+      <!-- fb2: Hotel Tequendama -->
+      <div class="fb2">
+        <div class="fb2a"></div>
+        <div class="fb2b window-wrap">
+          <div class="fb2-window"></div>
+          <div class="fb2-window"></div>
+          <div class="fb2-window"></div>
+        </div>
+      </div>
+      <div></div>
+      <!-- fb3: Centro Internacional — low blocks -->
+      <div class="fb3 building-wrap">
+        <div class="fb3a window-wrap">
+          <div class="fb3-window"></div>
+          <div class="fb3-window"></div>
+          <div class="fb3-window"></div>
+        </div>
+        <div class="fb3b"></div>
+        <div class="fb3a"></div>
+        <div class="fb3b"></div>
+      </div>
+      <!-- fb4: Edificio Bavaria — angled corner -->
+      <div class="fb4">
+        <div class="fb4a"></div>
+        <div class="fb4b">
+          <div class="fb4-window"></div>
+          <div class="fb4-window"></div>
+          <div class="fb4-window"></div>
+          <div class="fb4-window"></div>
+          <div class="fb4-window"></div>
+          <div class="fb4-window"></div>
+        </div>
+      </div>
+      <!-- fb5: Torre Empresarial Colseguros -->
+      <div class="fb5"></div>
+      <!-- fb6: Edificio Davivienda -->
+      <div class="fb6"></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <!-- Info bar -->
     <div class="info-bar">
-      <span data-i18n="info">CSS Variables Skyline · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
+      <span data-i18n="info">Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
     </div>
 
     <script>
       /* ── Language ── */
       const translations = {
-        en: { lang_label: "Language:", mode_label: "Time:", info: "CSS Variables Skyline · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
-        es: { lang_label: "Idioma:", mode_label: "Hora:", info: "Skyline con Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
-        fr: { lang_label: "Langue :", mode_label: "Heure :", info: "Skyline avec Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" }
+        en: {
+          lang_label: "Language:", mode_label: "Time:", city_name: "🏙 Bogotá",
+          info: "Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+        },
+        es: {
+          lang_label: "Idioma:", mode_label: "Hora:", city_name: "🏙 Bogotá D.C.",
+          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+        },
+        fr: {
+          lang_label: "Langue :", mode_label: "Heure :", city_name: "🏙 Bogotá",
+          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+        }
       };
       function setLang(lang) {
         document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -67,21 +144,20 @@
       }
       setLang('en');
 
-      /* ── Day/Sunset/Night mode ── */
+      /* ── Day / Sunset / Night ── */
       function setMode(mode) {
         document.body.className = 'mode-' + mode;
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('btn-' + mode).classList.add('active');
       }
 
-      /* Auto-detect based on current hour */
-      function autoMode() {
+      /* Auto-detect current hour */
+      (function autoMode() {
         const h = new Date().getHours();
-        if (h >= 6 && h < 17)       setMode('day');
+        if      (h >= 6  && h < 17) setMode('day');
         else if (h >= 17 && h < 20) setMode('sunset');
         else                         setMode('night');
-      }
-      autoMode();
+      })();
     </script>
   </body>
 </html>

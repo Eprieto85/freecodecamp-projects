@@ -4,8 +4,8 @@
   --wheel-color: #f5a623;
   --cabin-a: #e94560;
   --cabin-b: #533483;
-  --sky-top: #0a0a23;
-  --sky-mid: #1a1a4e;
+  --sky-top: #1a0a4e;
+  --sky-mid: #2a3a8e;
   --ground: #0d3b1e;
 }
 
@@ -22,7 +22,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 60%, #0d2040 100%);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 60%, #1a2860 100%);
   min-height: 100vh;
   color: #fff;
 }

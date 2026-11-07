@@ -1,189 +1,292 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── EP Penguin — based on freeCodeCamp Responsive Web Design ── */
+
 :root {
-  --penguin-body: #1a1a4e;
-  --penguin-belly: #e0e0e0;
-  --penguin-beak: #f5a623;
-  --penguin-eye: #0a0a23;
-  --penguin-cheek: #e94560;
-  --ground-color: #0d3b1e;
-  --sky-top: #0a0a23;
-  --sky-bottom: #1a3c5e;
+  --penguin-face:    white;
+  --penguin-picorna: #f5a623;
+  --penguin-skin:    #1a1a4e;
 }
 
+/* ── Lang bar ── */
 .lang-bar {
-  background-color: var(--sky-top);
-  display: flex; align-items: center; justify-content: flex-end;
-  gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: #f5a623;
+  position: fixed; top: 0; right: 0; z-index: 100;
+  background: rgba(10,10,35,0.75);
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 14px; font-size: 0.8rem; color: #f5a623;
+  backdrop-filter: blur(4px);
 }
 .lang-btn {
   background: transparent; border: 1px solid #f5a623; color: #f5a623;
-  padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+  padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.75rem; transition: all 0.2s;
 }
 .lang-btn:hover, .lang-btn.active { background-color: #f5a623; color: #000; font-weight: bold; }
 
+/* ── Background ── */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
-  min-height: 100vh; color: #fff;
+  background: linear-gradient(45deg, rgb(10, 60, 180), rgb(90, 180, 255));
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
-header {
-  text-align: center; padding: 24px 20px 10px;
-}
-header h1 { font-size: 2.4rem; color: #f5a623; }
-header p { color: #aaa; font-size: 0.95rem; margin-top: 6px; }
-
-main { display: flex; flex-direction: column; align-items: center; padding: 20px; gap: 20px; }
-
-.scene {
-  position: relative;
-  width: 350px; height: 420px;
-  display: flex; justify-content: center; align-items: flex-end;
-}
-
-/* PENGUIN */
-.penguin {
+/* ── Mountains ── */
+.left-mountain {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(rgb(100, 180, 240), rgb(30, 100, 200));
   position: absolute;
-  bottom: 50px;
+  transform: skew(0deg, 44deg);
+  z-index: 2;
+  margin-top: 100px;
+}
+
+.back-mountain {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(rgb(140, 200, 255), rgb(20, 80, 180));
+  position: absolute;
+  z-index: 1;
+  transform: rotate(45deg);
+  left: 110px;
+  top: 225px;
+}
+
+/* ── Sun ── */
+.sun {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at 40% 40%, #fff9c4, #f5a623 60%, #c47d00);
+  position: absolute;
+  border-radius: 50%;
+  top: -75px;
+  right: -75px;
+  box-shadow: 0 0 60px 20px rgba(245,166,35,0.4);
+}
+
+/* ── Penguin container ── */
+.penguin {
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  margin-top: 75px;
+  z-index: 4;
+  position: relative;
+  transition: transform 1s ease-in-out 0ms;
   cursor: pointer;
-  transition: transform 0.3s;
   animation: waddle 3s ease-in-out infinite;
 }
 
 @keyframes waddle {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%       { transform: rotate(1.5deg); }
 }
 
-.penguin-top {
-  position: relative;
-  width: 90px; height: 80px;
-  margin: 0 auto;
+.penguin.wave {
+  animation: none;
+  transform: scale(1.1) rotate(0deg);
 }
 
+.penguin * { position: absolute; }
+
+.penguin:active { transform: scale(1.5); cursor: not-allowed; }
+
+/* ── Head ── */
 .penguin-head {
-  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 70px; height: 65px;
-  background: var(--penguin-body);
-  border-radius: 50% 50% 45% 45%;
+  width: 50%;
+  height: 45%;
+  background: linear-gradient(45deg, var(--penguin-skin), rgb(80, 80, 160));
+  border-radius: 70% 70% 65% 65%;
+  top: 10%;
+  left: 25%;
+  z-index: 1;
 }
 
-.left-cheek, .right-cheek {
-  position: absolute;
-  width: 30px; height: 25px;
-  background: var(--penguin-cheek);
-  border-radius: 50%;
-  bottom: 10px; z-index: 1;
+.face {
+  width: 60%;
+  height: 70%;
+  background-color: var(--penguin-face);
+  border-radius: 70% 70% 60% 60%;
+  top: 15%;
 }
-.left-cheek { left: 2px; }
-.right-cheek { right: 2px; }
+.face.left  { left: 5%; }
+.face.right { right: 5%; }
+
 .chin {
-  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 50px; height: 30px;
-  background: var(--penguin-belly);
-  border-radius: 0 0 50% 50%;
-  z-index: 2;
+  width: 90%;
+  height: 70%;
+  background-color: var(--penguin-face);
+  top: 25%;
+  left: 5%;
+  border-radius: 70% 70% 100% 100%;
 }
 
 .eye {
-  position: absolute;
-  width: 16px; height: 16px;
-  background: white;
-  border-radius: 50%;
-  top: 18px; z-index: 3;
-}
-.eye.left { left: 12px; }
-.eye.right { right: 12px; }
-.eyeball {
-  position: absolute; top: 4px; left: 4px;
-  width: 8px; height: 8px;
-  background: var(--penguin-eye);
+  width: 15%;
+  height: 17%;
+  background-color: black;
+  top: 45%;
   border-radius: 50%;
 }
+.eye.left  { left: 25%; }
+.eye.right { right: 25%; }
+
+.eye-lid {
+  width: 150%;
+  height: 100%;
+  background-color: var(--penguin-face);
+  top: 25%;
+  left: -23%;
+  border-radius: 50%;
+}
+
+.blush {
+  width: 15%;
+  height: 10%;
+  background-color: #e94560;
+  top: 65%;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.blush.left  { left: 15%; }
+.blush.right { right: 15%; }
 
 .beak {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  z-index: 4;
-}
-.beak.top { top: 32px; border-bottom: 12px solid var(--penguin-beak); }
-.beak.bottom { top: 44px; border-top: 8px solid #c47d00; }
-
-.penguin-body {
-  position: relative;
-  width: 100px; height: 110px;
-  background: var(--penguin-body);
-  border-radius: 50% 50% 45% 45%;
-  margin: 0 auto;
-}
-
-.penguin-belly {
-  position: absolute;
-  width: 60px; height: 70px;
-  background: var(--penguin-belly);
+  height: 10%;
+  background-color: var(--penguin-picorna);
   border-radius: 50%;
-  top: 15px; left: 50%; transform: translateX(-50%);
+}
+.beak.top    { width: 20%; top: 60%; left: 40%; }
+.beak.bottom { width: 16%; top: 65%; left: 42%; }
+
+/* ── Shirt ── */
+.shirt {
+  font: bold 22px 'Segoe UI', Helvetica, sans-serif;
+  top: 165px;
+  left: 127.5px;
+  z-index: 1;
+  color: #f5a623;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+.shirt div {
+  font-weight: initial;
+  top: 22.5px;
+  left: 12px;
 }
 
-.arm {
+/* ── Body ── */
+.penguin-body {
+  width: 53%;
+  height: 45%;
+  background: linear-gradient(
+    45deg,
+    var(--penguin-skin) 0%,
+    rgb(60, 60, 140) 25%,
+    rgb(120, 120, 200) 67%
+  );
+  border-radius: 80% 80% 100% 100%;
+  top: 40%;
+  left: 23.5%;
+}
+
+.penguin-body::before {
+  content: "";
   position: absolute;
-  width: 30px; height: 60px;
-  background: var(--penguin-body);
-  border-radius: 30px;
-  top: 15px;
-  transform-origin: top center;
+  width: 50%;
+  height: 45%;
+  background-color: var(--penguin-face);
+  top: 10%;
+  left: 25%;
+  border-radius: 0% 0% 100% 100%;
+  opacity: 80%;
+}
+
+/* ── Arms ── */
+.arm {
+  width: 30%;
+  height: 60%;
+  background: linear-gradient(90deg, var(--penguin-skin), rgb(80, 80, 160));
+  border-radius: 30% 30% 30% 120%;
+  z-index: -1;
+}
+
+.arm.left {
+  top: 35%;
+  left: 5%;
+  transform-origin: top left;
+  transform: rotate(130deg) scaleX(-1);
+  animation: 3s linear infinite wave-arm;
+}
+
+.arm.right {
+  top: 0%;
+  right: -5%;
+  transform: rotate(-45deg);
   transition: transform 0.4s ease;
 }
-.arm.left { left: -15px; transform: rotate(30deg); }
-.arm.right { right: -15px; transform: rotate(-30deg); }
 
-.penguin.wave .arm.left { transform: rotate(-60deg); }
-.penguin.wave .arm.right { transform: rotate(60deg); }
+/* Wave class: raise both arms */
+.penguin.wave .arm.left  { transform: rotate(70deg) scaleX(-1); animation: none; }
+.penguin.wave .arm.right { transform: rotate(-130deg); }
 
+@keyframes wave-arm {
+  10% { transform: rotate(110deg) scaleX(-1); }
+  20% { transform: rotate(130deg) scaleX(-1); }
+  30% { transform: rotate(110deg) scaleX(-1); }
+  40% { transform: rotate(130deg) scaleX(-1); }
+}
+
+/* ── Feet ── */
 .foot {
-  position: absolute;
-  width: 28px; height: 14px;
-  background: var(--penguin-beak);
+  width: 15%;
+  height: 30%;
+  background-color: var(--penguin-picorna);
+  top: 85%;
   border-radius: 50%;
-  bottom: -8px;
+  z-index: -1;
 }
-.foot.left { left: 15px; }
-.foot.right { right: 15px; }
+.foot.left  { left: 25%; transform: rotate(80deg); }
+.foot.right { right: 25%; transform: rotate(-80deg); }
 
+/* ── Ground (ice/snow) ── */
 .ground {
-  position: absolute; bottom: 0;
-  width: 100%; height: 50px;
-  background: linear-gradient(var(--ground-color), #0a2910);
-  border-radius: 0 0 8px 8px;
+  width: 100vw;
+  height: 400px;
+  background: linear-gradient(90deg, rgb(60, 140, 220), rgb(200, 240, 255));
+  z-index: 3;
+  position: absolute;
+  margin-top: -58px;
 }
 
-.snowflakes {
-  position: absolute; top: 10px; width: 100%;
-  display: flex; justify-content: space-around;
-  font-size: 1.2rem; color: rgba(255,255,255,0.4);
-  animation: snow 4s linear infinite;
-}
-@keyframes snow {
-  0% { transform: translateY(0); opacity: 0.4; }
-  100% { transform: translateY(380px); opacity: 0; }
-}
-
+/* ── Caption ── */
 .caption {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid #f5a623;
-  border-radius: 10px;
-  padding: 16px 20px;
-  max-width: 350px;
-  text-align: center;
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,10,35,0.7);
+  color: #f5a623;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(245,166,35,0.3);
+  z-index: 10;
+  white-space: nowrap;
 }
-.caption p { color: #ccc; font-size: 0.9rem; margin-bottom: 6px; line-height: 1.6; }
-.caption em { color: #f5a623; font-style: normal; }
-.caption code { background: rgba(245,166,35,0.15); color: #f5a623; padding: 2px 5px; border-radius: 3px; font-size: 0.8rem; }
 
-footer {
-  text-align: center; padding: 20px; color: #555; font-size: 0.85rem;
-  border-top: 1px solid #1a1a4e; margin-top: 10px;
+/* ── Info bar ── */
+.info-bar {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  background: rgba(10,10,35,0.75);
+  color: #aaa;
+  text-align: center;
+  padding: 7px;
+  font-size: 0.8rem;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 10;
 }
-footer a { color: #f5a623; text-decoration: none; }
-footer strong { color: #e0e0e0; }
+.info-bar a      { color: #f5a623; text-decoration: none; }
+.info-bar strong { color: #fff; }
