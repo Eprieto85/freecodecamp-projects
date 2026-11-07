@@ -8,15 +8,15 @@ $headers = @{
 }
 
 $images = [ordered]@{
-    "condor.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Vultur_gryphus_%28Vaxholm%29.jpg/400px-Vultur_gryphus_%28Vaxholm%29.jpg"
-    "jaguar.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/400px-Standing_jaguar.jpg"
-    "oso.jpg"       = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Spectacled_bear.jpg/400px-Spectacled_bear.jpg"
-    "titi.jpg"      = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Saguinus_oedipus_1.jpg/400px-Saguinus_oedipus_1.jpg"
-    "delfin.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Boutu_edit1.jpg/400px-Boutu_edit1.jpg"
-    "morpho.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Morpho_didius_Male_Dos_Pilas.jpg/400px-Morpho_didius_Male_Dos_Pilas.jpg"
-    "guacamaya.jpg" = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Ara_macao.jpg/400px-Ara_macao.jpg"
-    "colibri.jpg"   = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/White-necked_Jacobin_%28Florisuga_mellivora%29_male_RWD2.jpg/400px-White-necked_Jacobin_%28Florisuga_mellivora%29_male_RWD2.jpg"
-    "rana.jpg"      = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Atelopus_varius_2.jpg/400px-Atelopus_varius_2.jpg"
+    "condor.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Vultur_gryphus_%28Vaxholm%29.jpg/320px-Vultur_gryphus_%28Vaxholm%29.jpg"
+    "jaguar.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/320px-Standing_jaguar.jpg"
+    "oso.jpg"       = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Spectacled_bear.jpg/320px-Spectacled_bear.jpg"
+    "titi.jpg"      = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Saguinus_oedipus_1.jpg/320px-Saguinus_oedipus_1.jpg"
+    "delfin.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Boutu_edit1.jpg/320px-Boutu_edit1.jpg"
+    "morpho.jpg"    = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Morpho_didius_Male_Dos_Pilas.jpg/320px-Morpho_didius_Male_Dos_Pilas.jpg"
+    "guacamaya.jpg" = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Ara_macao.jpg/320px-Ara_macao.jpg"
+    "colibri.jpg"   = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/White-necked_Jacobin_%28Florisuga_mellivora%29_male_RWD2.jpg/320px-White-necked_Jacobin_%28Florisuga_mellivora%29_male_RWD2.jpg"
+    "rana.jpg"      = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Atelopus_varius_2.jpg/320px-Atelopus_varius_2.jpg"
 }
 
 foreach ($name in $images.Keys) {
