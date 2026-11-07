@@ -5,38 +5,66 @@
 }
 
 :root {
-  --ep-dark: #0a0a23;
-  --ep-accent: #f5a623;
-  --ep-light: #f5f6f7;
-  --ep-mid: #8b8b8b;
-  --ep-white: #ffffff;
+  /* Semana Colombia palette: red + black + white editorial */
+  --ep-dark:   #111111;
+  --ep-accent: #cc1122;   /* Semana red */
+  --ep-light:  #f5f5f0;
+  --ep-mid:    #666666;
+  --ep-white:  #ffffff;
+  --ep-gold:   #c8a040;
+}
+
+/* ── Masthead bar (Semana-style red banner) ── */
+.masthead-bar {
+  background: var(--ep-accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  border-bottom: 3px solid #8a0010;
+}
+.masthead-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.2rem;
+  color: #fff;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.masthead-tagline {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  font-style: italic;
 }
 
 .lang-bar {
-  background-color: var(--ep-dark);
+  background-color: #111;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
-  padding: 8px 20px;
-  font-size: 0.85rem;
-  color: var(--ep-accent);
+  padding: 5px 20px;
+  font-size: 0.8rem;
+  color: #aaa;
+  border-bottom: 1px solid #333;
 }
+.lang-bar span { color: #888; }
 
 .lang-btn {
   background: transparent;
-  border: 1px solid var(--ep-accent);
-  color: var(--ep-accent);
-  padding: 3px 10px;
-  border-radius: 4px;
+  border: 1px solid #cc1122;
+  color: #cc1122;
+  padding: 2px 9px;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   transition: all 0.2s;
 }
 
 .lang-btn:hover, .lang-btn.active {
-  background-color: var(--ep-accent);
-  color: var(--ep-dark);
+  background-color: #cc1122;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -49,6 +77,7 @@ body {
   font-size: 1.6rem;
   color: var(--ep-dark);
   background-color: var(--ep-light);
+  border-top: 5px solid var(--ep-accent);
 }
 
 main {
@@ -71,8 +100,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Anton', sans-serif;
 }
 
-a {
-  color: var(--ep-accent);
+a { color: var(--ep-accent); }
+
+/* ── Section rules (Semana-style red rule under section titles) ── */
+h2 {
+  color: var(--ep-dark);
+  border-bottom: 3px solid var(--ep-accent);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.2rem;
 }
 
 /* HEADING SECTION */
@@ -94,9 +129,19 @@ a {
   text-align: center;
   font-size: 8rem;
   letter-spacing: 0.5rem;
-  color: var(--ep-dark);
+  color: var(--ep-white);
+  background: var(--ep-dark);
   padding: 2rem;
   line-height: 1;
+  /* Semana-style: dark block title */
+  position: relative;
+}
+.hero-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--ep-accent);
 }
 
 .hero-subtitle {
@@ -156,9 +201,11 @@ a {
   font-size: 8rem;
   line-height: 0.87;
   font-weight: bold;
-  color: var(--ep-accent);
+  color: var(--ep-white);
+  background: var(--ep-accent);
   font-family: 'Anton', sans-serif;
   margin-right: 1rem;
+  padding: 0 0.4rem;
 }
 
 .heading p {

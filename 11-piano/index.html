@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="EP Piano — Responsive Web Design by Edisson Prieto." />
-    <title>EP Piano</title>
+    <meta name="description" content="EP Piano — Responsive Web Design with CSS by Edisson Prieto." />
+    <title>EP Piano — CSS Responsive</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
     <div class="lang-bar">
       <span data-i18n="lang_label">Language:</span>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -16,77 +17,108 @@
     </div>
 
     <header>
-      <h1 data-i18n="title">🎹 EP Piano</h1>
+      <h1>🎹 <span data-i18n="title">EP Piano</span></h1>
       <p data-i18n="subtitle">Responsive Web Design with CSS</p>
     </header>
 
     <div id="piano">
-      <div class="piano-top-bar">
-        <span class="piano-brand" data-i18n="brand">EP · Grand</span>
-        <span class="piano-model">Model 1988 · Bogotá</span>
+      <div class="piano-brand">
+        <span class="brand-left">EP · Grand</span>
+        <span class="brand-right" data-i18n="brand_model">Model 1988 · Bogotá</span>
       </div>
       <div class="keys">
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
-        <div class="key black--key"></div>
+        <!-- Octave 1: C4 -->
+        <div class="key" data-freq="261.63"></div>
+        <div class="key black--key" data-freq="293.66"><span class="bk" data-freq="277.18"></span></div>
+        <div class="key black--key" data-freq="329.63"><span class="bk" data-freq="311.13"></span></div>
+        <div class="key" data-freq="349.23"></div>
+        <div class="key black--key" data-freq="392.00"><span class="bk" data-freq="369.99"></span></div>
+        <div class="key black--key" data-freq="440.00"><span class="bk" data-freq="415.30"></span></div>
+        <div class="key black--key" data-freq="493.88"><span class="bk" data-freq="466.16"></span></div>
+        <!-- Octave 2: C5 -->
+        <div class="key" data-freq="523.25"></div>
+        <div class="key black--key" data-freq="587.33"><span class="bk" data-freq="554.37"></span></div>
+        <div class="key black--key" data-freq="659.25"><span class="bk" data-freq="622.25"></span></div>
+        <div class="key" data-freq="698.46"></div>
+        <div class="key black--key" data-freq="783.99"><span class="bk" data-freq="739.99"></span></div>
+        <div class="key black--key" data-freq="880.00"><span class="bk" data-freq="830.61"></span></div>
+        <div class="key black--key" data-freq="987.77"><span class="bk" data-freq="932.33"></span></div>
+        <!-- Octave 3: C6 -->
+        <div class="key" data-freq="1046.50"></div>
+        <div class="key black--key" data-freq="1174.66"><span class="bk" data-freq="1108.73"></span></div>
+        <div class="key black--key" data-freq="1318.51"><span class="bk" data-freq="1244.51"></span></div>
+        <div class="key" data-freq="1396.91"></div>
+        <div class="key black--key" data-freq="1567.98"><span class="bk" data-freq="1479.98"></span></div>
+        <div class="key black--key" data-freq="1760.00"><span class="bk" data-freq="1661.22"></span></div>
+        <div class="key black--key" data-freq="1975.53"><span class="bk" data-freq="1864.66"></span></div>
       </div>
     </div>
 
-    <div class="info">
-      <p data-i18n="info">Built using <code>position</code>, <code>z-index</code>, <code>media queries</code> and <code>CSS pseudoclasses</code>. Click any key!</p>
-    </div>
+    <section class="info-panel">
+      <h2 data-i18n="skills_title">🎯 CSS Skills Demonstrated</h2>
+      <p data-i18n="skills_desc">A responsive 3-octave piano keyboard built entirely with CSS — no images, no SVGs, just code. Click any key to play!</p>
+      <ul>
+        <li><code>position: absolute</code> — <span data-i18n="s1">black keys overlap white keys</span></li>
+        <li><code>::after pseudo-element</code> — <span data-i18n="s2">black key shapes generated by CSS</span></li>
+        <li><code>z-index</code> — <span data-i18n="s3">layering black keys on top</span></li>
+        <li><code>@media queries</code> — <span data-i18n="s4">keyboard adapts to screen size</span></li>
+        <li><code>float + overflow</code> — <span data-i18n="s5">horizontal key layout</span></li>
+        <li><code>border-radius</code> — <span data-i18n="s6">rounded key tips</span></li>
+        <li><code>Web Audio API</code> — <span data-i18n="s7">real synthesized sound on click</span></li>
+      </ul>
+    </section>
 
     <footer>
-      <p data-i18n="footer">Responsive Piano · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+      <span data-i18n="footer">Responsive Piano · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
     </footer>
 
     <script>
+      /* ── Translations ── */
       const translations = {
         en: {
-          lang_label: "Language:", title: "🎹 EP Piano", subtitle: "Responsive Web Design with CSS",
-          brand: "EP · Grand",
-          info: "Built using <code>position</code>, <code>z-index</code>, <code>media queries</code> and <code>CSS pseudoclasses</code>. Click any key!",
-          footer: "Responsive Piano · Edisson Prieto · GitHub"
+          lang_label: "Language:", title: "EP Piano",
+          subtitle: "Responsive Web Design with CSS",
+          brand_model: "Model 1988 · Bogotá",
+          skills_title: "🎯 CSS Skills Demonstrated",
+          skills_desc: "A responsive 3-octave piano keyboard built entirely with CSS — no images, no SVGs, just code. Click any key to play!",
+          s1: "black keys overlap white keys",
+          s2: "black key shapes generated by CSS",
+          s3: "layering black keys on top",
+          s4: "keyboard adapts to screen size",
+          s5: "horizontal key layout",
+          s6: "rounded key tips",
+          s7: "real synthesized sound on click",
+          footer: "Responsive Piano · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         es: {
-          lang_label: "Idioma:", title: "🎹 EP Piano", subtitle: "Diseño Web Responsivo con CSS",
-          brand: "EP · Gran Cola",
-          info: "Construido con <code>position</code>, <code>z-index</code>, <code>media queries</code> y <code>pseudoclases CSS</code>. ¡Haz clic en una tecla!",
-          footer: "Piano Responsivo · Edisson Prieto · GitHub"
+          lang_label: "Idioma:", title: "EP Piano",
+          subtitle: "Diseño Web Responsivo con CSS",
+          brand_model: "Modelo 1988 · Bogotá",
+          skills_title: "🎯 Habilidades CSS Demostradas",
+          skills_desc: "Un piano de 3 octavas construido completamente con CSS — sin imágenes, sin SVGs, solo código. ¡Haz clic en cualquier tecla para tocar!",
+          s1: "las teclas negras se superponen a las blancas",
+          s2: "las teclas negras son generadas por CSS",
+          s3: "capas de teclas negras encima",
+          s4: "el teclado se adapta al tamaño de pantalla",
+          s5: "diseño horizontal de teclas con float",
+          s6: "puntas de teclas redondeadas",
+          s7: "sonido sintetizado real al hacer clic",
+          footer: "Piano Responsivo · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         fr: {
-          lang_label: "Langue :", title: "🎹 EP Piano", subtitle: "Design Web Responsif avec CSS",
-          brand: "EP · Grand",
-          info: "Construit avec <code>position</code>, <code>z-index</code>, <code>media queries</code> et <code>pseudoclasses CSS</code>. Cliquez sur une touche !",
-          footer: "Piano Responsif · Edisson Prieto · GitHub"
+          lang_label: "Langue :", title: "EP Piano",
+          subtitle: "Design Web Responsive avec CSS",
+          brand_model: "Modèle 1988 · Bogotá",
+          skills_title: "🎯 Compétences CSS Démontrées",
+          skills_desc: "Un clavier de piano 3 octaves construit entièrement en CSS — sans images, sans SVG, juste du code. Cliquez sur une touche pour jouer !",
+          s1: "les touches noires chevauchent les blanches",
+          s2: "formes des touches noires générées par CSS",
+          s3: "superposition des touches noires",
+          s4: "clavier adaptatif selon la taille d'écran",
+          s5: "disposition horizontale des touches",
+          s6: "extrémités des touches arrondies",
+          s7: "son synthétisé réel au clic",
+          footer: "Piano Responsive · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
         }
       };
       function setLang(lang) {
@@ -94,17 +126,50 @@
           const key = el.getAttribute('data-i18n');
           if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
         });
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('btn-' + lang).classList.add('active');
         document.documentElement.lang = lang;
       }
       setLang('en');
 
-      // Click sound effect (visual feedback)
-      document.querySelectorAll('.key').forEach(key => {
-        key.addEventListener('mousedown', () => key.style.filter = 'brightness(0.75)');
-        key.addEventListener('mouseup', () => key.style.filter = '');
-        key.addEventListener('mouseleave', () => key.style.filter = '');
+      /* ── Web Audio synthesis ── */
+      let audioCtx = null;
+      function getCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+      }
+      function playNote(freq, isBlack) {
+        const ctx = getCtx();
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = isBlack ? 'sawtooth' : 'triangle';
+        osc.frequency.value = freq;
+        const vol = isBlack ? 0.3 : 0.4;
+        gain.gain.setValueAtTime(vol, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 1.5);
+      }
+
+      /* ── Key click handlers ── */
+      document.querySelector('.keys').addEventListener('mousedown', function(e) {
+        if (e.target.classList.contains('bk')) {
+          /* Black key clicked */
+          const freq = parseFloat(e.target.dataset.freq);
+          playNote(freq, true);
+          e.target.classList.add('pressed');
+          setTimeout(() => e.target.classList.remove('pressed'), 200);
+          e.stopPropagation();
+        } else if (e.target.classList.contains('key')) {
+          /* White key clicked */
+          const freq = parseFloat(e.target.dataset.freq);
+          playNote(freq, false);
+          e.target.classList.add('pressed');
+          setTimeout(() => e.target.classList.remove('pressed'), 200);
+        }
       });
     </script>
   </body>

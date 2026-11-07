@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="EP Tech Gallery — CSS Flexbox by Edisson Prieto." />
-    <title>EP Tech Gallery</title>
+    <meta name="description" content="Fauna Colombia — CSS Flexbox Gallery by Edisson Prieto." />
+    <title>Fauna Colombia — EP Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
     <div class="lang-bar">
       <span data-i18n="lang_label">Language:</span>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -18,78 +19,149 @@
     </div>
 
     <header>
-      <h1>EP Tech Gallery</h1>
-      <p data-i18n="subtitle">A visual collection of web development technologies</p>
+      <h1>🇨🇴 <span data-i18n="title">Fauna Colombia</span></h1>
+      <p data-i18n="subtitle">Emblematic animals of Colombian biodiversity · CSS Flexbox Gallery</p>
     </header>
 
     <div class="gallery">
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/1.jpg" alt="HTML5" loading="lazy" />
-        <figcaption data-i18n="cap1">HTML5 — Structure</figcaption>
+      <!-- 1. Cóndor Andino -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Vultur_gryphus_%28Vaxholm%29.jpg/400px-Vultur_gryphus_%28Vaxholm%29.jpg"
+             alt="Cóndor de los Andes" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap1">🦅 Cóndor de los Andes</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/2.jpg" alt="CSS3" loading="lazy" />
-        <figcaption data-i18n="cap2">CSS3 — Style</figcaption>
+      <!-- 2. Jaguar -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/400px-Standing_jaguar.jpg"
+             alt="Jaguar" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap2">🐆 Jaguar (Panthera onca)</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/3.jpg" alt="JavaScript" loading="lazy" />
-        <figcaption data-i18n="cap3">JavaScript — Logic</figcaption>
+      <!-- 3. Oso de Anteojos -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Spectacled_bear.jpg/400px-Spectacled_bear.jpg"
+             alt="Oso de Anteojos" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap3">🐻 Oso de Anteojos</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/4.jpg" alt="Flexbox" loading="lazy" />
-        <figcaption data-i18n="cap4">Flexbox — Layout</figcaption>
+      <!-- 4. Mono Tití Cabeciblanco -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Saguinus_oedipus_1.jpg/400px-Saguinus_oedipus_1.jpg"
+             alt="Mono Tití Cabeciblanco" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap4">🐒 Mono Tití Cabeciblanco</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/5.jpg" alt="CSS Grid" loading="lazy" />
-        <figcaption data-i18n="cap5">CSS Grid — Grids</figcaption>
+      <!-- 5. Delfín Rosado -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Boutu_edit1.jpg/400px-Boutu_edit1.jpg"
+             alt="Delfín Rosado" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap5">🐬 Delfín Rosado (Boto)</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/6.jpg" alt="Responsive Design" loading="lazy" />
-        <figcaption data-i18n="cap6">Responsive Design</figcaption>
+      <!-- 6. Mariposa Morpho azul -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Morpho_didius_Male_Dos_Pilas.jpg/400px-Morpho_didius_Male_Dos_Pilas.jpg"
+             alt="Mariposa Morpho" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap6">🦋 Mariposa Morpho Azul</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/7.jpg" alt="Animations" loading="lazy" />
-        <figcaption data-i18n="cap7">CSS Animations</figcaption>
+      <!-- 7. Guacamaya Roja -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Ara_macao.jpg/400px-Ara_macao.jpg"
+             alt="Guacamaya Roja" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap7">🦜 Guacamaya Roja</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/8.jpg" alt="Accessibility" loading="lazy" />
-        <figcaption data-i18n="cap8">Accessibility</figcaption>
+      <!-- 8. Colibrí Esmeralda -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/White-necked_Jacobin_(Florisuga_mellivora)_male_RWD2.jpg/400px-White-necked_Jacobin_(Florisuga_mellivora)_male_RWD2.jpg"
+             alt="Colibrí" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap8">🐦 Colibrí Jacobino</figcaption>
       </figure>
-      <figure>
-        <img src="https://cdn.freecodecamp.org/curriculum/css-photo-gallery/9.jpg" alt="Git & GitHub" loading="lazy" />
-        <figcaption data-i18n="cap9">Git &amp; GitHub</figcaption>
+      <!-- 9. Rana Arlequín -->
+      <figure onclick="openModal(this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Atelopus_varius_2.jpg/400px-Atelopus_varius_2.jpg"
+             alt="Rana Arlequín" loading="lazy"
+             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+        <figcaption data-i18n="cap9">🐸 Rana Arlequín (Atelopus)</figcaption>
       </figure>
     </div>
 
+    <!-- Skills section -->
+    <section class="info-panel">
+      <h2 data-i18n="skills_title">🎯 CSS Skills Demonstrated</h2>
+      <p data-i18n="skills_desc">A responsive Flexbox gallery of Colombia's most emblematic animals. Click any photo to explore it up close!</p>
+      <ul>
+        <li><code>display: flex</code> — <span data-i18n="s1">wrapping gallery layout</span></li>
+        <li><code>flex-wrap + gap</code> — <span data-i18n="s2">automatic row breaking with consistent spacing</span></li>
+        <li><code>object-fit: cover</code> — <span data-i18n="s3">uniform image dimensions without distortion</span></li>
+        <li><code>transition + transform</code> — <span data-i18n="s4">hover scale and glow effects</span></li>
+        <li><code>@keyframes + animation</code> — <span data-i18n="s5">shimmer and pulse on lightbox image</span></li>
+        <li><code>position: fixed</code> — <span data-i18n="s6">full-screen lightbox overlay</span></li>
+      </ul>
+    </section>
+
     <footer>
-      <p data-i18n="footer">EP Tech Gallery · <strong>Edisson Prieto</strong> · CSS Flexbox · <a href="https://github.com/Eprieto85">GitHub</a></p>
+      <span data-i18n="footer">Fauna Colombia Gallery · <strong>Edisson Prieto</strong> · CSS Flexbox · <a href="https://github.com/Eprieto85">GitHub</a></span>
     </footer>
 
+    <!-- Lightbox modal -->
+    <div id="modal" onclick="closeModal()">
+      <div class="modal-frame" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-img-wrap">
+          <img id="modal-img" src="" alt="" />
+        </div>
+        <p id="modal-caption"></p>
+      </div>
+    </div>
+
     <script>
+      /* ── Translations ── */
       const translations = {
         en: {
           lang_label: "Language:",
-          subtitle: "A visual collection of web development technologies",
-          cap1: "HTML5 — Structure", cap2: "CSS3 — Style", cap3: "JavaScript — Logic",
-          cap4: "Flexbox — Layout", cap5: "CSS Grid — Grids", cap6: "Responsive Design",
-          cap7: "CSS Animations", cap8: "Accessibility", cap9: "Git & GitHub",
-          footer: "EP Tech Gallery · Edisson Prieto · CSS Flexbox · GitHub"
+          title: "Fauna Colombia",
+          subtitle: "Emblematic animals of Colombian biodiversity · CSS Flexbox Gallery",
+          cap1: "🦅 Cóndor de los Andes", cap2: "🐆 Jaguar (Panthera onca)", cap3: "🐻 Oso de Anteojos",
+          cap4: "🐒 Mono Tití Cabeciblanco", cap5: "🐬 Delfín Rosado (Boto)", cap6: "🦋 Mariposa Morpho Azul",
+          cap7: "🦜 Guacamaya Roja", cap8: "🐦 Colibrí Jacobino", cap9: "🐸 Rana Arlequín (Atelopus)",
+          skills_title: "🎯 CSS Skills Demonstrated",
+          skills_desc: "A responsive Flexbox gallery of Colombia's most emblematic animals. Click any photo to explore it up close!",
+          s1: "wrapping gallery layout", s2: "automatic row breaking with consistent spacing",
+          s3: "uniform image dimensions without distortion", s4: "hover scale and glow effects",
+          s5: "shimmer and pulse on lightbox image", s6: "full-screen lightbox overlay",
+          footer: "Fauna Colombia Gallery · <strong>Edisson Prieto</strong> · CSS Flexbox · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         es: {
           lang_label: "Idioma:",
-          subtitle: "Una colección visual de tecnologías de desarrollo web",
-          cap1: "HTML5 — Estructura", cap2: "CSS3 — Estilo", cap3: "JavaScript — Lógica",
-          cap4: "Flexbox — Layout", cap5: "CSS Grid — Cuadrículas", cap6: "Diseño Responsivo",
-          cap7: "Animaciones CSS", cap8: "Accesibilidad", cap9: "Git y GitHub",
-          footer: "EP Tech Gallery · Edisson Prieto · CSS Flexbox · GitHub"
+          title: "Fauna Colombia",
+          subtitle: "Animales emblemáticos de la biodiversidad colombiana · Galería CSS Flexbox",
+          cap1: "🦅 Cóndor de los Andes", cap2: "🐆 Jaguar (Panthera onca)", cap3: "🐻 Oso de Anteojos",
+          cap4: "🐒 Mono Tití Cabeciblanco", cap5: "🐬 Delfín Rosado (Boto)", cap6: "🦋 Mariposa Morpho Azul",
+          cap7: "🦜 Guacamaya Roja", cap8: "🐦 Colibrí Jacobino", cap9: "🐸 Rana Arlequín (Atelopus)",
+          skills_title: "🎯 Habilidades CSS Demostradas",
+          skills_desc: "Una galería Flexbox responsiva con los animales más emblemáticos de Colombia. ¡Haz clic en cualquier foto para verla de cerca!",
+          s1: "layout de galería con wrap", s2: "ruptura automática de filas con espaciado uniforme",
+          s3: "dimensiones uniformes sin distorsión", s4: "efectos de escala y brillo al hacer hover",
+          s5: "shimmer y pulso en la imagen del lightbox", s6: "overlay lightbox a pantalla completa",
+          footer: "Galería Fauna Colombia · <strong>Edisson Prieto</strong> · CSS Flexbox · <a href='https://github.com/Eprieto85'>GitHub</a>"
         },
         fr: {
           lang_label: "Langue :",
-          subtitle: "Une collection visuelle de technologies de développement web",
-          cap1: "HTML5 — Structure", cap2: "CSS3 — Style", cap3: "JavaScript — Logique",
-          cap4: "Flexbox — Mise en page", cap5: "CSS Grid — Grilles", cap6: "Design Responsif",
-          cap7: "Animations CSS", cap8: "Accessibilité", cap9: "Git et GitHub",
-          footer: "EP Tech Gallery · Edisson Prieto · CSS Flexbox · GitHub"
+          title: "Faune Colombie",
+          subtitle: "Animaux emblématiques de la biodiversité colombienne · Galerie CSS Flexbox",
+          cap1: "🦅 Condor des Andes", cap2: "🐆 Jaguar (Panthera onca)", cap3: "🐻 Ours à lunettes",
+          cap4: "🐒 Tamarin à tête blanche", cap5: "🐬 Dauphin rose (Boto)", cap6: "🦋 Papillon Morpho bleu",
+          cap7: "🦜 Ara rouge", cap8: "🐦 Colibri jacobin", cap9: "🐸 Grenouille arlequin (Atelopus)",
+          skills_title: "🎯 Compétences CSS Démontrées",
+          skills_desc: "Une galerie Flexbox responsive des animaux les plus emblématiques de Colombie. Cliquez sur une photo pour l'explorer de près !",
+          s1: "mise en page galerie avec wrap", s2: "retour à la ligne automatique avec espacement uniforme",
+          s3: "dimensions uniformes sans distorsion", s4: "effets d'échelle et de lueur au survol",
+          s5: "shimmer et pulsation sur l'image lightbox", s6: "overlay lightbox plein écran",
+          footer: "Galerie Faune Colombie · <strong>Edisson Prieto</strong> · CSS Flexbox · <a href='https://github.com/Eprieto85'>GitHub</a>"
         }
       };
       function setLang(lang) {
@@ -97,11 +169,27 @@
           const key = el.getAttribute('data-i18n');
           if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
         });
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('btn-' + lang).classList.add('active');
         document.documentElement.lang = lang;
       }
       setLang('en');
+
+      /* ── Lightbox ── */
+      function openModal(fig) {
+        const img = fig.querySelector('img');
+        const cap = fig.querySelector('figcaption');
+        document.getElementById('modal-img').src = img.src;
+        document.getElementById('modal-img').alt = img.alt;
+        document.getElementById('modal-caption').textContent = cap.textContent;
+        document.getElementById('modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        document.getElementById('modal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     </script>
   </body>
 </html>

@@ -1,40 +1,51 @@
-/* ── EP Penguin — based on freeCodeCamp Responsive Web Design ── */
+/* ── EP Penguin — based on freeCodeCamp CSS Transforms project ── */
 
 :root {
   --penguin-face:    white;
   --penguin-picorna: #f5a623;
-  --penguin-skin:    #1a1a4e;
+  --penguin-skin:    #1a1a4e;    /* EP deep navy */
 }
 
 /* ── Lang bar ── */
 .lang-bar {
   position: fixed; top: 0; right: 0; z-index: 100;
-  background: rgba(10,10,35,0.75);
+  background: rgba(10,10,35,0.8);
   display: flex; align-items: center; gap: 7px;
   padding: 6px 14px; font-size: 0.8rem; color: #f5a623;
   backdrop-filter: blur(4px);
+  border-bottom-left-radius: 8px;
 }
 .lang-btn {
   background: transparent; border: 1px solid #f5a623; color: #f5a623;
-  padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 0.75rem; transition: all 0.2s;
+  padding: 2px 8px; border-radius: 3px; cursor: pointer;
+  font-size: 0.75rem; transition: all 0.2s;
 }
-.lang-btn:hover, .lang-btn.active { background-color: #f5a623; color: #000; font-weight: bold; }
+.lang-btn:hover, .lang-btn.active { background: #f5a623; color: #000; font-weight: bold; }
 
-/* ── Background ── */
+/* ── Page structure ── */
 body {
-  background: linear-gradient(45deg, rgb(10, 60, 180), rgb(90, 180, 255));
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(170deg,
+    #3a1a60 0%, #c04a10 20%, #e06820 40%,
+    #9a2244 65%, #2a0a60 85%, #0a0520 100%
+  );
+  min-height: 100vh;
+}
+
+/* ── Scene: 100vh penguin viewport ── */
+.scene {
+  position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-/* ── Mountains ── */
+/* ── Mountains (Andean) ── */
 .left-mountain {
   width: 300px;
   height: 300px;
-  background: linear-gradient(rgb(100, 180, 240), rgb(30, 100, 200));
+  background: linear-gradient(rgb(60, 100, 160), rgb(20, 60, 140));
   position: absolute;
   transform: skew(0deg, 44deg);
   z-index: 2;
@@ -44,7 +55,7 @@ body {
 .back-mountain {
   width: 300px;
   height: 300px;
-  background: linear-gradient(rgb(140, 200, 255), rgb(20, 80, 180));
+  background: linear-gradient(rgb(100, 140, 200), rgb(40, 70, 160));
   position: absolute;
   z-index: 1;
   transform: rotate(45deg);
@@ -56,12 +67,12 @@ body {
 .sun {
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle at 40% 40%, #fff9c4, #f5a623 60%, #c47d00);
+  background: radial-gradient(circle at 40% 40%, #fff9c4, #f5a623 55%, #c47d00 80%, #801800 100%);
   position: absolute;
   border-radius: 50%;
   top: -75px;
   right: -75px;
-  box-shadow: 0 0 60px 20px rgba(245,166,35,0.4);
+  box-shadow: 0 0 80px 30px rgba(245,120,20,0.5);
 }
 
 /* ── Penguin container ── */
@@ -72,7 +83,7 @@ body {
   margin-top: 75px;
   z-index: 4;
   position: relative;
-  transition: transform 1s ease-in-out 0ms;
+  transition: transform 0.8s ease-in-out;
   cursor: pointer;
   animation: waddle 3s ease-in-out infinite;
 }
@@ -84,18 +95,41 @@ body {
 
 .penguin.wave {
   animation: none;
-  transform: scale(1.1) rotate(0deg);
+  transform: scale(1.08) rotate(0deg);
 }
 
 .penguin * { position: absolute; }
+.penguin:active { transform: scale(1.4); cursor: not-allowed; }
 
-.penguin:active { transform: scale(1.5); cursor: not-allowed; }
+/* ── Sombrero Vueltiao (Colombian hat) ── */
+/* Single-element hat: crown (top 68%) + brim (bottom 32%) via layered bg */
+.hat {
+  position: absolute;
+  top: 4%;     /* sits just on top of the head (head starts at 10%) */
+  left: 25%;   /* aligns with head (head left=25%) */
+  width: 50%;  /* matches head width */
+  height: 44px;
+  z-index: 10;
+  background:
+    /* brim strip at bottom */
+    repeating-linear-gradient(
+      90deg, #2c1500 0px, #2c1500 3px, #c8a040 3px, #c8a040 6px
+    ) 0 30px / 100% 14px no-repeat,
+    /* crown narrower at top */
+    repeating-linear-gradient(
+      90deg, #3a1a00 0px, #3a1a00 3px, #d4a830 3px, #d4a830 6px
+    ) 10% 0 / 80% 30px no-repeat;
+  border-radius: 8px 8px 0 0;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+/* keep old .hat-crown/.hat-brim harmless if they appear */
+.hat-crown, .hat-brim { display: none; }
 
 /* ── Head ── */
 .penguin-head {
   width: 50%;
   height: 45%;
-  background: linear-gradient(45deg, var(--penguin-skin), rgb(80, 80, 160));
+  background: linear-gradient(45deg, var(--penguin-skin), rgb(50, 50, 140));
   border-radius: 70% 70% 65% 65%;
   top: 10%;
   left: 25%;
@@ -146,7 +180,7 @@ body {
   background-color: #e94560;
   top: 65%;
   border-radius: 50%;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .blush.left  { left: 15%; }
 .blush.right { right: 15%; }
@@ -161,17 +195,27 @@ body {
 
 /* ── Shirt ── */
 .shirt {
-  font: bold 22px 'Segoe UI', Helvetica, sans-serif;
-  top: 165px;
-  left: 127.5px;
+  position: absolute !important;
+  top: 160px;
+  left: 90px;
+  width: 120px;
   z-index: 1;
+  text-align: center;
   color: #f5a623;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
 .shirt div {
-  font-weight: initial;
-  top: 22.5px;
-  left: 12px;
+  position: static !important;
+  display: block;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+.shirt p {
+  position: static !important;
+  display: block;
+  font: bold 15px 'Segoe UI', Helvetica, sans-serif;
+  white-space: nowrap;
+  margin: 0;
 }
 
 /* ── Body ── */
@@ -181,8 +225,8 @@ body {
   background: linear-gradient(
     45deg,
     var(--penguin-skin) 0%,
-    rgb(60, 60, 140) 25%,
-    rgb(120, 120, 200) 67%
+    rgb(40, 40, 120) 25%,
+    rgb(100, 100, 190) 67%
   );
   border-radius: 80% 80% 100% 100%;
   top: 40%;
@@ -205,7 +249,7 @@ body {
 .arm {
   width: 30%;
   height: 60%;
-  background: linear-gradient(90deg, var(--penguin-skin), rgb(80, 80, 160));
+  background: linear-gradient(90deg, var(--penguin-skin), rgb(60, 60, 150));
   border-radius: 30% 30% 30% 120%;
   z-index: -1;
 }
@@ -225,7 +269,6 @@ body {
   transition: transform 0.4s ease;
 }
 
-/* Wave class: raise both arms */
 .penguin.wave .arm.left  { transform: rotate(70deg) scaleX(-1); animation: none; }
 .penguin.wave .arm.right { transform: rotate(-130deg); }
 
@@ -248,11 +291,16 @@ body {
 .foot.left  { left: 25%; transform: rotate(80deg); }
 .foot.right { right: 25%; transform: rotate(-80deg); }
 
-/* ── Ground (ice/snow) ── */
+/* ── Ground (Andean lake / snow) ── */
 .ground {
   width: 100vw;
   height: 400px;
-  background: linear-gradient(90deg, rgb(60, 140, 220), rgb(200, 240, 255));
+  background: linear-gradient(90deg,
+    rgb(40, 100, 180),
+    rgb(80, 160, 220) 40%,
+    rgb(180, 230, 255) 70%,
+    rgb(80, 160, 220) 100%
+  );
   z-index: 3;
   position: absolute;
   margin-top: -58px;
@@ -260,13 +308,12 @@ body {
 
 /* ── Caption ── */
 .caption {
-  position: fixed;
+  position: absolute;
   bottom: 56px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(10,10,35,0.7);
   color: #f5a623;
-  font-family: 'Segoe UI', sans-serif;
   font-size: 0.85rem;
   padding: 6px 18px;
   border-radius: 20px;
@@ -275,18 +322,28 @@ body {
   white-space: nowrap;
 }
 
-/* ── Info bar ── */
-.info-bar {
-  position: fixed;
-  bottom: 0; left: 0;
-  width: 100%;
-  background: rgba(10,10,35,0.75);
-  color: #aaa;
-  text-align: center;
-  padding: 7px;
-  font-size: 0.8rem;
-  font-family: 'Segoe UI', sans-serif;
-  z-index: 10;
+/* ── Info panel (below the scene) ── */
+.info-panel {
+  background: rgba(10,10,35,0.7);
+  border-top: 2px solid rgba(245,166,35,0.25);
+  padding: 32px 10%;
+  backdrop-filter: blur(6px);
 }
-.info-bar a      { color: #f5a623; text-decoration: none; }
-.info-bar strong { color: #fff; }
+.info-panel h2 { color: #f5a623; margin: 0 0 10px; font-size: 1.1rem; }
+.info-panel p  { color: #ccc; line-height: 1.7; margin-bottom: 16px; font-size: 0.9rem; }
+.info-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.info-panel li { color: #ccc; font-size: 0.87rem; }
+.info-panel code { background: rgba(245,166,35,0.12); color: #f5a623; padding: 1px 6px; border-radius: 3px; font-size: 0.82rem; }
+
+/* ── Page footer ── */
+.page-footer {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  color: #666;
+  font-size: 0.82rem;
+  background: rgba(10,10,35,0.7);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.page-footer a { color: #f5a623; text-decoration: none; }
+.page-footer strong { color: #ccc; }

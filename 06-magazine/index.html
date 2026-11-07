@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="masthead-bar">
+      <span class="masthead-name">CÓDIGO</span>
+      <span class="masthead-tagline" data-i18n="tagline">La revista del desarrollador colombiano</span>
+    </div>
+
     <div class="lang-bar">
       <span data-i18n="lang_label">Language:</span>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -109,6 +114,7 @@
       const translations = {
         en: {
           lang_label: "Language:",
+          tagline: "The Colombian developer's magazine",
           hero_subtitle: "The web developer's digest",
           author_by: "By Edisson Prieto",
           publish_date: "November 7, 2026",
@@ -139,6 +145,7 @@
         },
         es: {
           lang_label: "Idioma:",
+          tagline: "La revista del desarrollador colombiano",
           hero_subtitle: "El resumen del desarrollador web",
           author_by: "Por Edisson Prieto",
           publish_date: "7 de noviembre de 2026",
@@ -169,6 +176,7 @@
         },
         fr: {
           lang_label: "Langue :",
+          tagline: "Le magazine du développeur colombien",
           hero_subtitle: "Le digest du développeur web",
           author_by: "Par Edisson Prieto",
           publish_date: "7 novembre 2026",
