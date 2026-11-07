@@ -24,67 +24,41 @@
     </header>
 
     <div class="gallery">
-      <!-- 1. Cóndor Andino -->
-      <figure onclick="openModal(this)">
-        <img src="images/condor.jpg"
-             alt="Cóndor de los Andes" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- Images loaded from iNaturalist API (api.inaturalist.org) -->
+      <!-- 1 --> <figure onclick="openModal(this)" data-taxon="Vultur gryphus">
+        <img src="" alt="Cóndor de los Andes" />
         <figcaption data-i18n="cap1">🦅 Cóndor de los Andes</figcaption>
       </figure>
-      <!-- 2. Jaguar -->
-      <figure onclick="openModal(this)">
-        <img src="images/jaguar.jpg"
-             alt="Jaguar" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 2 --> <figure onclick="openModal(this)" data-taxon="Panthera onca">
+        <img src="" alt="Jaguar" />
         <figcaption data-i18n="cap2">🐆 Jaguar (Panthera onca)</figcaption>
       </figure>
-      <!-- 3. Oso de Anteojos -->
-      <figure onclick="openModal(this)">
-        <img src="images/oso.jpg"
-             alt="Oso de Anteojos" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 3 --> <figure onclick="openModal(this)" data-taxon="Tremarctos ornatus">
+        <img src="" alt="Oso de Anteojos" />
         <figcaption data-i18n="cap3">🐻 Oso de Anteojos</figcaption>
       </figure>
-      <!-- 4. Mono Tití Cabeciblanco -->
-      <figure onclick="openModal(this)">
-        <img src="images/titi.jpg"
-             alt="Mono Tití Cabeciblanco" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 4 --> <figure onclick="openModal(this)" data-taxon="Saguinus oedipus">
+        <img src="" alt="Mono Tití Cabeciblanco" />
         <figcaption data-i18n="cap4">🐒 Mono Tití Cabeciblanco</figcaption>
       </figure>
-      <!-- 5. Delfín Rosado -->
-      <figure onclick="openModal(this)">
-        <img src="images/delfin.jpg"
-             alt="Delfín Rosado" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 5 --> <figure onclick="openModal(this)" data-taxon="Inia geoffrensis">
+        <img src="" alt="Delfín Rosado" />
         <figcaption data-i18n="cap5">🐬 Delfín Rosado (Boto)</figcaption>
       </figure>
-      <!-- 6. Mariposa Morpho azul -->
-      <figure onclick="openModal(this)">
-        <img src="images/morpho.jpg"
-             alt="Mariposa Morpho" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 6 --> <figure onclick="openModal(this)" data-taxon="Morpho didius">
+        <img src="" alt="Mariposa Morpho" />
         <figcaption data-i18n="cap6">🦋 Mariposa Morpho Azul</figcaption>
       </figure>
-      <!-- 7. Guacamaya Roja -->
-      <figure onclick="openModal(this)">
-        <img src="images/guacamaya.jpg"
-             alt="Guacamaya Roja" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 7 --> <figure onclick="openModal(this)" data-taxon="Ara macao">
+        <img src="" alt="Guacamaya Roja" />
         <figcaption data-i18n="cap7">🦜 Guacamaya Roja</figcaption>
       </figure>
-      <!-- 8. Colibrí Jacobino -->
-      <figure onclick="openModal(this)">
-        <img src="images/colibri.jpg"
-             alt="Colibrí" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 8 --> <figure onclick="openModal(this)" data-taxon="Florisuga mellivora">
+        <img src="" alt="Colibrí Jacobino" />
         <figcaption data-i18n="cap8">🐦 Colibrí Jacobino</figcaption>
       </figure>
-      <!-- 9. Rana Arlequín -->
-      <figure onclick="openModal(this)">
-        <img src="images/rana.jpg"
-             alt="Rana Arlequín" loading="lazy"
-             onerror="this.src='';this.parentElement.classList.add('no-img')" />
+      <!-- 9 --> <figure onclick="openModal(this)" data-taxon="Atelopus varius">
+        <img src="" alt="Rana Arlequín" />
         <figcaption data-i18n="cap9">🐸 Rana Arlequín (Atelopus)</figcaption>
       </figure>
     </div>
@@ -115,10 +89,37 @@
           <img id="modal-img" src="" alt="" />
         </div>
         <p id="modal-caption"></p>
+        <p id="modal-credit"></p>
       </div>
     </div>
 
     <script>
+      /* ── iNaturalist image loader ── */
+      (function loadGallery() {
+        document.querySelectorAll('.gallery figure[data-taxon]').forEach(fig => {
+          const taxon = fig.dataset.taxon;
+          fetch('https://api.inaturalist.org/v1/taxa?q=' + encodeURIComponent(taxon) +
+                '&rank=species&per_page=1&photos=true')
+            .then(r => r.json())
+            .then(d => {
+              const t = d.results && d.results[0];
+              if (!t || !t.default_photo) { fig.classList.add('no-img'); return; }
+              const img = fig.querySelector('img');
+              img.src = t.default_photo.medium_url;
+              img.onerror = () => fig.classList.add('no-img');
+              /* Store credit for lightbox */
+              fig.dataset.credit = (t.default_photo.attribution || 'iNaturalist')
+                .replace(/\(c\)/gi, '©');
+              /* Badge on card */
+              const badge = document.createElement('span');
+              badge.className = 'credit-badge';
+              badge.textContent = '📷 iNaturalist';
+              fig.appendChild(badge);
+            })
+            .catch(() => fig.classList.add('no-img'));
+        });
+      })();
+
       /* ── Translations ── */
       const translations = {
         en: {
@@ -179,9 +180,12 @@
       function openModal(fig) {
         const img = fig.querySelector('img');
         const cap = fig.querySelector('figcaption');
+        if (!img.src || fig.classList.contains('no-img')) return;
         document.getElementById('modal-img').src = img.src;
         document.getElementById('modal-img').alt = img.alt;
         document.getElementById('modal-caption').textContent = cap.textContent;
+        document.getElementById('modal-credit').textContent =
+          fig.dataset.credit ? '📷 ' + fig.dataset.credit : '';
         document.getElementById('modal').classList.add('open');
         document.body.style.overflow = 'hidden';
       }
