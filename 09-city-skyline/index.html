@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="mode-night">
+  <div class="scene-wrapper">
 
     <!-- Controls -->
     <div class="top-controls">
@@ -39,27 +40,26 @@
         <div class="bb1c bb1-window"></div>
         <div class="bb1d"></div>
       </div>
-      <!-- bb2: BD Bacatá — tallest in Colombia, glass green -->
-      <div class="bb2">
+      <!-- bb2: BD Bacatá — tallest in Colombia, twin glass towers -->
+      <div class="bb2 building-wrap">
+        <span class="lbl" data-i18n="lbl_bacata">BD Bacatá</span>
         <div class="bb2a"></div>
         <div class="bb2b"></div>
       </div>
       <!-- bb3: Edificio de Telecomunicaciones ETB -->
       <div class="bb3"></div>
       <div></div>
-      <!-- bb4: Torre Colpatria — iconic blue tower with windows -->
+      <!-- bb4: Torre Colpatria — iconic tower, LED light shows -->
       <div class="bb4 building-wrap">
+        <span class="lbl" data-i18n="lbl_colpatria">Colpatria</span>
         <div class="bb4a"></div>
         <div class="bb4b"></div>
-        <div class="bb4c window-wrap">
-          <div class="bb4-window"></div>
-          <div class="bb4-window"></div>
-          <div class="bb4-window"></div>
-          <div class="bb4-window"></div>
-        </div>
+        <div class="bb4c"></div>
       </div>
       <div></div>
       <div></div>
+      <!-- Monserrate label — fixed near mountain peak -->
+      <div class="monserrate-label lbl" data-i18n="lbl_monserrate">Monserrate</div>
     </div>
 
     <div class="foreground-buildings">
@@ -81,8 +81,9 @@
         </div>
       </div>
       <div></div>
-      <!-- fb3: Centro Internacional — low blocks -->
+      <!-- fb3: Capitolio Nacional — wide neoclassical building -->
       <div class="fb3 building-wrap">
+        <span class="lbl lbl-low" data-i18n="lbl_capitolio">Capitolio</span>
         <div class="fb3a window-wrap">
           <div class="fb3-window"></div>
           <div class="fb3-window"></div>
@@ -116,21 +117,74 @@
     <div class="info-bar">
       <span data-i18n="info">Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
     </div>
+  </div><!-- end scene wrapper -->
+
+  <!-- Description + Skills section -->
+  <section class="skills-panel">
+    <h2 data-i18n="skills_title">🎯 CSS Skills Demonstrated</h2>
+    <p data-i18n="skills_desc">Bogotá skyline recreated using CSS variables, gradients and media queries — inspired by real Bogotá landmarks: Torres del Parque, BD Bacatá, Torre Colpatria and Monserrate.</p>
+    <ul>
+      <li><code>CSS custom properties</code> — <span data-i18n="s1">all colors controlled via CSS variables for instant theme switching</span></li>
+      <li><code>radial-gradient / linear-gradient</code> — <span data-i18n="s2">sky, building textures and windows built with gradients</span></li>
+      <li><code>repeating-linear-gradient</code> — <span data-i18n="s3">building facades with repeated stripe patterns</span></li>
+      <li><code>clip-path: polygon()</code> — <span data-i18n="s4">Monserrate mountain silhouette carved with clip-path</span></li>
+      <li><code>@media queries</code> — <span data-i18n="s5">night-only silhouette mode on narrow screens</span></li>
+      <li><code>CSS transitions</code> — <span data-i18n="s6">smooth 1.4s animated day/sunset/night transitions</span></li>
+      <li><code>JavaScript + classList</code> — <span data-i18n="s7">mode switching and auto-detect by time of day</span></li>
+    </ul>
+  </section>
+
+  <footer class="page-footer">
+    <span data-i18n="info">Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span>
+  </footer>
 
     <script>
       /* ── Language ── */
       const translations = {
         en: {
           lang_label: "Language:", mode_label: "Time:", city_name: "🏙 Bogotá",
-          info: "Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+          lbl_bacata: "BD Bacatá", lbl_colpatria: "Colpatria", lbl_capitolio: "Capitolio",
+          lbl_monserrate: "Monserrate",
+          info: "Bogotá Skyline · CSS Variables · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>",
+          skills_title: "🎯 CSS Skills Demonstrated",
+          skills_desc: "Bogotá skyline recreated using CSS variables, gradients and media queries — inspired by real Bogotá landmarks: Torres del Parque, BD Bacatá, Torre Colpatria and Monserrate.",
+          s1: "all colors controlled via CSS variables for instant theme switching",
+          s2: "sky, building textures and windows built with gradients",
+          s3: "building facades with repeated stripe patterns",
+          s4: "Monserrate mountain silhouette carved with clip-path",
+          s5: "night-only silhouette mode on narrow screens",
+          s6: "smooth 1.4s animated day/sunset/night transitions",
+          s7: "mode switching and auto-detect by time of day"
         },
         es: {
           lang_label: "Idioma:", mode_label: "Hora:", city_name: "🏙 Bogotá D.C.",
-          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+          lbl_bacata: "BD Bacatá", lbl_colpatria: "Colpatria", lbl_capitolio: "Capitolio",
+          lbl_monserrate: "Monserrate",
+          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>",
+          skills_title: "🎯 Habilidades CSS Demostradas",
+          skills_desc: "Skyline de Bogotá recreado con variables CSS, gradientes y media queries — inspirado en edificios reales: Torres del Parque, BD Bacatá, Torre Colpatria y Monserrate.",
+          s1: "todos los colores controlados via variables CSS para cambio instantáneo de tema",
+          s2: "cielo, texturas de edificios y ventanas construidos con gradientes",
+          s3: "fachadas de edificios con patrones de franjas repetidas",
+          s4: "silueta del Monserrate tallada con clip-path",
+          s5: "modo silueta nocturna en pantallas angostas",
+          s6: "transiciones animadas de 1.4s entre día/atardecer/noche",
+          s7: "cambio de modo y auto-detección por hora del día"
         },
         fr: {
           lang_label: "Langue :", mode_label: "Heure :", city_name: "🏙 Bogotá",
-          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"
+          lbl_bacata: "BD Bacatá", lbl_colpatria: "Colpatria", lbl_capitolio: "Capitolio",
+          lbl_monserrate: "Monserrate",
+          info: "Skyline de Bogotá · Variables CSS · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>",
+          skills_title: "🎯 Compétences CSS Démontrées",
+          skills_desc: "Skyline de Bogotá recréé avec des variables CSS, des dégradés et des media queries — inspiré de vrais monuments : Torres del Parque, BD Bacatá, Torre Colpatria et Monserrate.",
+          s1: "toutes les couleurs contrôlées via des variables CSS",
+          s2: "ciel, textures de bâtiments et fenêtres avec des dégradés",
+          s3: "façades avec des motifs de bandes répétées",
+          s4: "silhouette du Monserrate découpée avec clip-path",
+          s5: "mode silhouette nocturne sur écrans étroits",
+          s6: "transitions animées 1.4s jour/coucher/nuit",
+          s7: "changement de mode et détection automatique par heure"
         }
       };
       function setLang(lang) {

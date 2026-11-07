@@ -10,7 +10,8 @@
 
 /* ── Mode variables ── */
 :root {
-  /* Night (default — Bogotá glows at night) */
+  /* Night (default) */
+  --mountain-color: linear-gradient(135deg, #2d4a1e 20%, #1a2e10 80%);
   --building-color1: #2a0e06;   /* Torres del Parque — dark brick */
   --building-color2: #0d2015;   /* BD Bacatá — dark glass */
   --building-color3: #1a0a0a;   /* ETB — dark */
@@ -18,7 +19,7 @@
   --window-color1:   #ff9955;   /* Warm window glow */
   --window-color2:   #ffe680;   /* Yellow window glow */
   --window-color3:   #ffcc33;   /* Gold window glow */
-  --window-color4:   #55aaff;   /* Blue Colpatria lights */
+  --window-color4:   #66bbff;   /* Blue Colpatria LED strips */
   --sky-gradient: radial-gradient(
     closest-corner circle at 15% 15%,
     #1a0a4e, #1a0a4e 20%,
@@ -28,27 +29,30 @@
   --transition: all 1.4s ease;
 }
 
-/* Day — Andean blue sky, clear Bogotá morning */
+/* Day — Bright Bogotá morning, terracotta + glass towers */
 .mode-day {
-  --building-color1: #c97d4e;   /* Torres del Parque terracotta */
-  --building-color2: #2d7a56;   /* BD Bacatá glass green */
-  --building-color3: #8b6425;   /* ETB warm concrete */
-  --building-color4: #3a5f8a;   /* Colpatria blue steel */
-  --window-color1:   #e8c09a;
-  --window-color2:   #c8e6c9;
-  --window-color3:   #ffe0b2;
-  --window-color4:   #bbdefb;
-  --sky-gradient: radial-gradient(
-    closest-corner circle at 15% 15%,
-    #fff9d4, #fff9d4 18%,
-    #ffe066 19%,
-    #64b5e8 60%,
-    #3a8abf 100%
+  --building-color1: #c97d4e;   /* Torres del Parque — terracotta brick */
+  --building-color2: #4a7aaf;   /* BD Bacatá — glass blue */
+  --building-color3: #c8a040;   /* ETB — golden ochre colonial */
+  --building-color4: #2a6faa;   /* Colpatria — bright blue steel */
+  --window-color1:   #fff0c0;   /* Warm window light */
+  --window-color2:   #c8e8ff;   /* Glass blue reflection */
+  --window-color3:   #ffe8a0;   /* Golden windows */
+  --window-color4:   #80c8f0;   /* Blue glass windows */
+  --mountain-color:  linear-gradient(160deg, #5a9e3a 0%, #2d7a1e 50%, #1a4810 100%);
+  --sky-gradient: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #c8e8ff 8%,
+    #64b5e8 35%,
+    #4a90d9 70%,
+    #3a7abf 100%
   );
 }
 
 /* Sunset — golden hour over the Andes */
 .mode-sunset {
+  --mountain-color:  linear-gradient(160deg, #2d4a1e 0%, #1a3010 80%);
   --building-color1: #5a1e08;
   --building-color2: #0d3320;
   --building-color3: #2a1500;
@@ -70,10 +74,14 @@
 * { box-sizing: border-box; }
 
 body {
-  height: 100vh;
   margin: 0;
-  overflow: hidden;
+  min-height: 100vh;
   transition: var(--transition);
+}
+
+/* Sky fills the scene wrapper */
+.background-buildings.sky {
+  height: 100vh;
 }
 
 /* ── Top controls ── */
@@ -133,6 +141,7 @@ body {
 
 .building-wrap { display: flex; flex-direction: column; align-items: center; }
 .window-wrap { display: flex; align-items: center; justify-content: space-evenly; }
+.bb2.building-wrap { align-items: flex-end; }
 
 /* ── Sky ── */
 .sky {
@@ -140,19 +149,79 @@ body {
   transition: var(--transition);
 }
 
-/* Monserrate mountain silhouette (pseudo-element on .sky) */
+/* ── Cordillera Oriental — distant mountain range (background) ── */
+.sky::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38%;
+  background: var(--mountain-color);
+  clip-path: polygon(
+    0% 100%, 3% 72%, 8% 80%, 14% 55%, 18% 65%,
+    22% 50%, 27% 60%, 32% 45%, 36% 52%, 40% 40%,
+    43% 48%, 46% 38%, 50% 44%, 54% 32%, 58% 42%,
+    62% 36%, 65% 42%, 68% 30%, 72% 42%, 76% 50%,
+    80% 42%, 84% 52%, 88% 44%, 92% 56%, 96% 48%,
+    100% 60%, 100% 100%
+  );
+  opacity: 0.45;
+  z-index: 0;
+  transition: var(--transition);
+}
+
+/* ── Monserrate — the iconic mountain (foreground, right side) ── */
+/* In reality Monserrate is to the EAST of Bogotá city center */
 .sky::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: -5%;
-  width: 45%;
-  height: 45%;
-  background: linear-gradient(135deg, #2d4a1e 20%, #1a2e10 80%);
-  clip-path: polygon(0% 100%, 15% 55%, 25% 65%, 35% 40%, 42% 50%, 50% 20%, 60% 45%, 70% 35%, 80% 55%, 100% 100%);
-  opacity: 0.5;
+  right: 2%;
+  width: 46%;
+  height: 65%;
+  background: var(--mountain-color);
+  /* Steeper, more recognizable shape — sharp peak at ~54% x, ~15% y */
+  clip-path: polygon(
+    0% 100%, 5% 92%, 10% 85%, 16% 90%,
+    22% 76%, 27% 82%, 32% 65%, 37% 72%,
+    42% 55%, 46% 60%, 50% 42%, 54% 15%,
+    58% 30%, 62% 42%, 67% 54%, 72% 64%,
+    78% 74%, 85% 82%, 92% 90%, 100% 100%
+  );
+  opacity: 0.9;
   z-index: 0;
   transition: var(--transition);
+}
+
+/* Monserrate sanctuary — white church at the peak */
+/* Peak: x=54% within right:2% width:46% element */
+/* left from page = 100% - 2% - (1-0.54)*46% = 100% - 2% - 21.2% ≈ 76.8% */
+/* bottom: height:65%, peak at y=15% → 65%*(1-0.15) ≈ 55.3% from bottom */
+.sky .monserrate-label {
+  position: absolute !important;
+  bottom: 55%;
+  left: 74%;
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-family: 'Segoe UI', sans-serif;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+}
+/* White sanctuary dot above the label */
+.sky .monserrate-label::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 12px;
+  background: white;
+  border-radius: 2px 2px 0 0;
+  margin: 0 auto 3px;
+  box-shadow: 0 0 10px 3px rgba(255,255,255,0.95), 0 0 20px 6px rgba(255,255,255,0.4);
 }
 
 /* ── BACKGROUND BUILDINGS ── */
@@ -171,15 +240,34 @@ body {
   background: linear-gradient(var(--building-color1), var(--window-color1));
 }
 
-/* bb2 — BD Bacatá: glass green tower, triangle top */
-.bb2 { width: 10%; height: 50%; }
+/* bb2 — BD Bacatá: twin glass towers (Colombia's tallest) */
+.bb2 { width: 14%; height: 65%; position: relative; align-items: flex-end; }
+/* Main tower top — slightly off-center right */
 .bb2a {
-  border-bottom: 5vh solid var(--building-color2);
-  border-left: 5vw solid transparent;
-  border-right: 5vw solid transparent;
+  margin-right: 2%;
+  border-bottom: 4vh solid var(--building-color2);
+  border-left: 3.5vw solid transparent;
+  border-right: 3.5vw solid transparent;
 }
+/* Main tower body */
 .bb2b {
-  width: 100%; height: 100%;
+  width: 54%; height: 100%;
+  background: repeating-linear-gradient(
+    var(--building-color2),
+    var(--building-color2) 6%,
+    var(--window-color2) 6%,
+    var(--window-color2) 9%
+  );
+  position: relative;
+}
+/* Second (shorter) tower to the left via pseudo-element */
+.bb2b::before {
+  content: '';
+  position: absolute;
+  right: 110%;
+  bottom: 0;
+  width: 85%;
+  height: 72%;
   background: repeating-linear-gradient(
     var(--building-color2),
     var(--building-color2) 6%,
@@ -199,12 +287,23 @@ body {
   );
 }
 
-/* bb4 — Torre Colpatria: tall blue tower, 4 windows */
-.bb4 { width: 11%; height: 58%; }
-.bb4a { width: 3%; height: 10%; background-color: var(--building-color4); }
-.bb4b { width: 80%; height: 5%; background-color: var(--building-color4); }
-.bb4c { width: 100%; height: 85%; background-color: var(--building-color4); }
-.bb4-window { width: 18%; height: 90%; background-color: var(--window-color4); }
+/* bb4 — Torre Colpatria: tallest background tower, iconic LED horizontal stripes */
+.bb4 { width: 10%; height: 82%; position: relative; }
+/* antenna/spire */
+.bb4a { width: 3%; height: 5%; background-color: var(--building-color4); }
+/* setback cap */
+.bb4b { width: 72%; height: 4%; background-color: var(--building-color4); }
+/* main body — horizontal banding simulating the LED light show */
+.bb4c {
+  width: 100%; height: 91%;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--building-color4) 0px,
+    var(--building-color4) 7px,
+    var(--window-color4)   7px,
+    var(--window-color4)   9px
+  );
+}
 
 /* ── FOREGROUND BUILDINGS ── */
 
@@ -243,11 +342,31 @@ body {
 .fb2b { width: 100%; height: 75%; background-color: var(--building-color3); }
 .fb2-window { width: 22%; height: 100%; background-color: var(--window-color3); }
 
-/* fb3 — Centro Internacional: low stacked blocks */
-.fb3 { width: 10%; height: 35%; }
-.fb3a { width: 80%; height: 15%; background-color: var(--building-color1); }
-.fb3b { width: 100%; height: 35%; background-color: var(--building-color1); }
-.fb3-window { width: 25%; height: 80%; background-color: var(--window-color1); }
+/* fb3 — Capitolio Nacional: wide neoclassical building with columns */
+.fb3 { width: 16%; height: 28%; position: relative; }
+/* Cornice / attic story */
+.fb3a {
+  width: 96%;
+  height: 20%;
+  background-color: var(--building-color3);
+  border-bottom: 2px solid var(--window-color3);
+}
+/* Colonnade body */
+.fb3b {
+  width: 100%; height: 60%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--building-color3)  0%,
+    var(--building-color3)  7%,
+    var(--window-color3)    7%,
+    var(--window-color3)    10%
+  );
+}
+/* Plinth/base */
+.fb3-window {
+  width: 100%; height: 20%;
+  background-color: var(--building-color3);
+}
 
 /* fb4 — Edificio Bavaria: angled top */
 .fb4 { width: 8%; height: 45%; position: relative; left: 10%; }
@@ -299,6 +418,26 @@ body {
     );
 }
 
+/* ── Landmark labels ── */
+.lbl {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  pointer-events: none;
+  white-space: nowrap;
+  display: block;
+  text-align: center;
+  margin-bottom: 2px;
+}
+.lbl-low {
+  /* Capitolio label sits above a low building */
+  font-size: 7px;
+  color: rgba(255,255,255,0.6);
+}
+
 /* ── Responsive: narrow screen = night silhouette ── */
 @media (max-width: 1000px) {
   .mode-day, .mode-sunset {
@@ -314,9 +453,17 @@ body {
   }
 }
 
+/* ── Scene wrapper ── */
+.scene-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* ── Info bar ── */
 .info-bar {
-  position: fixed;
+  position: absolute;
   bottom: 0; left: 0;
   width: 100%;
   background: rgba(0,0,0,0.5);
@@ -329,3 +476,30 @@ body {
 }
 .info-bar a { color: var(--window-color2); text-decoration: none; }
 .info-bar strong { color: #fff; }
+
+/* ── Skills panel (below the skyline) ── */
+.skills-panel {
+  background: #0a0820;
+  border-top: 2px solid rgba(255,230,128,0.2);
+  padding: 32px 10%;
+  font-family: 'Segoe UI', sans-serif;
+}
+.skills-panel h2 { color: #ffe680; margin: 0 0 10px; font-size: 1.1rem; }
+.skills-panel p  { color: #aaa; line-height: 1.7; margin-bottom: 16px; font-size: 0.9rem; }
+.skills-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.skills-panel li { color: #ccc; font-size: 0.87rem; }
+.skills-panel code { background: rgba(255,230,128,0.1); color: #ffe680; padding: 1px 6px; border-radius: 3px; font-size: 0.82rem; }
+
+/* ── Page footer ── */
+.page-footer {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  background: #060514;
+  color: #444;
+  font-size: 0.82rem;
+  font-family: 'Segoe UI', sans-serif;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.page-footer a { color: #ffe680; text-decoration: none; }
+.page-footer strong { color: #ccc; }
