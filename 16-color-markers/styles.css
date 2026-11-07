@@ -1,0 +1,202 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.lang-bar {
+  background-color: #0a0a23;
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: #f5a623;
+}
+.lang-btn {
+  background: transparent; border: 1px solid #f5a623; color: #f5a623;
+  padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+}
+.lang-btn:hover, .lang-btn.active { background-color: #f5a623; color: #000; font-weight: bold; }
+
+body {
+  font-family: 'Montserrat', 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at 50% 0%, #1a1a4e, #0a0a23 70%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+header {
+  text-align: center;
+  padding: 32px 20px 12px;
+}
+header h1 { font-size: 2.2rem; color: #f5a623; letter-spacing: 2px; }
+header p { color: #888; font-size: 0.9rem; margin-top: 6px; }
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 32px;
+  gap: 24px;
+}
+
+.intro {
+  max-width: 520px;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px 36px;
+  align-items: start;
+  justify-content: center;
+}
+
+/* MARKER STRUCTURE */
+.marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+}
+
+.cap {
+  width: 60px;
+  height: 26px;
+  border-radius: 6px 6px 0 0;
+}
+
+.sleeve {
+  width: 54px;
+  height: 10px;
+}
+
+.body {
+  width: 60px;
+  height: 160px;
+  border-radius: 0 0 10px 10px;
+}
+
+.label-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.color-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ddd;
+  text-align: center;
+}
+
+.label-row code {
+  font-size: 0.7rem;
+  color: #aaa;
+  background: rgba(255,255,255,0.07);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ---- MARKER COLOR THEMES ---- */
+
+/* EP Gold */
+.ep-gold .cap     { background: linear-gradient(135deg, #c47d00, #a86500); }
+.ep-gold .sleeve  { background: rgba(255,255,255,0.3); }
+.ep-gold .body    {
+  background: linear-gradient(135deg, #f5a623 0%, #ffd27f 50%, #c47d00 100%);
+  box-shadow: 0 0 20px rgba(245,166,35,0.5), 0 0 40px rgba(245,166,35,0.2);
+}
+
+/* Crimson */
+.ep-red .cap     { background: linear-gradient(135deg, #a81d35, #800020); }
+.ep-red .sleeve  { background: rgba(255,255,255,0.25); }
+.ep-red .body    {
+  background: linear-gradient(135deg, #e94560 0%, #ff6b88 50%, #a81d35 100%);
+  box-shadow: 0 0 20px rgba(233,69,96,0.5), 0 0 40px rgba(233,69,96,0.2);
+}
+
+/* Sunset Orange */
+.ep-orange .cap     { background: linear-gradient(135deg, #c44a1a, #a03010); }
+.ep-orange .sleeve  { background: rgba(255,255,255,0.3); }
+.ep-orange .body    {
+  background: linear-gradient(135deg, #ff6b35 0%, #ffaa80 50%, #c44a1a 100%);
+  box-shadow: 0 0 20px rgba(255,107,53,0.5), 0 0 40px rgba(255,107,53,0.2);
+}
+
+/* Deep Navy */
+.ep-navy .cap     { background: linear-gradient(135deg, #05051a, #0a0a23); }
+.ep-navy .sleeve  { background: rgba(255,255,255,0.15); }
+.ep-navy .body    {
+  background: linear-gradient(135deg, #0a0a23 0%, #2a2a60 50%, #050510 100%);
+  box-shadow: 0 0 20px rgba(42,42,96,0.6), 0 0 40px rgba(10,10,35,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Ocean Blue */
+.ep-blue .cap     { background: linear-gradient(135deg, #082040, #0f3460); }
+.ep-blue .sleeve  { background: rgba(255,255,255,0.2); }
+.ep-blue .body    {
+  background: linear-gradient(135deg, #0f3460 0%, #2a6cad 50%, #082040 100%);
+  box-shadow: 0 0 20px rgba(15,52,96,0.6), 0 0 40px rgba(42,108,173,0.3);
+}
+
+/* Violet */
+.ep-purple .cap     { background: linear-gradient(135deg, #2d1a60, #533483); }
+.ep-purple .sleeve  { background: rgba(255,255,255,0.2); }
+.ep-purple .body    {
+  background: linear-gradient(135deg, #533483 0%, #8a60c0 50%, #2d1a60 100%);
+  box-shadow: 0 0 20px rgba(83,52,131,0.6), 0 0 40px rgba(138,96,192,0.3);
+}
+
+/* Teal */
+.ep-teal .cap     { background: linear-gradient(135deg, #0d6b56, #16a085); }
+.ep-teal .sleeve  { background: rgba(255,255,255,0.25); }
+.ep-teal .body    {
+  background: linear-gradient(135deg, #16a085 0%, #48d1b8 50%, #0d6b56 100%);
+  box-shadow: 0 0 20px rgba(22,160,133,0.5), 0 0 40px rgba(22,160,133,0.2);
+}
+
+/* Forest Green */
+.ep-green .cap     { background: linear-gradient(135deg, #071e0f, #0d3b1e); }
+.ep-green .sleeve  { background: rgba(255,255,255,0.15); }
+.ep-green .body    {
+  background: linear-gradient(135deg, #0d3b1e 0%, #1e7a3c 50%, #071e0f 100%);
+  box-shadow: 0 0 20px rgba(13,59,30,0.6), 0 0 40px rgba(30,122,60,0.3);
+}
+
+/* Ghost White */
+.ep-white .cap     { background: linear-gradient(135deg, #c8c8c8, #e8e8e8); }
+.ep-white .sleeve  { background: rgba(0,0,0,0.1); }
+.ep-white .body    {
+  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 50%, #d0d0d0 100%);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.tech-note {
+  max-width: 520px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: #aaa;
+  line-height: 1.6;
+  text-align: center;
+}
+.tech-note code {
+  background: rgba(245,166,35,0.15); color: #f5a623;
+  padding: 1px 5px; border-radius: 3px; font-size: 0.82rem;
+}
+
+footer {
+  text-align: center; padding: 20px; color: #555; font-size: 0.85rem;
+  border-top: 1px solid rgba(255,255,255,0.08); margin-top: 10px;
+}
+footer a { color: #f5a623; text-decoration: none; }
+footer strong { color: #e0e0e0; }
+
+@media (max-width: 480px) {
+  .container { grid-template-columns: repeat(2, auto); gap: 16px 24px; }
+}

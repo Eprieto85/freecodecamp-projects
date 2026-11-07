@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Code Nutrition Facts — CSS Typography by Edisson Prieto." />
+    <title>Code Nutrition Facts</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>⚡ <span data-i18n="page_title">Code Nutrition Facts</span></h1>
+      <p data-i18n="page_sub">CSS Typography &amp; Box Model Demo</p>
+    </header>
+
+    <main>
+      <div class="label">
+        <h2 class="label-title" data-i18n="label_title">Nutrition Facts</h2>
+        <div class="serving-info">
+          <p class="serving-size" data-i18n="servings">8 servings per container</p>
+          <div class="serving-row">
+            <span data-i18n="serving_size_label">Serving size</span>
+            <span data-i18n="serving_amount">1 project (∞ lines)</span>
+          </div>
+        </div>
+
+        <div class="calories-row">
+          <span data-i18n="cal_label">Calories</span>
+          <span class="cal-number">847</span>
+        </div>
+
+        <div class="daily-value-header">
+          <span data-i18n="daily_pct">% Daily Value *</span>
+        </div>
+
+        <div class="nutrient bold">
+          <span><b data-i18n="fat">Total Fat</b> 32g</span><span>41%</span>
+        </div>
+        <div class="nutrient indent">
+          <span><span data-i18n="sat_fat">Saturated Fat</span> 10g</span><span>50%</span>
+        </div>
+        <div class="nutrient indent italic">
+          <span><i data-i18n="trans_fat">Trans Fat</i> 0g</span><span></span>
+        </div>
+        <div class="nutrient bold">
+          <span><b data-i18n="cholesterol">Cholesterol</b> 0mg</span><span>0%</span>
+        </div>
+        <div class="nutrient bold">
+          <span><b data-i18n="sodium">Sodium</b> 160mg</span><span>7%</span>
+        </div>
+        <div class="nutrient bold">
+          <span><b data-i18n="carbs">Total Carbohydrate</b> 37g</span><span>13%</span>
+        </div>
+        <div class="nutrient indent">
+          <span><span data-i18n="fiber">Dietary Fiber</span> 4g</span><span>14%</span>
+        </div>
+        <div class="nutrient indent">
+          <span><span data-i18n="sugars">Total Sugars</span> 12g</span><span></span>
+        </div>
+        <div class="nutrient indent2">
+          <span data-i18n="added_sugars">Includes 10g Added Sugars</span><span>20%</span>
+        </div>
+        <div class="nutrient bold thick-top">
+          <span><b data-i18n="protein">Protein</b> 3g</span><span></span>
+        </div>
+
+        <div class="vitamins">
+          <div class="vitamin-row">
+            <span data-i18n="vit_d">Vitamin D</span> 2mcg <span>10%</span>
+          </div>
+          <div class="vitamin-row">
+            <span data-i18n="calcium">Calcium</span> 260mg <span>20%</span>
+          </div>
+          <div class="vitamin-row">
+            <span data-i18n="iron">Iron</span> 8mg <span>45%</span>
+          </div>
+          <div class="vitamin-row">
+            <span data-i18n="potassium">Potassium</span> 235mg <span>6%</span>
+          </div>
+        </div>
+
+        <p class="footnote" data-i18n="footnote">
+          * The % Daily Value tells you how much a nutrient in a serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.
+        </p>
+      </div>
+
+      <div class="info-box">
+        <p data-i18n="info">This label was built using CSS <code>typography</code>, <code>box-model</code>, <code>borders</code>, and careful use of <code>font-weight</code> and spacing. No images — pure HTML &amp; CSS!</p>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">Code Nutrition Facts · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", page_title: "Code Nutrition Facts", page_sub: "CSS Typography & Box Model Demo",
+          label_title: "Nutrition Facts", servings: "8 servings per container",
+          serving_size_label: "Serving size", serving_amount: "1 project (∞ lines)",
+          cal_label: "Calories", daily_pct: "% Daily Value *",
+          fat: "Total Fat", sat_fat: "Saturated Fat", trans_fat: "Trans Fat",
+          cholesterol: "Cholesterol", sodium: "Sodium", carbs: "Total Carbohydrate",
+          fiber: "Dietary Fiber", sugars: "Total Sugars",
+          added_sugars: "Includes 10g Added Sugars", protein: "Protein",
+          vit_d: "Vitamin D", calcium: "Calcium", iron: "Iron", potassium: "Potassium",
+          footnote: "* The % Daily Value tells you how much a nutrient in a serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.",
+          info: "This label was built using CSS <code>typography</code>, <code>box-model</code>, <code>borders</code>, and careful use of <code>font-weight</code> and spacing. No images — pure HTML & CSS!",
+          footer: "Code Nutrition Facts · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", page_title: "Datos Nutricionales del Código", page_sub: "Demo de Tipografía CSS y Modelo de Caja",
+          label_title: "Información Nutricional", servings: "8 porciones por envase",
+          serving_size_label: "Tamaño de porción", serving_amount: "1 proyecto (∞ líneas)",
+          cal_label: "Calorías", daily_pct: "% Valor Diario *",
+          fat: "Grasas Totales", sat_fat: "Grasas Saturadas", trans_fat: "Grasas Trans",
+          cholesterol: "Colesterol", sodium: "Sodio", carbs: "Carbohidratos Totales",
+          fiber: "Fibra Dietética", sugars: "Azúcares Totales",
+          added_sugars: "Incluye 10g de Azúcares Añadidos", protein: "Proteínas",
+          vit_d: "Vitamina D", calcium: "Calcio", iron: "Hierro", potassium: "Potasio",
+          footnote: "* El % Valor Diario indica cuánto contribuye un nutriente en una porción a la dieta diaria. Se usan 2.000 calorías al día para consejos generales.",
+          info: "Esta etiqueta fue construida usando <code>tipografía</code> CSS, <code>modelo de caja</code>, <code>bordes</code> y uso cuidadoso de <code>font-weight</code> y espaciado. ¡Sin imágenes — solo HTML y CSS!",
+          footer: "Datos Nutricionales del Código · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", page_title: "Valeurs Nutritionnelles du Code", page_sub: "Démo CSS Typographie et Modèle de Boîte",
+          label_title: "Informations Nutritionnelles", servings: "8 portions par contenant",
+          serving_size_label: "Taille de la portion", serving_amount: "1 projet (∞ lignes)",
+          cal_label: "Calories", daily_pct: "% Apport Journalier *",
+          fat: "Matières Grasses Totales", sat_fat: "Acides Gras Saturés", trans_fat: "Acides Gras Trans",
+          cholesterol: "Cholestérol", sodium: "Sodium", carbs: "Glucides Totaux",
+          fiber: "Fibres Alimentaires", sugars: "Sucres Totaux",
+          added_sugars: "Dont 10g de Sucres Ajoutés", protein: "Protéines",
+          vit_d: "Vitamine D", calcium: "Calcium", iron: "Fer", potassium: "Potassium",
+          footnote: "* Les % d'apport journalier indiquent la contribution d'un nutriment à l'alimentation quotidienne. 2 000 calories par jour sont utilisées comme référence.",
+          info: "Cette étiquette a été construite avec la <code>typographie</code> CSS, le <code>modèle de boîte</code>, les <code>bordures</code> et l'utilisation soignée de <code>font-weight</code>. Sans images — HTML et CSS purs !",
+          footer: "Valeurs Nutritionnelles du Code · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

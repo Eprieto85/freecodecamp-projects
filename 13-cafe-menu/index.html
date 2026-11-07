@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Café EP — Colombian Coffee House Menu by Edisson Prieto." />
+    <title>Café EP — Colombian Coffee</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <div class="page">
+      <header>
+        <div class="logo">☕</div>
+        <h1>Café EP</h1>
+        <p class="tagline" data-i18n="tagline">Colombian Coffee House</p>
+        <div class="divider"><span>✦</span></div>
+      </header>
+
+      <main>
+        <!-- COFFEE -->
+        <section>
+          <h2 data-i18n="section_coffee">☕ Coffee</h2>
+          <div class="menu-items">
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item1_name">Tinto Especial</span>
+                <span class="item-price">$2.50</span>
+              </div>
+              <p class="item-desc" data-i18n="item1_desc">Traditional Colombian black coffee, single origin from Huila.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item2_name">Café con Leche</span>
+                <span class="item-price">$3.50</span>
+              </div>
+              <p class="item-desc" data-i18n="item2_desc">Espresso blended with steamed whole milk. Creamy and bold.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item3_name">Perico</span>
+                <span class="item-price">$3.00</span>
+              </div>
+              <p class="item-desc" data-i18n="item3_desc">Classic Colombian coffee with a splash of hot milk.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item4_name">Espresso EP</span>
+                <span class="item-price">$2.80</span>
+              </div>
+              <p class="item-desc" data-i18n="item4_desc">Double shot, house blend roasted in Bogotá highlands.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- PASTRIES -->
+        <section>
+          <h2 data-i18n="section_pastries">🥐 Pastries &amp; Snacks</h2>
+          <div class="menu-items">
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item5_name">Almojábana</span>
+                <span class="item-price">$2.00</span>
+              </div>
+              <p class="item-desc" data-i18n="item5_desc">Traditional Colombian cheese bread made with cornflour.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item6_name">Pan de Bono</span>
+                <span class="item-price">$1.80</span>
+              </div>
+              <p class="item-desc" data-i18n="item6_desc">Soft yuca and cheese roll, warm from the oven.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item7_name">Croissant de Guayaba</span>
+                <span class="item-price">$3.20</span>
+              </div>
+              <p class="item-desc" data-i18n="item7_desc">Flaky croissant filled with sweet guava paste.</p>
+            </article>
+            <article class="item">
+              <div class="item-header">
+                <span class="item-name" data-i18n="item8_name">Torta EP</span>
+                <span class="item-price">$4.50</span>
+              </div>
+              <p class="item-desc" data-i18n="item8_desc">House slice of dark chocolate cake with coffee ganache.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p class="footer-quote" data-i18n="footer_quote">"Good coffee, good code, great day."</p>
+        <p data-i18n="footer_credit">Café EP · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+      </footer>
+    </div>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", tagline: "Colombian Coffee House",
+          section_coffee: "☕ Coffee", section_pastries: "🥐 Pastries & Snacks",
+          item1_name: "Tinto Especial", item1_desc: "Traditional Colombian black coffee, single origin from Huila.",
+          item2_name: "Café con Leche", item2_desc: "Espresso blended with steamed whole milk. Creamy and bold.",
+          item3_name: "Perico", item3_desc: "Classic Colombian coffee with a splash of hot milk.",
+          item4_name: "Espresso EP", item4_desc: "Double shot, house blend roasted in Bogotá highlands.",
+          item5_name: "Almojábana", item5_desc: "Traditional Colombian cheese bread made with cornflour.",
+          item6_name: "Pan de Bono", item6_desc: "Soft yuca and cheese roll, warm from the oven.",
+          item7_name: "Croissant de Guayaba", item7_desc: "Flaky croissant filled with sweet guava paste.",
+          item8_name: "Torta EP", item8_desc: "House slice of dark chocolate cake with coffee ganache.",
+          footer_quote: '"Good coffee, good code, great day."',
+          footer_credit: "Café EP · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", tagline: "Cafetería Colombiana",
+          section_coffee: "☕ Café", section_pastries: "🥐 Panes y Meriendas",
+          item1_name: "Tinto Especial", item1_desc: "Café negro colombiano tradicional, origen único del Huila.",
+          item2_name: "Café con Leche", item2_desc: "Espresso combinado con leche entera al vapor. Cremoso e intenso.",
+          item3_name: "Perico", item3_desc: "Café colombiano clásico con un chorrito de leche caliente.",
+          item4_name: "Espresso EP", item4_desc: "Doble tiro, mezcla de la casa tostada en las alturas de Bogotá.",
+          item5_name: "Almojábana", item5_desc: "Pan de queso colombiano tradicional elaborado con harina de maíz.",
+          item6_name: "Pan de Bono", item6_desc: "Suave rollito de yuca y queso, caliente del horno.",
+          item7_name: "Croissant de Guayaba", item7_desc: "Croissant hojaldrado relleno de dulce bocadillo de guayaba.",
+          item8_name: "Torta EP", item8_desc: "Porción de torta de chocolate oscuro con ganache de café.",
+          footer_quote: '"Buen café, buen código, gran día."',
+          footer_credit: "Café EP · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", tagline: "Café Colombien",
+          section_coffee: "☕ Café", section_pastries: "🥐 Viennoiseries et Collations",
+          item1_name: "Tinto Especial", item1_desc: "Café noir colombien traditionnel, origine unique de Huila.",
+          item2_name: "Café au Lait", item2_desc: "Espresso mélangé avec du lait entier vapeur. Crémeux et corsé.",
+          item3_name: "Perico", item3_desc: "Café colombien classique avec une touche de lait chaud.",
+          item4_name: "Espresso EP", item4_desc: "Double dose, mélange maison torréfié dans les hauteurs de Bogotá.",
+          item5_name: "Almojábana", item5_desc: "Pain au fromage colombien traditionnel à la farine de maïs.",
+          item6_name: "Pan de Bono", item6_desc: "Petit pain moelleux au manioc et fromage, chaud du four.",
+          item7_name: "Croissant à la Goyave", item7_desc: "Croissant feuilleté garni de pâte de goyave sucrée.",
+          item8_name: "Gâteau EP", item8_desc: "Part de gâteau au chocolat noir avec ganache au café.",
+          footer_quote: '"Bon café, bon code, belle journée."',
+          footer_credit: "Café EP · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

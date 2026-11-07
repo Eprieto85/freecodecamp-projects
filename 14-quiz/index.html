@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="EP Web Dev Quiz — Test your HTML & CSS knowledge. By Edisson Prieto." />
+    <title>EP Web Dev Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <img src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg"
+           alt="freeCodeCamp Logo" class="logo" aria-label="freeCodeCamp" />
+      <h1>⚡ <span data-i18n="title">EP Web Dev Quiz</span></h1>
+      <nav aria-label="Quiz sections">
+        <a href="#html-section" data-i18n="nav_html">HTML</a>
+        <a href="#css-section" data-i18n="nav_css">CSS</a>
+        <a href="#js-section" data-i18n="nav_js">JS</a>
+      </nav>
+    </header>
+
+    <main>
+      <form method="post" action="#">
+
+        <!-- STUDENT INFO -->
+        <div class="student-info">
+          <label for="student-name">
+            <span data-i18n="label_name">Name</span>
+            <input type="text" id="student-name" name="student-name" autocomplete="name" required placeholder="Edisson Prieto" />
+          </label>
+          <label for="student-email">
+            <span data-i18n="label_email">Email</span>
+            <input type="email" id="student-email" name="student-email" autocomplete="email" required placeholder="dev@example.com" />
+          </label>
+        </div>
+
+        <!-- HTML SECTION -->
+        <section id="html-section" aria-labelledby="html-h2">
+          <h2 id="html-h2" data-i18n="html_heading">HTML</h2>
+
+          <div class="question-block">
+            <p data-i18n="html_q1">1. Which element defines the page title shown in the browser tab?</p>
+            <ul role="list">
+              <li><label><input type="radio" name="html-q1" value="a" /><span>&lt;head&gt;</span></label></li>
+              <li><label><input type="radio" name="html-q1" value="b" /><span>&lt;title&gt;</span></label></li>
+              <li><label><input type="radio" name="html-q1" value="c" /><span>&lt;meta&gt;</span></label></li>
+              <li><label><input type="radio" name="html-q1" value="d" /><span>&lt;header&gt;</span></label></li>
+            </ul>
+          </div>
+
+          <div class="question-block">
+            <p data-i18n="html_q2">2. What attribute makes an input field required before form submission?</p>
+            <ul role="list">
+              <li><label><input type="radio" name="html-q2" value="a" /><span>mandatory</span></label></li>
+              <li><label><input type="radio" name="html-q2" value="b" /><span>validate</span></label></li>
+              <li><label><input type="radio" name="html-q2" value="c" /><span>required</span></label></li>
+              <li><label><input type="radio" name="html-q2" value="d" /><span>notempty</span></label></li>
+            </ul>
+          </div>
+
+          <div class="question-block">
+            <label for="html-q3-answer">
+              <span data-i18n="html_q3">3. What semantic element should wrap the main navigation links?</span>
+            </label>
+            <input type="text" id="html-q3-answer" name="html-q3" placeholder="<??>" />
+          </div>
+        </section>
+
+        <!-- CSS SECTION -->
+        <section id="css-section" aria-labelledby="css-h2">
+          <h2 id="css-h2" data-i18n="css_heading">CSS</h2>
+
+          <div class="question-block">
+            <p data-i18n="css_q1">4. Which CSS property controls the stacking order of elements?</p>
+            <ul role="list">
+              <li><label><input type="radio" name="css-q1" value="a" /><span>stack-order</span></label></li>
+              <li><label><input type="radio" name="css-q1" value="b" /><span>z-index</span></label></li>
+              <li><label><input type="radio" name="css-q1" value="c" /><span>position</span></label></li>
+              <li><label><input type="radio" name="css-q1" value="d" /><span>layer</span></label></li>
+            </ul>
+          </div>
+
+          <div class="question-block">
+            <p data-i18n="css_q2">5. How do you declare a CSS custom property (variable)?</p>
+            <ul role="list">
+              <li><label><input type="radio" name="css-q2" value="a" /><span>$color: red;</span></label></li>
+              <li><label><input type="radio" name="css-q2" value="b" /><span>@var color: red;</span></label></li>
+              <li><label><input type="radio" name="css-q2" value="c" /><span>--color: red;</span></label></li>
+              <li><label><input type="radio" name="css-q2" value="d" /><span>var(color): red;</span></label></li>
+            </ul>
+          </div>
+
+          <div class="question-block">
+            <label for="css-q3-answer">
+              <span data-i18n="css_q3">6. Write the CSS shorthand to set all four margins to 10px.</span>
+            </label>
+            <input type="text" id="css-q3-answer" name="css-q3" placeholder="margin: ??" />
+          </div>
+        </section>
+
+        <!-- JS SECTION -->
+        <section id="js-section" aria-labelledby="js-h2">
+          <h2 id="js-h2" data-i18n="js_heading">JavaScript</h2>
+
+          <div class="question-block">
+            <p data-i18n="js_q1">7. Which method selects an element by its ID?</p>
+            <ul role="list">
+              <li><label><input type="radio" name="js-q1" value="a" /><span>querySelector()</span></label></li>
+              <li><label><input type="radio" name="js-q1" value="b" /><span>getElementById()</span></label></li>
+              <li><label><input type="radio" name="js-q1" value="c" /><span>getElement()</span></label></li>
+              <li><label><input type="radio" name="js-q1" value="d" /><span>findById()</span></label></li>
+            </ul>
+          </div>
+
+          <div class="question-block">
+            <label for="js-q2-answer">
+              <span data-i18n="js_q2">8. How do you add an event listener for a click event in JavaScript?</span>
+            </label>
+            <input type="text" id="js-q2-answer" name="js-q2" placeholder='element.???("click", fn)' />
+          </div>
+        </section>
+
+        <button type="submit" class="submit-btn" data-i18n="submit">Submit Quiz</button>
+      </form>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">EP Web Dev Quiz · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", title: "EP Web Dev Quiz",
+          nav_html: "HTML", nav_css: "CSS", nav_js: "JS",
+          label_name: "Name", label_email: "Email",
+          html_heading: "HTML", css_heading: "CSS", js_heading: "JavaScript",
+          html_q1: "1. Which element defines the page title shown in the browser tab?",
+          html_q2: "2. What attribute makes an input field required before form submission?",
+          html_q3: "3. What semantic element should wrap the main navigation links?",
+          css_q1: "4. Which CSS property controls the stacking order of elements?",
+          css_q2: "5. How do you declare a CSS custom property (variable)?",
+          css_q3: "6. Write the CSS shorthand to set all four margins to 10px.",
+          js_q1: "7. Which method selects an element by its ID?",
+          js_q2: '8. How do you add an event listener for a click event in JavaScript?',
+          submit: "Submit Quiz",
+          footer: "EP Web Dev Quiz · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", title: "Quiz EP Desarrollo Web",
+          nav_html: "HTML", nav_css: "CSS", nav_js: "JS",
+          label_name: "Nombre", label_email: "Correo",
+          html_heading: "HTML", css_heading: "CSS", js_heading: "JavaScript",
+          html_q1: "1. ¿Qué elemento define el título de la página que aparece en la pestaña del navegador?",
+          html_q2: "2. ¿Qué atributo hace que un campo sea obligatorio antes de enviar el formulario?",
+          html_q3: "3. ¿Qué elemento semántico debe envolver los enlaces de navegación principales?",
+          css_q1: "4. ¿Qué propiedad CSS controla el orden de apilamiento de los elementos?",
+          css_q2: "5. ¿Cómo se declara una propiedad personalizada CSS (variable)?",
+          css_q3: "6. Escribe la forma abreviada en CSS para definir los cuatro márgenes en 10px.",
+          js_q1: "7. ¿Qué método selecciona un elemento por su ID?",
+          js_q2: "8. ¿Cómo se agrega un listener de evento clic en JavaScript?",
+          submit: "Enviar Quiz",
+          footer: "Quiz EP Desarrollo Web · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", title: "Quiz EP Développement Web",
+          nav_html: "HTML", nav_css: "CSS", nav_js: "JS",
+          label_name: "Nom", label_email: "Email",
+          html_heading: "HTML", css_heading: "CSS", js_heading: "JavaScript",
+          html_q1: "1. Quel élément définit le titre de la page affiché dans l'onglet du navigateur ?",
+          html_q2: "2. Quel attribut rend un champ obligatoire avant la soumission du formulaire ?",
+          html_q3: "3. Quel élément sémantique doit envelopper les liens de navigation principaux ?",
+          css_q1: "4. Quelle propriété CSS contrôle l'ordre d'empilement des éléments ?",
+          css_q2: "5. Comment déclarer une propriété personnalisée CSS (variable) ?",
+          css_q3: "6. Écrivez la propriété abrégée CSS pour définir les quatre marges à 10px.",
+          js_q1: "7. Quelle méthode sélectionne un élément par son ID ?",
+          js_q2: "8. Comment ajouter un écouteur d'événement clic en JavaScript ?",
+          submit: "Soumettre le Quiz",
+          footer: "Quiz EP Développement Web · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

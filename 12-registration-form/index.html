@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Developer Profile Registration — by Edisson Prieto." />
+    <title>Developer Profile Registration</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>⚙ <span data-i18n="title">Developer Profile</span></h1>
+      <p data-i18n="subtitle">Join the EP Dev Community</p>
+    </header>
+
+    <main>
+      <form id="registration-form" action="#" method="post">
+
+        <fieldset>
+          <legend data-i18n="legend1">Personal Information</legend>
+          <label for="first-name" data-i18n="label_fname">First Name</label>
+          <input type="text" id="first-name" name="first-name" required placeholder="Edisson" />
+
+          <label for="last-name" data-i18n="label_lname">Last Name</label>
+          <input type="text" id="last-name" name="last-name" required placeholder="Prieto" />
+
+          <label for="email" data-i18n="label_email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="dev@example.com" />
+
+          <label for="password" data-i18n="label_pass">Password (min. 8 characters)</label>
+          <input type="password" id="password" name="password" pattern="[a-zA-Z0-9!@#$]{8,}" required placeholder="••••••••" />
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="legend2">Developer Level</legend>
+          <label>
+            <input type="radio" name="level" value="beginner" checked />
+            <span data-i18n="level_beg">🌱 Beginner — Learning the basics</span>
+          </label>
+          <label>
+            <input type="radio" name="level" value="intermediate" />
+            <span data-i18n="level_int">🔧 Intermediate — Building projects</span>
+          </label>
+          <label>
+            <input type="radio" name="level" value="advanced" />
+            <span data-i18n="level_adv">🚀 Advanced — Production experience</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="legend3">Technologies you work with</legend>
+          <label><input type="checkbox" name="tech" value="html" checked /> HTML5</label>
+          <label><input type="checkbox" name="tech" value="css" checked /> CSS3</label>
+          <label><input type="checkbox" name="tech" value="js" /> JavaScript</label>
+          <label><input type="checkbox" name="tech" value="react" /> React</label>
+          <label><input type="checkbox" name="tech" value="node" /> Node.js</label>
+        </fieldset>
+
+        <fieldset>
+          <legend data-i18n="legend4">Your Profile</legend>
+          <label for="github-url" data-i18n="label_github">GitHub Profile URL</label>
+          <input type="url" id="github-url" name="github-url" placeholder="https://github.com/username" />
+
+          <label for="stack" data-i18n="label_stack">Primary Tech Stack</label>
+          <select id="stack" name="stack">
+            <option value="" data-i18n="select_placeholder">-- Select a stack --</option>
+            <option value="frontend">Front-End</option>
+            <option value="backend">Back-End</option>
+            <option value="fullstack">Full Stack</option>
+            <option value="mobile">Mobile</option>
+          </select>
+
+          <label for="bio" data-i18n="label_bio">Short Bio</label>
+          <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself as a developer..."></textarea>
+        </fieldset>
+
+        <label class="terms-label">
+          <input type="checkbox" name="terms" required />
+          <span data-i18n="terms">I agree to the <a href="#">Community Guidelines</a></span>
+        </label>
+
+        <input type="submit" data-i18n="submit_btn" value="Create My Profile" />
+      </form>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">Developer Profile · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", title: "Developer Profile", subtitle: "Join the EP Dev Community",
+          legend1: "Personal Information", legend2: "Developer Level", legend3: "Technologies you work with", legend4: "Your Profile",
+          label_fname: "First Name", label_lname: "Last Name", label_email: "Email Address",
+          label_pass: "Password (min. 8 characters)", label_github: "GitHub Profile URL",
+          label_stack: "Primary Tech Stack", label_bio: "Short Bio",
+          select_placeholder: "-- Select a stack --",
+          level_beg: "🌱 Beginner — Learning the basics",
+          level_int: "🔧 Intermediate — Building projects",
+          level_adv: "🚀 Advanced — Production experience",
+          terms: "I agree to the <a href='#'>Community Guidelines</a>",
+          submit_btn: "Create My Profile",
+          footer: "Developer Profile · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", title: "Perfil de Desarrollador", subtitle: "Únete a la Comunidad EP Dev",
+          legend1: "Información Personal", legend2: "Nivel de Desarrollador", legend3: "Tecnologías con las que trabajas", legend4: "Tu Perfil",
+          label_fname: "Nombre", label_lname: "Apellido", label_email: "Correo Electrónico",
+          label_pass: "Contraseña (mín. 8 caracteres)", label_github: "URL de Perfil en GitHub",
+          label_stack: "Stack Tecnológico Principal", label_bio: "Biografía Corta",
+          select_placeholder: "-- Selecciona un stack --",
+          level_beg: "🌱 Principiante — Aprendiendo los fundamentos",
+          level_int: "🔧 Intermedio — Construyendo proyectos",
+          level_adv: "🚀 Avanzado — Experiencia en producción",
+          terms: "Acepto las <a href='#'>Normas de la Comunidad</a>",
+          submit_btn: "Crear Mi Perfil",
+          footer: "Perfil de Desarrollador · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", title: "Profil Développeur", subtitle: "Rejoignez la Communauté EP Dev",
+          legend1: "Informations Personnelles", legend2: "Niveau de Développeur", legend3: "Technologies avec lesquelles vous travaillez", legend4: "Votre Profil",
+          label_fname: "Prénom", label_lname: "Nom de famille", label_email: "Adresse Email",
+          label_pass: "Mot de passe (min. 8 caractères)", label_github: "URL du Profil GitHub",
+          label_stack: "Stack Technique Principal", label_bio: "Courte Biographie",
+          select_placeholder: "-- Sélectionnez un stack --",
+          level_beg: "🌱 Débutant — Apprentissage des bases",
+          level_int: "🔧 Intermédiaire — Construction de projets",
+          level_adv: "🚀 Avancé — Expérience en production",
+          terms: "J'accepte les <a href='#'>Règles de la Communauté</a>",
+          submit_btn: "Créer Mon Profil",
+          footer: "Profil Développeur · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) {
+            if (el.tagName === 'INPUT' && el.type === 'submit') el.value = translations[lang][key];
+            else el.innerHTML = translations[lang][key];
+          }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>

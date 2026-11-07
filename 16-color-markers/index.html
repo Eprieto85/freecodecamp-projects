@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="EP Color Palette — CSS Colors & Gradients by Edisson Prieto." />
+    <title>EP Color Palette</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+
+    <header>
+      <h1>🎨 <span data-i18n="title">EP Color Palette</span></h1>
+      <p data-i18n="subtitle">CSS Colors, Gradients &amp; Box Shadows</p>
+    </header>
+
+    <main>
+      <p class="intro" data-i18n="intro">Every marker below is painted with pure CSS — no images, just gradients, opacity, and box-shadow.</p>
+
+      <div class="container">
+        <!-- Warm palette -->
+        <div class="marker ep-gold">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color1">EP Gold</span>
+          <code>#f5a623</code>
+        </div>
+
+        <div class="marker ep-red">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color2">Crimson</span>
+          <code>#e94560</code>
+        </div>
+
+        <div class="marker ep-orange">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color3">Sunset Orange</span>
+          <code>#ff6b35</code>
+        </div>
+
+        <!-- Cool palette -->
+        <div class="marker ep-navy">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color4">Deep Navy</span>
+          <code>#0a0a23</code>
+        </div>
+
+        <div class="marker ep-blue">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color5">Ocean Blue</span>
+          <code>#0f3460</code>
+        </div>
+
+        <div class="marker ep-purple">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color6">Violet</span>
+          <code>#533483</code>
+        </div>
+
+        <!-- Neutral palette -->
+        <div class="marker ep-teal">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color7">Teal</span>
+          <code>#16a085</code>
+        </div>
+
+        <div class="marker ep-green">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color8">Forest Green</span>
+          <code>#0d3b1e</code>
+        </div>
+
+        <div class="marker ep-white">
+          <div class="cap"></div>
+          <div class="sleeve"></div>
+          <div class="body"></div>
+        </div>
+        <div class="label-row">
+          <span class="color-name" data-i18n="color9">Ghost White</span>
+          <code>#f5f5f5</code>
+        </div>
+      </div>
+
+      <div class="tech-note">
+        <p data-i18n="tech">Each marker uses <code>linear-gradient()</code> for the body sheen, <code>rgba()</code> for transparency effects, and <code>box-shadow</code> for the glow.</p>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="footer">EP Color Palette · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></p>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          lang_label: "Language:", title: "EP Color Palette", subtitle: "CSS Colors, Gradients & Box Shadows",
+          intro: "Every marker below is painted with pure CSS — no images, just gradients, opacity, and box-shadow.",
+          color1: "EP Gold", color2: "Crimson", color3: "Sunset Orange",
+          color4: "Deep Navy", color5: "Ocean Blue", color6: "Violet",
+          color7: "Teal", color8: "Forest Green", color9: "Ghost White",
+          tech: "Each marker uses <code>linear-gradient()</code> for the body sheen, <code>rgba()</code> for transparency effects, and <code>box-shadow</code> for the glow.",
+          footer: "EP Color Palette · Edisson Prieto · GitHub"
+        },
+        es: {
+          lang_label: "Idioma:", title: "Paleta de Colores EP", subtitle: "Colores CSS, Gradientes y Sombras",
+          intro: "Cada marcador está pintado con CSS puro — sin imágenes, solo degradados, opacidad y sombras.",
+          color1: "Oro EP", color2: "Carmesí", color3: "Naranja Atardecer",
+          color4: "Azul Profundo", color5: "Azul Océano", color6: "Violeta",
+          color7: "Turquesa", color8: "Verde Bosque", color9: "Blanco Fantasma",
+          tech: "Cada marcador usa <code>linear-gradient()</code> para el brillo del cuerpo, <code>rgba()</code> para efectos de transparencia y <code>box-shadow</code> para el resplandor.",
+          footer: "Paleta de Colores EP · Edisson Prieto · GitHub"
+        },
+        fr: {
+          lang_label: "Langue :", title: "Palette de Couleurs EP", subtitle: "Couleurs CSS, Dégradés et Ombres",
+          intro: "Chaque marqueur est peint en CSS pur — sans images, juste des dégradés, de l'opacité et des ombres.",
+          color1: "Or EP", color2: "Cramoisi", color3: "Orange Coucher de Soleil",
+          color4: "Bleu Marine Profond", color5: "Bleu Océan", color6: "Violet",
+          color7: "Turquoise", color8: "Vert Forêt", color9: "Blanc Fantôme",
+          tech: "Chaque marqueur utilise <code>linear-gradient()</code> pour le brillant du corps, <code>rgba()</code> pour les effets de transparence, et <code>box-shadow</code> pour la lueur.",
+          footer: "Palette de Couleurs EP · Edisson Prieto · GitHub"
+        }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+    </script>
+  </body>
+</html>
