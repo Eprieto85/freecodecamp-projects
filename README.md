@@ -40,6 +40,10 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 | JS-01 | [Greeting Bot](./js-01-greeting-bot/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-01-greeting-bot/) | `let`, `const`, var declaration, string concatenation, reassignment |
 | JS-02 | [Trivia Bot](./js-02-trivia-bot/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-02-trivia-bot/) | `let`, `const`, var reassignment, multiple `console.log()` |
 | JS-03 | [Sentence Generator](./js-03-sentence-generator/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-03-sentence-generator/) | `let` reassignment, string templates, mad-libs pattern |
+| JS-04 | [Teacher Chatbot](./js-04-teacher-chatbot/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-04-teacher-chatbot/) | Template literals `${}`, `.length`, bracket notation `[i]`, `.indexOf()` |
+| JS-05 | [String Inspector](./js-05-string-inspector/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-05-string-inspector/) | `.includes()`, `.slice(start, end)`, `.slice(-n)`, case sensitivity |
+| JS-06 | [String Formatter](./js-06-string-formatter/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-06-string-formatter/) | `.trim()`, `.trimStart()`, `.trimEnd()`, `.toUpperCase()`, `.toLowerCase()`, camelCase |
+| JS-07 | [String Transformer](./js-07-string-transformer/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-07-string-transformer/) | `.replace()`, `.replaceAll()`, `.repeat()`, method chaining |
 
 > More labs added as modules are completed.
 
@@ -54,7 +58,9 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 
 **JavaScript (Certification 2)**
 - Variable declaration (`let`, `const`) · String concatenation · Variable reassignment
-- `console.log()` output · Mad-libs string templates
+- Template literals `${}` · `.length` · Bracket notation · `.indexOf()`
+- `.includes()` · `.slice()` · `.trim()` · Case conversion · camelCase
+- `.replace()` · `.replaceAll()` · `.repeat()` · Method chaining
 
 ## Author
 
