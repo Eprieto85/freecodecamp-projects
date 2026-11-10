@@ -8,7 +8,7 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 
 ## ✅ Certification 1 — Responsive Web Design
 
-> **Status: Exam submitted · Awaiting result**
+> **✅ Certified — November 10, 2026 · [View Certificate](https://freecodecamp.org/certification/eprieto/responsive-web-design-v9)**
 
 | # | Project | Live Demo | Description | Tech |
 |---|---------|-----------|-------------|------|
