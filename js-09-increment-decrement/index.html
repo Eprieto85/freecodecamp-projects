@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Increment & Decrement Debugger — prefix vs postfix by Edisson Prieto." />
+    <title>Increment & Decrement — EP JS Lab 09</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root { --bg: #06060f; --bg2: #0d0d20; --accent: #6366f1; --accent2: #a5b4fc; --text: #e0e7ff; --muted: #4a4a8a; --card: rgba(10,10,35,0.7); --border: rgba(99,102,241,0.22); }
+      body { font-family: 'Exo 2', sans-serif; background: linear-gradient(135deg, var(--bg), var(--bg2), var(--bg)); color: var(--text); min-height: 100vh; }
+      .lang-bar { background: #030308; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: var(--accent); }
+      .lang-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+      .lang-btn:hover, .lang-btn.active { background: var(--accent); color: #06060f; font-weight: bold; }
+      header { text-align: center; padding: 32px 20px 18px; border-bottom: 3px solid var(--accent); background: linear-gradient(135deg, #0a0a1e, #12122a); }
+      header h1 { font-size: 2rem; color: var(--accent); letter-spacing: 3px; }
+      header p { color: var(--muted); margin-top: 6px; font-size: 0.88rem; }
+      .badge { display: inline-block; background: rgba(99,102,241,0.1); border: 1px solid var(--border); color: var(--accent); font-size: 0.72rem; padding: 2px 10px; border-radius: 20px; margin-top: 7px; }
+
+      .main { max-width: 900px; margin: 28px auto 0; padding: 0 20px; }
+
+      /* Prefix vs Postfix explainer */
+      .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+      .concept-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+      .concept-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+      .step-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+      .step-num { background: rgba(99,102,241,0.15); border: 1px solid var(--border); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--accent); flex-shrink: 0; }
+      .step-text { color: var(--muted); }
+      .step-val { color: var(--accent2); font-weight: bold; }
+      .prefix-badge { background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3); color: #4ade80; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+      .postfix-badge { background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+
+      /* Results cards */
+      .results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+      .res-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 10px; text-align: center; }
+      .res-var { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
+      .res-val { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent2); font-weight: bold; }
+      .res-op { font-size: 0.65rem; color: var(--accent); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+
+      /* Console */
+      .terminal { background: #030308; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+      .term-bar { background: #07071a; padding: 9px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+      .term-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .term-dot.r{background:#ff5f57;}.term-dot.y{background:#ffbd2e;}.term-dot.g{background:#28ca42;}
+      .term-title { color: var(--muted); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; margin-left: 6px; }
+      .term-body { padding: 12px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.8; }
+      .prompt { color: var(--accent); } .out { color: #e0e7ff; } .comment { color: #1a1a40; }
+      .line { opacity: 0; transform: translateX(-6px); animation: fi 0.3s forwards; }
+      @keyframes fi { to { opacity:1; transform:none; } }
+
+      .skills { max-width: 900px; margin: 0 auto 20px; padding: 0 20px; }
+      .info-panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+      .info-panel h2 { color: var(--accent); margin-bottom: 8px; font-size: 1rem; }
+      .info-panel p { color: var(--muted); line-height: 1.6; margin-bottom: 12px; font-size: 0.86rem; }
+      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+      .tag { background: rgba(99,102,241,0.08); border: 1px solid var(--border); color: var(--accent); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+      footer { text-align: center; padding: 18px; color: #12122a; font-size: 0.8rem; border-top: 1px solid #06060f; margin-top: 10px; }
+      footer a { color: var(--accent); text-decoration: none; }
+      @media(max-width:580px){ .concept-grid{grid-template-columns:1fr;} .results{grid-template-columns:1fr 1fr;} }
+    </style>
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+    <header>
+      <h1>⚡ <span data-i18n="title">Increment & Decrement</span></h1>
+      <p data-i18n="subtitle">++ Prefix · ++ Postfix · -- Prefix · -- Postfix · Lab 09</p>
+      <div class="badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+    </header>
+
+    <div class="main">
+      <div class="concept-grid">
+        <!-- Prefix ++ -->
+        <div class="concept-card">
+          <h3>++counter <span class="prefix-badge">prefix</span></h3>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">let counter = <span class="step-val">10</span></div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">++counter → increments FIRST → <span class="step-val">11</span></div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">const updatedCounter = <span class="step-val">11</span></div></div>
+        </div>
+        <!-- Postfix ++ -->
+        <div class="concept-card">
+          <h3>score++ <span class="postfix-badge">postfix</span></h3>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">let score = <span class="step-val">8</span></div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">score++ → assigns FIRST → finalScore = <span class="step-val">8</span></div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">score increments after → score = <span class="step-val">9</span></div></div>
+        </div>
+        <!-- Prefix -- -->
+        <div class="concept-card">
+          <h3>--coins <span class="prefix-badge">prefix</span></h3>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">let coins = <span class="step-val">3</span></div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">--coins → decrements FIRST → <span class="step-val">2</span></div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">const updatedCoins = <span class="step-val">2</span></div></div>
+        </div>
+        <!-- Postfix -- -->
+        <div class="concept-card">
+          <h3>health-- <span class="postfix-badge">postfix</span></h3>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">let health = <span class="step-val">7</span></div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">health-- → assigns FIRST → newHealth = <span class="step-val">7</span></div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">health decrements after → health = <span class="step-val">6</span></div></div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="res-card"><div class="res-var">updatedCounter</div><div class="res-val">11</div><div class="res-op">++counter</div></div>
+        <div class="res-card"><div class="res-var">finalScore</div><div class="res-val">8</div><div class="res-op">score++</div></div>
+        <div class="res-card"><div class="res-var">updatedCoins</div><div class="res-val">2</div><div class="res-op">--coins</div></div>
+        <div class="res-card"><div class="res-var">newHealth</div><div class="res-val">7</div><div class="res-op">health--</div></div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+          <span class="term-title">script.js — console output</span>
+        </div>
+        <div class="term-body" id="terminal"></div>
+      </div>
+    </div>
+
+    <div class="skills">
+      <div class="info-panel">
+        <h2 data-i18n="skills_title">🎯 JavaScript Concepts</h2>
+        <p data-i18n="skills_desc">Prefix (++x / --x) increments or decrements BEFORE returning the value. Postfix (x++ / x--) returns the current value FIRST, then changes it. This subtle difference causes bugs when the result is captured in a new variable.</p>
+        <div class="tags">
+          <span class="tag">++prefix</span><span class="tag">postfix++</span>
+          <span class="tag">--prefix</span><span class="tag">postfix--</span>
+          <span class="tag">return order</span><span class="tag">debugging</span>
+        </div>
+      </div>
+    </div>
+    <footer><span data-i18n="footer">Increment & Decrement · JS Lab 09 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+    <script>
+      const T = {
+        en: { lang_label:"Language:", title:"Increment & Decrement", badge:"freeCodeCamp · JavaScript Certification",
+          subtitle:"++ Prefix · ++ Postfix · -- Prefix · -- Postfix · Lab 09",
+          skills_title:"🎯 JavaScript Concepts",
+          skills_desc:"Prefix (++x / --x) increments or decrements BEFORE returning the value. Postfix (x++ / x--) returns the current value FIRST, then changes it. This subtle difference causes bugs when the result is captured in a new variable.",
+          footer:"Increment & Decrement · JS Lab 09 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        es: { lang_label:"Idioma:", title:"Incremento y Decremento", badge:"freeCodeCamp · Certificación JavaScript",
+          subtitle:"++ Prefijo · ++ Posfijo · -- Prefijo · -- Posfijo · Lab 09",
+          skills_title:"🎯 Conceptos JavaScript",
+          skills_desc:"El prefijo (++x / --x) incrementa o decrementa ANTES de devolver el valor. El posfijo (x++ / x--) devuelve el valor actual PRIMERO y luego lo cambia. Esta diferencia sutil provoca bugs cuando el resultado se guarda en una nueva variable.",
+          footer:"Incremento y Decremento · JS Lab 09 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        fr: { lang_label:"Langue :", title:"Incrémentation & Décrémentation", badge:"freeCodeCamp · Certification JavaScript",
+          subtitle:"++ Préfixe · ++ Postfixe · -- Préfixe · -- Postfixe · Lab 09",
+          skills_title:"🎯 Concepts JavaScript",
+          skills_desc:"Le préfixe (++x / --x) incrémente ou décrémente AVANT de retourner la valeur. Le postfixe (x++ / x--) retourne d'abord la valeur actuelle, puis la modifie. Cette différence subtile provoque des bugs quand le résultat est capturé dans une nouvelle variable.",
+          footer:"Incrémentation & Décrémentation · JS Lab 09 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(T[lang][k]!==undefined) el.innerHTML=T[lang][k]; });
+        document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+        document.getElementById('btn-'+lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+
+      let counter = 10; const updatedCounter = ++counter;
+      let score = 8;    const finalScore = score++;
+      let coins = 3;    const updatedCoins = --coins;
+      let health = 7;   const newHealth = health--;
+
+      const lines = [
+        {t:'c',v:'// Prefix ++ — increments BEFORE returning'},
+        {t:'o',v:`let counter = 10; const updatedCounter = ++counter; → ${updatedCounter}`},
+        {t:'c',v:'// Postfix ++ — returns CURRENT value, then increments'},
+        {t:'o',v:`let score = 8; const finalScore = score++; → ${finalScore} (score is now ${score})`},
+        {t:'c',v:'// Prefix -- — decrements BEFORE returning'},
+        {t:'o',v:`let coins = 3; const updatedCoins = --coins; → ${updatedCoins}`},
+        {t:'c',v:'// Postfix -- — returns CURRENT value, then decrements'},
+        {t:'o',v:`let health = 7; const newHealth = health--; → ${newHealth} (health is now ${health})`}
+      ];
+      const term = document.getElementById('terminal');
+      lines.forEach((l,i) => {
+        const d = document.createElement('div'); d.className = 'line';
+        d.style.animationDelay = (i*0.12)+'s';
+        d.innerHTML = l.t==='c' ? `<span class="comment">${l.v}</span>` : `<span class="prompt">› </span><span class="out">${l.v}</span>`;
+        term.appendChild(d);
+      });
+    </script>
+  </body>
+</html>

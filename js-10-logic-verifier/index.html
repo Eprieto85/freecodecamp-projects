@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Logic Verifier App — if, else, booleans by Edisson Prieto." />
+    <title>Logic Verifier — EP JS Lab 10</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root { --bg: #001a18; --bg2: #002622; --accent: #14b8a6; --accent2: #5eead4; --text: #ccfbf1; --muted: #2a7a72; --card: rgba(0,30,28,0.7); --border: rgba(20,184,166,0.22); }
+      body { font-family: 'Exo 2', sans-serif; background: linear-gradient(135deg, var(--bg), var(--bg2), var(--bg)); color: var(--text); min-height: 100vh; }
+      .lang-bar { background: #000d0c; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: var(--accent); }
+      .lang-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+      .lang-btn:hover, .lang-btn.active { background: var(--accent); color: #001a18; font-weight: bold; }
+      header { text-align: center; padding: 32px 20px 18px; border-bottom: 3px solid var(--accent); background: linear-gradient(135deg, #001e1c, #002e2a); }
+      header h1 { font-size: 2rem; color: var(--accent); letter-spacing: 3px; }
+      header p { color: var(--muted); margin-top: 6px; font-size: 0.88rem; }
+      .badge { display: inline-block; background: rgba(20,184,166,0.1); border: 1px solid var(--border); color: var(--accent); font-size: 0.72rem; padding: 2px 10px; border-radius: 20px; margin-top: 7px; }
+
+      .main { max-width: 900px; margin: 28px auto 0; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+      /* Timmy status cards */
+      .timmy-col { display: flex; flex-direction: column; gap: 12px; }
+      .status-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+      .status-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+      .bool-row { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; margin-bottom: 6px; }
+      .bool-var { color: var(--muted); }
+      .bool-true  { background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.4); color: #4ade80; padding: 2px 10px; border-radius: 6px; font-weight: bold; }
+      .bool-false { background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.4); color: #f87171; padding: 2px 10px; border-radius: 6px; font-weight: bold; }
+      .output-row { background: rgba(20,184,166,0.07); border: 1px solid rgba(20,184,166,0.15); border-radius: 6px; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent2); margin-top: 8px; }
+      .output-label { color: var(--muted); font-size: 0.65rem; margin-bottom: 2px; }
+      .skipped { color: #4a4a4a; font-style: italic; font-size: 0.75rem; }
+
+      /* Age checker with slider */
+      .age-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+      .age-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 12px; }
+      .age-display { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+      .age-num { font-size: 2.5rem; font-weight: bold; color: var(--accent2); font-family: 'JetBrains Mono', monospace; min-width: 60px; }
+      .age-label { color: var(--muted); font-size: 0.8rem; }
+      input[type=range] { width: 100%; accent-color: var(--accent); margin-bottom: 10px; }
+      .age-result { background: rgba(20,184,166,0.08); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; min-height: 40px; }
+      .can-drive { color: #4ade80; }
+      .cant-drive { color: #f87171; }
+
+      /* Code panel */
+      .code-wrap { max-width: 900px; margin: 0 auto 20px; padding: 0 20px; }
+      .code-box { background: #000d0c; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+      .code-header { background: #001410; padding: 9px 16px; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+      .code-body { padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.75; }
+      .ln { color: #0a3a35; margin-right: 10px; user-select: none; }
+      .kw { color: #cc88ff; } .bool-kw { color: #f87171; } .bool-kw2 { color: #4ade80; }
+      .str { color: #88ffcc; } .num { color: #fbbf24; } .cm { color: #1a4a45; }
+      .op { color: #14b8a6; }
+
+      .terminal { background: #000d0c; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 0 20px 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+      .term-bar { background: #001410; padding: 9px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+      .term-dot { width: 11px; height: 11px; border-radius: 50%; }
+      .term-dot.r{background:#ff5f57;}.term-dot.y{background:#ffbd2e;}.term-dot.g{background:#28ca42;}
+      .term-title { color: var(--muted); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; margin-left: 6px; }
+      .term-body { padding: 12px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.8; }
+      .prompt { color: var(--accent); } .out { color: #ccfbf1; } .comment { color: #0a3a35; }
+      .line { opacity: 0; transform: translateX(-6px); animation: fi 0.3s forwards; }
+      @keyframes fi { to { opacity:1; transform:none; } }
+
+      .skills { max-width: 900px; margin: 0 auto 20px; padding: 0 20px; }
+      .info-panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+      .info-panel h2 { color: var(--accent); margin-bottom: 8px; font-size: 1rem; }
+      .info-panel p { color: var(--muted); line-height: 1.6; margin-bottom: 12px; font-size: 0.86rem; }
+      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+      .tag { background: rgba(20,184,166,0.08); border: 1px solid var(--border); color: var(--accent); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+      footer { text-align: center; padding: 18px; color: #0a2a28; font-size: 0.8rem; border-top: 1px solid #001a18; margin-top: 10px; }
+      footer a { color: var(--accent); text-decoration: none; }
+      @media(max-width:640px){ .main{grid-template-columns:1fr;} }
+    </style>
+  </head>
+  <body>
+    <div class="lang-bar">
+      <span data-i18n="lang_label">Language:</span>
+      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
+      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
+      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+    </div>
+    <header>
+      <h1>🔀 <span data-i18n="title">Logic Verifier</span></h1>
+      <p data-i18n="subtitle">if · else · Boolean Conditions · Comparison Operators · Lab 10</p>
+      <div class="badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+    </header>
+
+    <div class="main">
+      <div class="timmy-col">
+        <!-- Developer job -->
+        <div class="status-card">
+          <h3 data-i18n="job_title">👔 Developer Job</h3>
+          <div class="bool-row">
+            <span class="bool-var">hasDeveloperJob =</span>
+            <span class="bool-true">true</span>
+          </div>
+          <div class="output-row">
+            <div class="output-label">console.log →</div>
+            "Timmy is employed as a developer."
+          </div>
+        </div>
+        <!-- Gamer -->
+        <div class="status-card">
+          <h3 data-i18n="gamer_title">🎮 Gamer Status</h3>
+          <div class="bool-row">
+            <span class="bool-var">isTimmyAGamer =</span>
+            <span class="bool-false">false</span>
+          </div>
+          <div class="output-row">
+            <div class="output-label">if block skipped →</div>
+            <span class="skipped">// "Timmy loves to play..." not logged</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Age slider -->
+      <div class="age-card">
+        <h3 data-i18n="age_title">🚗 Driving Age Check — try it!</h3>
+        <div class="age-display">
+          <div class="age-num" id="age-num">14</div>
+          <div class="age-label" data-i18n="age_label">timmyAge<br>(drag to change)</div>
+        </div>
+        <input type="range" min="10" max="25" value="14" id="age-slider" oninput="updateAge(this.value)" />
+        <div class="age-result" id="age-result"></div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-box">
+        <div class="code-header">📄 script.js</div>
+        <div class="code-body" id="code-view"></div>
+      </div>
+    </div>
+
+    <div class="terminal" style="max-width:900px;margin:0 auto 20px;padding:0 20px;">
+      <div style="background:#000d0c;border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+        <div class="term-bar">
+          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+          <span class="term-title">script.js — console output</span>
+        </div>
+        <div class="term-body" id="terminal"></div>
+      </div>
+    </div>
+
+    <div class="skills">
+      <div class="info-panel">
+        <h2 data-i18n="skills_title">🎯 JavaScript Concepts</h2>
+        <p data-i18n="skills_desc">if statements execute a block only when the condition is true. else runs when the if condition is false. The >= operator checks if a value is greater than or equal to another. Boolean variables (true/false) are used directly as conditions.</p>
+        <div class="tags">
+          <span class="tag">if</span><span class="tag">else</span><span class="tag">else if</span>
+          <span class="tag">boolean</span><span class="tag">&gt;= operator</span><span class="tag">=== operator</span>
+        </div>
+      </div>
+    </div>
+    <footer><span data-i18n="footer">Logic Verifier · JS Lab 10 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+    <script>
+      const T = {
+        en: { lang_label:"Language:", title:"Logic Verifier", badge:"freeCodeCamp · JavaScript Certification",
+          subtitle:"if · else · Boolean Conditions · Comparison Operators · Lab 10",
+          job_title:"👔 Developer Job", gamer_title:"🎮 Gamer Status",
+          age_title:"🚗 Driving Age Check — try it!", age_label:"timmyAge\n(drag to change)",
+          skills_title:"🎯 JavaScript Concepts",
+          skills_desc:"if statements execute a block only when the condition is true. else runs when the if condition is false. The >= operator checks if a value is greater than or equal to another. Boolean variables (true/false) are used directly as conditions.",
+          footer:"Logic Verifier · JS Lab 10 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        es: { lang_label:"Idioma:", title:"Verificador de Lógica", badge:"freeCodeCamp · Certificación JavaScript",
+          subtitle:"if · else · Condiciones Booleanas · Operadores de Comparación · Lab 10",
+          job_title:"👔 Trabajo de Desarrollador", gamer_title:"🎮 Estado de Gamer",
+          age_title:"🚗 Verificar Edad para Conducir — ¡pruébalo!", age_label:"timmyAge\n(arrastra para cambiar)",
+          skills_title:"🎯 Conceptos JavaScript",
+          skills_desc:"Las sentencias if ejecutan un bloque solo cuando la condición es verdadera. else se ejecuta cuando la condición if es falsa. El operador >= verifica si un valor es mayor o igual a otro. Las variables booleanas (true/false) se usan directamente como condiciones.",
+          footer:"Verificador de Lógica · JS Lab 10 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
+        fr: { lang_label:"Langue :", title:"Vérificateur de Logique", badge:"freeCodeCamp · Certification JavaScript",
+          subtitle:"if · else · Conditions Booléennes · Opérateurs de Comparaison · Lab 10",
+          job_title:"👔 Emploi de Développeur", gamer_title:"🎮 Statut de Gamer",
+          age_title:"🚗 Vérification de l'Âge — essayez!", age_label:"timmyAge\n(glisser pour changer)",
+          skills_title:"🎯 Concepts JavaScript",
+          skills_desc:"Les instructions if exécutent un bloc uniquement quand la condition est vraie. else s'exécute quand la condition if est fausse. L'opérateur >= vérifie si une valeur est supérieure ou égale à une autre. Les variables booléennes (true/false) sont utilisées directement comme conditions.",
+          footer:"Vérificateur de Logique · JS Lab 10 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" }
+      };
+      function setLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(T[lang][k]!==undefined) el.innerHTML=T[lang][k]; });
+        document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+        document.getElementById('btn-'+lang).classList.add('active');
+        document.documentElement.lang = lang;
+      }
+      setLang('en');
+
+      function updateAge(val) {
+        document.getElementById('age-num').textContent = val;
+        const res = document.getElementById('age-result');
+        if (parseInt(val) >= 16) {
+          res.innerHTML = '<span class="can-drive">✅ "Timmy is old enough to drive."</span>';
+        } else {
+          res.innerHTML = '<span class="cant-drive">❌ "Timmy is not old enough to drive."</span>';
+        }
+      }
+      updateAge(14);
+
+      const codeLines = [
+        `<span class="kw">const</span> hasDeveloperJob = <span class="bool-kw2">true</span>;`,
+        `<span class="kw">if</span> (hasDeveloperJob) {`,
+        `  console.log(<span class="str">"Timmy is employed as a developer."</span>);`,
+        `}`,``,
+        `<span class="kw">const</span> isTimmyAGamer = <span class="bool-kw">false</span>;`,
+        `<span class="kw">if</span> (isTimmyAGamer) {`,
+        `  <span class="cm">// block skipped — condition is false</span>`,
+        `}`,``,
+        `<span class="kw">let</span> timmyAge = <span class="num">14</span>;`,
+        `<span class="kw">if</span> (timmyAge <span class="op">&gt;=</span> <span class="num">16</span>) {`,
+        `  console.log(<span class="str">"Timmy is old enough to drive."</span>);`,
+        `} <span class="kw">else</span> {`,
+        `  console.log(<span class="str">"Timmy is not old enough to drive."</span>);`,
+        `}`
+      ];
+      const cv = document.getElementById('code-view');
+      codeLines.forEach((l,i) => {
+        const d = document.createElement('div');
+        d.innerHTML = `<span class="ln">${String(i+1).padStart(2,' ')}</span>${l}`;
+        cv.appendChild(d);
+      });
+
+      const lines = [
+        {t:'o', v:'"Timmy is employed as a developer."'},
+        {t:'c', v:'// isTimmyAGamer is false → block skipped'},
+        {t:'o', v:'"Timmy is not old enough to drive."  (timmyAge = 14)'}
+      ];
+      const term = document.getElementById('terminal');
+      lines.forEach((l,i) => {
+        const d = document.createElement('div'); d.className='line';
+        d.style.animationDelay=(i*0.15)+'s';
+        d.innerHTML = l.t==='c' ? `<span class="comment">${l.v}</span>` : `<span class="prompt">› </span><span class="out">${l.v}</span>`;
+        term.appendChild(d);
+      });
+    </script>
+  </body>
+</html>

@@ -33,7 +33,7 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 
 ## 🟡 Certification 2 — JavaScript Algorithms & Data Structures
 
-> **Status: In progress — Variables & Strings module**
+> **Status: In progress — Booleans, Numbers & Conditionals module**
 
 | # | Lab | Live Demo | Concepts |
 |---|-----|-----------|----------|
@@ -44,6 +44,11 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 | JS-05 | [String Inspector](./js-05-string-inspector/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-05-string-inspector/) | `.includes()`, `.slice(start, end)`, `.slice(-n)`, case sensitivity |
 | JS-06 | [String Formatter](./js-06-string-formatter/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-06-string-formatter/) | `.trim()`, `.trimStart()`, `.trimEnd()`, `.toUpperCase()`, `.toLowerCase()`, camelCase |
 | JS-07 | [String Transformer](./js-07-string-transformer/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-07-string-transformer/) | `.replace()`, `.replaceAll()`, `.repeat()`, method chaining |
+| JS-08 | [Type Coercion Debugger](./js-08-type-coercion/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-08-type-coercion/) | Type coercion, boolean→number, string→number, null→0, arithmetic debugging |
+| JS-09 | [Increment & Decrement](./js-09-increment-decrement/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-09-increment-decrement/) | `++prefix`, `postfix++`, `--prefix`, `postfix--`, return order |
+| JS-10 | [Logic Verifier](./js-10-logic-verifier/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-10-logic-verifier/) | `if`, `else`, boolean conditions, `>=` operator |
+| JS-11 | [MathBot](./js-11-mathbot/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-11-mathbot/) | `Math.random()`, `Math.floor()`, `Math.ceil()`, `Math.round()`, `Math.max()`, `Math.min()` |
+| JS-12 | [Fortune Teller](./js-12-fortune-teller/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-12-fortune-teller/) | `Math.random()`, `Math.floor()`, `if / else if` chain, conditional assignment |
 
 > More labs added as modules are completed.
 
@@ -61,6 +66,8 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 - Template literals `${}` · `.length` · Bracket notation · `.indexOf()`
 - `.includes()` · `.slice()` · `.trim()` · Case conversion · camelCase
 - `.replace()` · `.replaceAll()` · `.repeat()` · Method chaining
+- Type coercion · `++`/`--` prefix & postfix · `if` / `else` / `else if`
+- `Math.random()` · `Math.floor()` · `Math.ceil()` · `Math.round()` · `Math.max()` · `Math.min()`
 
 ## Author
 
