@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Qualifier — EP JS Lab 16</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#064e3b,#065f46,#047857);min-height:100vh;color:#ecfdf5;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.25);backdrop-filter:blur(12px);border-bottom:1px solid rgba(52,211,153,0.15);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#34d399;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:#34d399;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#34d399;border-color:#34d399;color:#064e3b;font-weight:700;}
+
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#34d399;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#34d399;}
+    .hero p{color:rgba(236,253,245,0.55);font-size:0.92rem;max-width:500px;margin:0 auto;}
+
+    /* SLIDERS */
+    .sliders-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .slider-card{background:rgba(0,0,0,0.25);backdrop-filter:blur(20px);border:1px solid rgba(52,211,153,0.15);border-radius:20px;padding:24px 28px;}
+    .sl-label{font-size:0.78rem;color:#34d399;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+    .sl-value{font-size:2rem;font-weight:900;color:#fff;margin-bottom:16px;}
+    .sl-value span{font-size:1rem;font-weight:400;color:rgba(236,253,245,0.4);}
+    input[type=range]{width:100%;appearance:none;height:6px;border-radius:3px;background:rgba(52,211,153,0.2);outline:none;}
+    input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:#34d399;cursor:pointer;box-shadow:0 0 8px rgba(52,211,153,0.4);}
+    .sl-min-max{display:flex;justify-content:space-between;font-size:0.7rem;color:rgba(236,253,245,0.3);font-family:'JetBrains Mono',monospace;margin-top:8px;}
+
+    /* RESULT */
+    .result-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;}
+    .result-card{border-radius:20px;padding:28px 32px;text-align:center;transition:all .3s;border:2px solid transparent;}
+    .res-eligible{background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);}
+    .res-partial{background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.25);}
+    .res-denied{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2);}
+    .res-icon{font-size:2.5rem;margin-bottom:12px;}
+    .res-title{font-size:1.4rem;font-weight:800;margin-bottom:8px;}
+    .res-title.green{color:#34d399;} .res-title.yellow{color:#fbbf24;} .res-title.red{color:#f87171;}
+    .res-msg{color:rgba(236,253,245,0.65);font-size:0.9rem;line-height:1.6;}
+    .loan-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+    .l-badge{padding:5px 14px;border-radius:8px;font-size:0.78rem;font-weight:700;}
+    .b-green{background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:#34d399;}
+    .b-gray{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(236,253,245,0.3);}
+
+    /* THRESHOLDS TABLE */
+    .table-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;}
+    .table-title{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;color:rgba(236,253,245,0.35);margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
+    .thresh-table{width:100%;border-collapse:collapse;}
+    .thresh-table th{background:rgba(0,0,0,0.3);color:#34d399;font-size:0.75rem;font-family:'JetBrains Mono',monospace;padding:10px 14px;text-align:left;letter-spacing:1px;}
+    .thresh-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;color:rgba(236,253,245,0.7);}
+    .thresh-table tr.active td{background:rgba(52,211,153,0.07);color:#fff;}
+    .thresh-table td.money{font-family:'JetBrains Mono',monospace;color:#34d399;}
+
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(52,211,153,0.1);border-radius:16px;max-width:900px;margin:0 auto 28px;padding:16px 22px;}
+    .ctx p{color:rgba(236,253,245,0.5);font-size:0.85rem;line-height:1.7;}
+    .ctx strong{color:#34d399;}
+
+    footer{text-align:center;padding:20px;color:rgba(236,253,245,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#34d399;text-decoration:none;}
+    @media(max-width:640px){.sliders-wrap{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 16</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Functions · if/else if · Lab 16</div>
+  <h1>Loan <span>Qualifier</span></h1>
+  <p data-i18n="hero_sub">Banks run this exact logic millions of times per day. Adjust your income and credit score to see your eligibility in real time.</p>
+</div>
+
+<div class="sliders-wrap">
+  <div class="slider-card">
+    <div class="sl-label" data-i18n="income_label">ANNUAL INCOME</div>
+    <div class="sl-value">$<span id="income-val">55000</span></div>
+    <input type="range" id="income-slider" min="10000" max="120000" step="1000" value="55000" oninput="update()"/>
+    <div class="sl-min-max"><span>$10k</span><span>$120k</span></div>
+  </div>
+  <div class="slider-card">
+    <div class="sl-label" data-i18n="credit_label">CREDIT SCORE</div>
+    <div class="sl-value"><span id="credit-val">690</span> <span>/ 850</span></div>
+    <input type="range" id="credit-slider" min="300" max="850" step="5" value="690" oninput="update()"/>
+    <div class="sl-min-max"><span>300</span><span>850</span></div>
+  </div>
+</div>
+
+<div class="result-wrap">
+  <div class="result-card" id="result-card">
+    <div class="res-icon" id="res-icon">💰</div>
+    <div class="res-title" id="res-title"></div>
+    <div class="res-msg" id="res-msg"></div>
+    <div class="loan-badges" id="loan-badges"></div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <div class="table-title" data-i18n="table_title">// Loan eligibility thresholds</div>
+  <table class="thresh-table">
+    <thead><tr><th data-i18n="th_loan">LOAN TYPE</th><th data-i18n="th_income">MIN INCOME</th><th data-i18n="th_credit">MIN CREDIT</th></tr></thead>
+    <tbody>
+      <tr id="row-duplex"><td data-i18n="loan_duplex">Duplex</td><td class="money">$60,000</td><td class="money">700</td></tr>
+      <tr id="row-condo"><td data-i18n="loan_condo">Condo</td><td class="money">$45,000</td><td class="money">680</td></tr>
+      <tr id="row-car"><td data-i18n="loan_car">Car</td><td class="money">$30,000</td><td class="money">650</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">getLoanMessage(annualIncome, creditScore)</strong> — <span data-i18n="ctx_text">this if/else if chain is the core of every credit decision engine. Banks, fintechs and mortgage apps use the same cascading logic to match a customer's profile against tiered eligibility rules.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Loan Qualifier · Lab 16 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Functions · if/else if · Lab 16",
+    hero_sub:"Banks run this exact logic millions of times per day. Adjust your income and credit score to see your eligibility in real time.",
+    income_label:"ANNUAL INCOME",credit_label:"CREDIT SCORE",
+    table_title:"// Loan eligibility thresholds",
+    th_loan:"LOAN TYPE",th_income:"MIN INCOME",th_credit:"MIN CREDIT",
+    loan_duplex:"Duplex",loan_condo:"Condo",loan_car:"Car",
+    ctx_title:"getLoanMessage(annualIncome, creditScore)",
+    ctx_text:"this if/else if chain is the core of every credit decision engine. Banks, fintechs and mortgage apps use the same cascading logic to match a customer's profile against tiered eligibility rules.",
+    footer:"Loan Qualifier · Lab 16 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Funciones · if/else if · Lab 16",
+    hero_sub:"Los bancos ejecutan esta lógica millones de veces al día. Ajusta tus ingresos y puntaje de crédito para ver tu elegibilidad en tiempo real.",
+    income_label:"INGRESOS ANUALES",credit_label:"PUNTAJE CREDITICIO",
+    table_title:"// Umbrales de elegibilidad de préstamos",
+    th_loan:"TIPO DE PRÉSTAMO",th_income:"INGRESO MÍN",th_credit:"CRÉDITO MÍN",
+    loan_duplex:"Dúplex",loan_condo:"Apartamento",loan_car:"Auto",
+    ctx_title:"getLoanMessage(annualIncome, creditScore)",
+    ctx_text:"esta cadena if/else if es el núcleo de todo motor de decisión crediticia. Bancos, fintechs y apps de hipotecas usan la misma lógica en cascada para evaluar el perfil del cliente.",
+    footer:"Calificador de Préstamos · Lab 16 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Fonctions · if/else if · Lab 16",
+    hero_sub:"Les banques exécutent cette logique des millions de fois par jour. Ajustez vos revenus et votre score de crédit pour voir votre éligibilité en temps réel.",
+    income_label:"REVENU ANNUEL",credit_label:"SCORE DE CRÉDIT",
+    table_title:"// Seuils d'éligibilité aux prêts",
+    th_loan:"TYPE DE PRÊT",th_income:"REVENU MIN",th_credit:"CRÉDIT MIN",
+    loan_duplex:"Duplex",loan_condo:"Appartement",loan_car:"Voiture",
+    ctx_title:"getLoanMessage(annualIncome, creditScore)",
+    ctx_text:"cette chaîne if/else if est au cœur de tout moteur de décision de crédit. Banques, fintechs et apps hypothécaires utilisent la même logique en cascade.",
+    footer:"Qualification de Prêt · Lab 16 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+const minIncomeForDuplex=60000,minCreditScoreForDuplex=700;
+const minIncomeForCondo=45000,minCreditScoreForCondo=680;
+const minIncomeForCar=30000,minCreditScoreForCar=650;
+
+function getLoanMessage(annualIncome,creditScore){
+  if(creditScore>=minCreditScoreForDuplex&&annualIncome>=minIncomeForDuplex)
+    return "You qualify for a duplex, condo, and car loan.";
+  else if(annualIncome>=minIncomeForCondo&&creditScore>=minCreditScoreForCondo)
+    return "You qualify for a condo and car loan.";
+  else if(annualIncome>=minIncomeForCar&&creditScore>=minCreditScoreForCar)
+    return "You qualify for a car loan.";
+  else return "You don't qualify for any loans.";
+}
+
+function update(){
+  const income=parseInt(document.getElementById('income-slider').value);
+  const credit=parseInt(document.getElementById('credit-slider').value);
+  document.getElementById('income-val').textContent=income.toLocaleString();
+  document.getElementById('credit-val').textContent=credit;
+
+  const msg=getLoanMessage(income,credit);
+  const card=document.getElementById('result-card');
+  const icon=document.getElementById('res-icon');
+  const title=document.getElementById('res-title');
+  const msgEl=document.getElementById('res-msg');
+  const badges=document.getElementById('loan-badges');
+
+  // Determine tier
+  const hasDuplex=credit>=minCreditScoreForDuplex&&income>=minIncomeForDuplex;
+  const hasCondo=income>=minIncomeForCondo&&credit>=minCreditScoreForCondo;
+  const hasCar=income>=minIncomeForCar&&credit>=minCreditScoreForCar;
+
+  card.className='result-card';
+  if(hasDuplex){
+    card.classList.add('res-eligible');
+    icon.textContent='🏠';
+    title.className='res-title green';title.textContent='Fully Eligible';
+  }else if(hasCondo){
+    card.classList.add('res-partial');
+    icon.textContent='🏢';
+    title.className='res-title yellow';title.textContent='Partially Eligible';
+  }else if(hasCar){
+    card.classList.add('res-partial');
+    icon.textContent='🚗';
+    title.className='res-title yellow';title.textContent='Car Loan Only';
+  }else{
+    card.classList.add('res-denied');
+    icon.textContent='❌';
+    title.className='res-title red';title.textContent='Not Eligible';
+  }
+  msgEl.textContent=msg;
+
+  const loans=['Duplex','Condo','Car'];
+  const eligible=[hasDuplex,hasCondo||hasDuplex,hasCar||hasCondo||hasDuplex];
+  badges.innerHTML=loans.map((l,i)=>`<span class="l-badge ${eligible[i]?'b-green':'b-gray'}">${eligible[i]?'✓':'-'} ${l}</span>`).join('');
+
+  // Highlight table rows
+  document.getElementById('row-duplex').className=hasDuplex?'active':'';
+  document.getElementById('row-condo').className=(hasCondo||hasDuplex)?'active':'';
+  document.getElementById('row-car').className=(hasCar||hasCondo||hasDuplex)?'active':'';
+}
+update();
+</script>
+</body>
+</html>

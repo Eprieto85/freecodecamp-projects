@@ -1,216 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="String Formatter — trim, case, camelCase by Edisson Prieto." />
-    <title>String Formatter — EP JS Lab 06</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      :root { --bg: #0f0a00; --bg2: #1a1000; --accent: #f59e0b; --accent2: #fcd34d; --text: #fef3c7; --muted: #92710a; --card: rgba(30,20,0,0.7); --border: rgba(245,158,11,0.22); }
-      body { font-family: 'Exo 2', sans-serif; background: linear-gradient(135deg, var(--bg), var(--bg2), var(--bg)); color: var(--text); min-height: 100vh; }
-      .lang-bar { background: #080500; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 8px 20px; font-size: 0.85rem; color: var(--accent); }
-      .lang-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
-      .lang-btn:hover, .lang-btn.active { background: var(--accent); color: #0f0a00; font-weight: bold; }
-      header { text-align: center; padding: 32px 20px 18px; border-bottom: 3px solid var(--accent); background: linear-gradient(135deg, #1a1000, #261800); }
-      header h1 { font-size: 2rem; color: var(--accent); letter-spacing: 3px; }
-      header p  { color: var(--muted); margin-top: 6px; font-size: 0.88rem; }
-      .badge { display: inline-block; background: rgba(245,158,11,0.1); border: 1px solid var(--border); color: var(--accent); font-size: 0.72rem; padding: 2px 10px; border-radius: 20px; margin-top: 7px; }
-
-      .main { max-width: 900px; margin: 28px auto 0; padding: 0 20px; }
-
-      /* Pipeline */
-      .pipeline { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 20px; }
-      .pipeline h3 { color: var(--accent); font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
-      .pipe-steps { display: flex; flex-direction: column; gap: 10px; }
-      .pipe-step { display: flex; align-items: center; gap: 12px; }
-      .pipe-label { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; min-width: 160px; flex-shrink: 0; }
-      .pipe-arrow { color: var(--accent); font-size: 0.8rem; }
-      .pipe-val { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15); padding: 3px 10px; border-radius: 6px; white-space: pre; }
-      .pipe-val .sp { background: rgba(245,158,11,0.3); padding: 0 2px; border-radius: 2px; }
-      .pipe-val.upper { color: #fcd34d; letter-spacing: 2px; }
-      .pipe-val.lower { color: #86efac; }
-      .pipe-val.camel { color: #93c5fd; }
-
-      /* camelCase breakdown */
-      .camel-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; }
-      .camel-box h3 { color: var(--accent); font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
-      .camel-steps { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
-      .cs { background: rgba(245,158,11,0.08); border: 1px solid var(--border); padding: 6px 12px; border-radius: 8px; }
-      .cs .label { color: var(--muted); font-size: 0.65rem; display: block; margin-bottom: 3px; }
-      .cs .val   { color: var(--accent2); }
-      .cs-arrow  { color: var(--accent); font-size: 1.1rem; }
-
-      /* Console */
-      .terminal { background: #05030a; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
-      .term-bar { background: #080510; padding: 9px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
-      .term-dot { width: 11px; height: 11px; border-radius: 50%; }
-      .term-dot.r{background:#ff5f57;}.term-dot.y{background:#ffbd2e;}.term-dot.g{background:#28ca42;}
-      .term-title { color: var(--muted); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; margin-left: 6px; }
-      .term-body { padding: 12px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.8; }
-      .prompt { color: var(--accent); } .out { color: #fef3c7; } .comment { color: #3a2a00; }
-      .line { opacity: 0; transform: translateX(-6px); animation: fi 0.3s forwards; }
-      @keyframes fi { to { opacity:1; transform:none; } }
-
-      .skills { max-width: 900px; margin: 0 auto 20px; padding: 0 20px; }
-      .info-panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
-      .info-panel h2 { color: var(--accent); margin-bottom: 8px; font-size: 1rem; }
-      .info-panel p  { color: var(--muted); line-height: 1.6; margin-bottom: 12px; font-size: 0.86rem; }
-      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
-      .tag { background: rgba(245,158,11,0.08); border: 1px solid var(--border); color: var(--accent); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
-      footer { text-align: center; padding: 18px; color: #2a1800; font-size: 0.8rem; border-top: 1px solid #1a1000; margin-top: 10px; }
-      footer a { color: var(--accent); text-decoration: none; }
-    </style>
-  </head>
-  <body>
-    <div class="lang-bar">
-      <span data-i18n="lang_label">Language:</span>
-      <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
-      <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
-      <button onclick="setLang('fr')" class="lang-btn" id="btn-fr">FR</button>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>String Formatter — EP JS Lab 06</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0f1a2e,#1a2e4a,#0f1a2e);min-height:100vh;color:#dbeafe;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(96,165,250,0.12);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#60a5fa;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);color:#60a5fa;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#60a5fa;border-color:#60a5fa;color:#0f1a2e;font-weight:700;}
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#60a5fa;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#60a5fa;}
+    .hero p{color:rgba(219,234,254,0.5);font-size:0.92rem;max-width:500px;margin:0 auto;}
+    .tool-wrap{max-width:820px;margin:0 auto 28px;padding:0 20px;}
+    .tool-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(96,165,250,0.14);border-radius:24px;padding:28px 32px;}
+    .tl-label{font-size:0.78rem;color:#60a5fa;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+    .inp-wrap{margin-bottom:16px;}
+    textarea.inp-field{width:100%;background:rgba(0,0,0,0.4);border:2px solid rgba(96,165,250,0.15);border-radius:10px;padding:12px 14px;color:#dbeafe;font-size:0.95rem;outline:none;transition:border-color .2s;resize:vertical;min-height:70px;font-family:'JetBrains Mono',monospace;}
+    textarea.inp-field:focus{border-color:#60a5fa;}
+    .run-btn{width:100%;background:linear-gradient(135deg,#60a5fa,#2563eb);border:none;border-radius:12px;padding:14px;color:#fff;font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:16px;transition:all .2s;}
+    .run-btn:hover{filter:brightness(1.1);}
+    .results{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+    .r-card{background:rgba(0,0,0,0.3);border-radius:12px;padding:14px 16px;}
+    .r-method{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#60a5fa;margin-bottom:4px;}
+    .r-result{font-family:'JetBrains Mono',monospace;font-size:0.95rem;font-weight:700;color:#fff;word-break:break-all;}
+    .r-desc{font-size:0.7rem;color:rgba(219,234,254,0.35);margin-top:4px;}
+    .concepts-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+    .c-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 10px;}
+    .c-kw{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#60a5fa;font-weight:700;margin-bottom:5px;}
+    .c-desc{font-size:0.65rem;color:rgba(219,234,254,0.4);line-height:1.4;}
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(96,165,250,0.08);border-radius:14px;max-width:900px;margin:0 auto 28px;padding:14px 20px;}
+    .ctx p{color:rgba(219,234,254,0.5);font-size:0.84rem;line-height:1.6;}
+    .ctx strong{color:#60a5fa;}
+    footer{text-align:center;padding:20px;color:rgba(219,234,254,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#60a5fa;text-decoration:none;}
+    @media(max-width:580px){.results{grid-template-columns:1fr;}.concepts-wrap{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 06</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">.trim() · .toUpperCase() · .toLowerCase() · Lab 06</div>
+  <h1>String <span>Formatter</span></h1>
+  <p data-i18n="hero_sub">Paste messy user input and watch it get cleaned up. These five methods are in every form validator, search engine, and data pipeline.</p>
+</div>
+<div class="tool-wrap">
+  <div class="tool-card">
+    <div class="tl-label" data-i18n="tl_label">// Paste any messy string to format it</div>
+    <div class="inp-wrap">
+      <textarea class="inp-field" id="str-inp">   Hello World!   This is MESSY input.   </textarea>
     </div>
-    <header>
-      <h1>🛠 <span data-i18n="title">String Formatter</span></h1>
-      <p data-i18n="subtitle">trim · toUpperCase · toLowerCase · camelCase · Lab 06</p>
-      <div class="badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
-    </header>
-
-    <div class="main">
-      <div class="pipeline">
-        <h3 data-i18n="pipe_title">Formatting Pipeline</h3>
-        <div class="pipe-steps" id="pipe-steps"></div>
-      </div>
-
-      <div class="camel-box">
-        <h3 data-i18n="camel_title">camelCase Step-by-Step</h3>
-        <div class="camel-steps" id="camel-steps"></div>
-      </div>
-
-      <div class="terminal">
-        <div class="term-bar">
-          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
-          <span class="term-title">script.js — console output</span>
-        </div>
-        <div class="term-body" id="terminal"></div>
-      </div>
-    </div>
-
-    <div class="skills">
-      <div class="info-panel">
-        <h2 data-i18n="skills_title">🎯 JavaScript Concepts</h2>
-        <p data-i18n="skills_desc">Whitespace removal with trim(), trimStart(), trimEnd(). Case conversion with toUpperCase() / toLowerCase(). Building camelCase with slice() and bracket notation.</p>
-        <div class="tags">
-          <span class="tag">.trim()</span><span class="tag">.trimStart()</span><span class="tag">.trimEnd()</span>
-          <span class="tag">.toUpperCase()</span><span class="tag">.toLowerCase()</span>
-          <span class="tag">.slice()</span><span class="tag">camelCase</span>
-        </div>
-      </div>
-    </div>
-    <footer><span data-i18n="footer">String Formatter · JS Lab 06 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
-
-    <script>
-      const T = {
-        en: { lang_label:"Language:", title:"String Formatter", badge:"freeCodeCamp · JavaScript Certification",
-          subtitle:"trim · toUpperCase · toLowerCase · camelCase · Lab 06",
-          pipe_title:"Formatting Pipeline", camel_title:"camelCase Step-by-Step",
-          skills_title:"🎯 JavaScript Concepts",
-          skills_desc:"Whitespace removal with trim(), trimStart(), trimEnd(). Case conversion with toUpperCase() / toLowerCase(). Building camelCase with slice() and bracket notation.",
-          footer:"String Formatter · JS Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
-        es: { lang_label:"Idioma:", title:"Formateador de Cadenas", badge:"freeCodeCamp · Certificación JavaScript",
-          subtitle:"trim · toUpperCase · toLowerCase · camelCase · Lab 06",
-          pipe_title:"Pipeline de Formateo", camel_title:"camelCase Paso a Paso",
-          skills_title:"🎯 Conceptos JavaScript",
-          skills_desc:"Eliminación de espacios con trim(), trimStart(), trimEnd(). Conversión de mayúsculas/minúsculas con toUpperCase() / toLowerCase(). Construcción de camelCase con slice() y notación de corchetes.",
-          footer:"Formateador de Cadenas · JS Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" },
-        fr: { lang_label:"Langue :", title:"Formateur de Chaînes", badge:"freeCodeCamp · Certification JavaScript",
-          subtitle:"trim · toUpperCase · toLowerCase · camelCase · Lab 06",
-          pipe_title:"Pipeline de Formatage", camel_title:"camelCase Étape par Étape",
-          skills_title:"🎯 Concepts JavaScript",
-          skills_desc:"Suppression d'espaces avec trim(), trimStart(), trimEnd(). Conversion de casse avec toUpperCase() / toLowerCase(). Construction de camelCase avec slice() et la notation par crochets.",
-          footer:"Formateur de Chaînes · JS Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>" }
-      };
-      function setLang(lang) {
-        document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(T[lang][k]!==undefined) el.innerHTML=T[lang][k]; });
-        document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-        document.getElementById('btn-'+lang).classList.add('active');
-        document.documentElement.lang = lang;
-      }
-      setLang('en');
-
-      const userInput    = "   Hello World!   ";
-      const cleaned      = userInput.trim();
-      const trimmedStart = userInput.trimStart();
-      const trimmedEnd   = userInput.trimEnd();
-      const upper        = cleaned.toUpperCase();
-      const lower        = cleaned.toLowerCase();
-      const lowercaseWord = "camelcase";
-      const camelCased   = lowercaseWord.slice(0,5) + lowercaseWord[5].toUpperCase() + lowercaseWord.slice(-3);
-
-      function showSpaces(s) {
-        return s.replace(/ /g, '<span class="sp">·</span>');
-      }
-
-      const pipeData = [
-        { label: "Original input", val: showSpaces(userInput), cls: "" },
-        { label: ".trim()",        val: cleaned,               cls: "" },
-        { label: ".trimStart()",   val: showSpaces(trimmedStart), cls: "" },
-        { label: ".trimEnd()",     val: showSpaces(trimmedEnd),   cls: "" },
-        { label: ".toUpperCase()", val: upper,                 cls: "upper" },
-        { label: ".toLowerCase()", val: lower,                 cls: "lower" },
-        { label: "camelCase result", val: camelCased,          cls: "camel" }
-      ];
-
-      const pipeEl = document.getElementById('pipe-steps');
-      pipeData.forEach(p => {
-        const row = document.createElement('div'); row.className = 'pipe-step';
-        row.innerHTML = `<div class="pipe-label">${p.label}</div><div class="pipe-arrow">→</div><div class="pipe-val ${p.cls}">${p.val}</div>`;
-        pipeEl.appendChild(row);
-      });
-
-      /* camelCase breakdown */
-      const camelEl = document.getElementById('camel-steps');
-      const camSteps = [
-        { label: 'input',          val: `"${lowercaseWord}"` },
-        { label: 'slice(0,5)',     val: `"${lowercaseWord.slice(0,5)}"` },
-        { label: '[5].toUpper()',  val: `"${lowercaseWord[5].toUpperCase()}"` },
-        { label: 'slice(-3)',      val: `"${lowercaseWord.slice(-3)}"` },
-        { label: 'result',         val: `"${camelCased}"` }
-      ];
-      camSteps.forEach((s, i) => {
-        if (i > 0 && i < camSteps.length - 1) {
-          const arr = document.createElement('div'); arr.className = 'cs-arrow'; arr.textContent = '+';
-          camelEl.appendChild(arr);
-        } else if (i === camSteps.length - 1) {
-          const arr = document.createElement('div'); arr.className = 'cs-arrow'; arr.textContent = '=';
-          camelEl.appendChild(arr);
-        }
-        const cs = document.createElement('div'); cs.className = 'cs';
-        cs.innerHTML = `<span class="label">${s.label}</span><span class="val">${s.val}</span>`;
-        camelEl.appendChild(cs);
-      });
-
-      /* Terminal */
-      const lines = [
-        {t:'c',v:'// trim methods'},
-        {t:'o',v:`Original: "${userInput}"`},
-        {t:'o',v:`trim(): "${cleaned}"`},
-        {t:'o',v:`trimStart(): "${trimmedStart}"`},
-        {t:'o',v:`trimEnd(): "${trimmedEnd}"`},
-        {t:'c',v:'// case methods'},
-        {t:'o',v:`toUpperCase(): "${upper}"`},
-        {t:'o',v:`toLowerCase(): "${lower}"`},
-        {t:'c',v:'// camelCase'},
-        {t:'o',v:`camelCased: "${camelCased}"`}
-      ];
-      const term = document.getElementById('terminal');
-      lines.forEach((l, i) => {
-        const d = document.createElement('div'); d.className = 'line';
-        d.style.animationDelay = (i * 0.1) + 's';
-        d.innerHTML = l.t === 'c' ? `<span class="comment">${l.v}</span>` : `<span class="prompt">› </span><span class="out">${l.v}</span>`;
-        term.appendChild(d);
-      });
-    </script>
-  </body>
+    <button class="run-btn" onclick="run()" data-i18n="run_btn">Format →</button>
+    <div class="results" id="results"></div>
+  </div>
+</div>
+<div class="concepts-wrap">
+  <div class="c-card"><div class="c-kw">.trim()</div><div class="c-desc" data-i18n="c1">Removes spaces from both ends. Essential for form input cleaning.</div></div>
+  <div class="c-card"><div class="c-kw">.trimStart()</div><div class="c-desc" data-i18n="c2">Removes leading whitespace only. Keeps trailing spaces.</div></div>
+  <div class="c-card"><div class="c-kw">.trimEnd()</div><div class="c-desc" data-i18n="c3">Removes trailing whitespace only. Keeps leading spaces.</div></div>
+  <div class="c-card"><div class="c-kw">.toUpperCase()</div><div class="c-desc" data-i18n="c4">All caps. Used for labels, error codes, and IDs.</div></div>
+  <div class="c-card"><div class="c-kw">.toLowerCase()</div><div class="c-desc" data-i18n="c5">All lowercase. Used for email, slug, and search normalization.</div></div>
+</div>
+<div class="ctx"><p>💡 <strong data-i18n="ctx_title">Real-world use</strong> — <span data-i18n="ctx_text">every login form calls .trim().toLowerCase() on the email before comparing. Database slugs use .toLowerCase().replace(/ /g,"-"). These methods are the first line of defense in input sanitization.</span></p></div>
+<footer><span data-i18n="footer">String Formatter · Lab 06 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+<script>
+const T={en:{badge:"freeCodeCamp · JS Certification",hero_label:".trim() · .toUpperCase() · .toLowerCase() · Lab 06",hero_sub:"Paste messy user input and watch it get cleaned up. These five methods are in every form validator, search engine, and data pipeline.",tl_label:"// Paste any messy string to format it",run_btn:"Format →",c1:"Removes spaces from both ends. Essential for form input cleaning.",c2:"Removes leading whitespace only. Keeps trailing spaces.",c3:"Removes trailing whitespace only. Keeps leading spaces.",c4:"All caps. Used for labels, error codes, and IDs.",c5:"All lowercase. Used for email, slug, and search normalization.",ctx_title:"Real-world use",ctx_text:"every login form calls .trim().toLowerCase() on the email before comparing. Database slugs use .toLowerCase().replace(/ /g,'-'). These are the first line of defense in input sanitization.",footer:"String Formatter · Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},es:{badge:"freeCodeCamp · Certificación JS",hero_label:".trim() · .toUpperCase() · .toLowerCase() · Lab 06",hero_sub:"Pega entrada sucia y mira cómo se limpia. Estos cinco métodos están en todo validador, motor de búsqueda y pipeline de datos.",tl_label:"// Pega cualquier cadena desordenada para formatearla",run_btn:"Formatear →",c1:"Elimina espacios de ambos extremos. Esencial para limpiar entrada de formularios.",c2:"Elimina solo el espacio inicial. Mantiene los espacios finales.",c3:"Elimina solo el espacio final. Mantiene los espacios iniciales.",c4:"Todo en mayúsculas. Usado para etiquetas, códigos de error e IDs.",c5:"Todo en minúsculas. Usado para normalización de email, slug y búsqueda.",ctx_title:"Uso en el mundo real",ctx_text:"todo formulario de inicio de sesión llama a .trim().toLowerCase() en el email antes de comparar. Los slugs de base de datos usan .toLowerCase().replace(/ /g,'-').",footer:"Formateador de Cadenas · Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},fr:{badge:"freeCodeCamp · Certification JS",hero_label:".trim() · .toUpperCase() · .toLowerCase() · Lab 06",hero_sub:"Collez une entrée désordonnée et regardez-la se nettoyer. Ces cinq méthodes sont dans chaque validateur, moteur de recherche et pipeline de données.",tl_label:"// Collez une chaîne désordonnée pour la formater",run_btn:"Formater →",c1:"Supprime les espaces des deux côtés. Essentiel pour nettoyer les entrées de formulaire.",c2:"Supprime uniquement l'espace de début. Conserve les espaces de fin.",c3:"Supprime uniquement l'espace de fin. Conserve les espaces de début.",c4:"Tout en majuscules. Utilisé pour les étiquettes, les codes d'erreur et les identifiants.",c5:"Tout en minuscules. Utilisé pour la normalisation des emails, slugs et recherches.",ctx_title:"Usage réel",ctx_text:"chaque formulaire de connexion appelle .trim().toLowerCase() sur l'email avant de comparer. Les slugs de base de données utilisent .toLowerCase().replace(/ /g,'-').",footer:"Formateur de Chaînes · Lab 06 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}};
+function setLang(l){document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');}
+setLang('en');
+function run(){
+  const s=document.getElementById('str-inp').value;
+  const data=[
+    {m:'str.trim()',r:s.trim(),d:'No leading/trailing spaces'},
+    {m:'str.trimStart()',r:s.trimStart(),d:'No leading spaces'},
+    {m:'str.trimEnd()',r:s.trimEnd(),d:'No trailing spaces'},
+    {m:'str.toUpperCase()',r:s.toUpperCase(),d:'All uppercase'},
+    {m:'str.toLowerCase()',r:s.toLowerCase(),d:'All lowercase'},
+    {m:'str.trim().toLowerCase()',r:s.trim().toLowerCase(),d:'Method chaining — cleaned + normalized'},
+  ];
+  const el=document.getElementById('results');
+  el.innerHTML='';
+  data.forEach(d=>{
+    const c=document.createElement('div');c.className='r-card';
+    c.innerHTML=`<div class="r-method">${d.m}</div><div class="r-result">"${d.r}"</div><div class="r-desc">${d.d}</div>`;
+    el.appendChild(c);
+  });
+}
+run();
+</script>
+</body>
 </html>

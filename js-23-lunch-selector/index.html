@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lunch Selector — EP JS Lab 23</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#431407,#7c2d12,#431407);min-height:100vh;color:#ffedd5;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(251,146,60,0.12);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#fb923c;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.3);color:#fb923c;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#fb923c;border-color:#fb923c;color:#431407;font-weight:700;}
+
+    .hero{text-align:center;padding:40px 20px 24px;}
+    .hero-label{display:inline-block;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#fb923c;margin-bottom:12px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#fb923c;}
+    .hero p{color:rgba(255,237,213,0.5);font-size:0.9rem;max-width:520px;margin:0 auto;}
+
+    /* LAYOUT */
+    .layout{max-width:960px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+    /* MENU PANEL */
+    .menu-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(251,146,60,0.12);border-radius:20px;padding:22px 24px;}
+    .card-label{font-size:0.75rem;color:#fb923c;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:14px;}
+    .input-row{display:flex;gap:8px;margin-bottom:12px;}
+    .lunch-input{flex:1;background:rgba(0,0,0,0.4);border:2px solid rgba(251,146,60,0.15);border-radius:10px;padding:10px 14px;color:#ffedd5;font-family:'JetBrains Mono',monospace;font-size:0.9rem;outline:none;transition:border-color .2s;}
+    .lunch-input:focus{border-color:#fb923c;}
+    .btn-add-end{background:rgba(251,146,60,0.15);border:1px solid rgba(251,146,60,0.3);color:#fb923c;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:0.75rem;font-weight:700;white-space:nowrap;transition:all .2s;}
+    .btn-add-start{background:rgba(96,165,250,0.12);border:1px solid rgba(96,165,250,0.25);color:#60a5fa;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:0.75rem;font-weight:700;white-space:nowrap;transition:all .2s;}
+    .btn-add-end:hover,.btn-add-start:hover{filter:brightness(1.2);}
+    .remove-row{display:flex;gap:8px;margin-bottom:16px;}
+    .btn-rm{flex:1;padding:10px 8px;border-radius:10px;border:none;cursor:pointer;font-size:0.75rem;font-weight:700;transition:all .2s;}
+    .btn-rm-last{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);color:#f87171;}
+    .btn-rm-first{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:#fbbf24;}
+    .btn-rm:hover{filter:brightness(1.2);}
+    .btn-random{width:100%;padding:14px;background:linear-gradient(135deg,#fb923c,#ea580c);border:none;border-radius:12px;color:#fff;font-weight:800;font-size:0.95rem;cursor:pointer;transition:all .2s;margin-bottom:12px;}
+    .btn-random:hover{filter:brightness(1.1);transform:translateY(-1px);}
+    .random-result{background:rgba(0,0,0,0.3);border-radius:12px;padding:14px;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center;}
+    .rand-text{font-size:1.1rem;font-weight:700;color:#fb923c;font-family:'JetBrains Mono',monospace;}
+    .rand-empty{font-size:0.8rem;color:rgba(255,237,213,0.3);}
+
+    /* LIST */
+    .list-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(251,146,60,0.12);border-radius:20px;padding:22px 24px;}
+    .list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+    .item-count{background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.2);color:#fb923c;font-size:0.7rem;padding:2px 10px;border-radius:12px;font-family:'JetBrains Mono',monospace;}
+    .menu-items{min-height:220px;}
+    .menu-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;margin-bottom:5px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);animation:slideIn .2s ease;}
+    @keyframes slideIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+    .mi-idx{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:rgba(255,237,213,0.2);min-width:18px;}
+    .mi-name{font-size:0.85rem;color:#ffedd5;flex:1;}
+    .pos-tag{font-size:0.62rem;padding:2px 6px;border-radius:4px;}
+    .pt-first{background:rgba(96,165,250,0.1);color:#60a5fa;}
+    .pt-last{background:rgba(248,113,113,0.1);color:#f87171;}
+    .empty-state{color:rgba(255,237,213,0.2);font-size:0.8rem;text-align:center;padding:40px 0;font-style:italic;}
+
+    /* FUNCTIONS REF */
+    .ref-wrap{max-width:960px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .ref-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:12px 14px;}
+    .ref-name{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#fb923c;margin-bottom:4px;}
+    .ref-desc{font-size:0.7rem;color:rgba(255,237,213,0.4);line-height:1.4;}
+
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(251,146,60,0.08);border-radius:14px;max-width:960px;margin:0 auto 24px;padding:14px 20px;}
+    .ctx p{color:rgba(255,237,213,0.5);font-size:0.84rem;line-height:1.6;}
+    .ctx strong{color:#fb923c;}
+
+    footer{text-align:center;padding:18px;color:rgba(255,237,213,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#fb923c;text-decoration:none;}
+    @media(max-width:640px){.layout{grid-template-columns:1fr;}.ref-wrap{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 23</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Arrays · Array Methods · Math.random() · Lab 23</div>
+  <h1>Lunch <span>Selector</span></h1>
+  <p data-i18n="hero_sub">A real-world array manager combining 7 functions. The same pattern powers restaurant apps, playlist builders, and recommendation engines.</p>
+</div>
+
+<div class="layout">
+  <div class="menu-card">
+    <div class="card-label" data-i18n="card_label">// Manage the lunch menu</div>
+    <div class="input-row">
+      <input class="lunch-input" id="lunch-input" placeholder="e.g. Pizza, Tacos..." onkeydown="if(event.key==='Enter')addEnd()"/>
+      <button class="btn-add-end" onclick="addEnd()" data-i18n="btn_end">+ End</button>
+      <button class="btn-add-start" onclick="addStart()" data-i18n="btn_start">+ Start</button>
+    </div>
+    <div class="remove-row">
+      <button class="btn-rm btn-rm-last" onclick="removeLast()" data-i18n="btn_rm_last">Remove Last</button>
+      <button class="btn-rm btn-rm-first" onclick="removeFirst()" data-i18n="btn_rm_first">Remove First</button>
+    </div>
+    <button class="btn-random" onclick="pickRandom()" data-i18n="btn_random">🎲 Pick Random Lunch</button>
+    <div class="random-result" id="random-result">
+      <span class="rand-empty" data-i18n="rand_empty">Click above to pick a random lunch</span>
+    </div>
+  </div>
+  <div class="list-card">
+    <div class="list-header">
+      <span class="card-label" data-i18n="list_title">// lunches [ ]</span>
+      <span class="item-count" id="item-count">0 items</span>
+    </div>
+    <div class="menu-items" id="menu-items"><div class="empty-state" data-i18n="empty_state">Menu is empty — add a lunch item</div></div>
+  </div>
+</div>
+
+<div class="ref-wrap">
+  <div class="ref-card"><div class="ref-name">addLunchToEnd(arr, item)</div><div class="ref-desc" data-i18n="f1">Uses .push() — adds to the end, logs confirmation, returns updated array.</div></div>
+  <div class="ref-card"><div class="ref-name">addLunchToStart(arr, item)</div><div class="ref-desc" data-i18n="f2">Uses .unshift() — adds to the start, logs confirmation, returns updated array.</div></div>
+  <div class="ref-card"><div class="ref-name">removeLastLunch(arr)</div><div class="ref-desc" data-i18n="f3">Uses .pop() — removes last, handles empty array guard, returns updated array.</div></div>
+  <div class="ref-card"><div class="ref-name">removeFirstLunch(arr)</div><div class="ref-desc" data-i18n="f4">Uses .shift() — removes first, handles empty array guard, returns updated array.</div></div>
+  <div class="ref-card"><div class="ref-name">getRandomLunch(arr)</div><div class="ref-desc" data-i18n="f5">Math.floor(Math.random() * arr.length) — picks a random index, non-destructive.</div></div>
+  <div class="ref-card"><div class="ref-name">showLunchMenu(arr)</div><div class="ref-desc" data-i18n="f6">Uses .join(", ") to display array as a comma-separated readable string.</div></div>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">Pattern: array manager</strong> — <span data-i18n="ctx_text">wrapping array mutations in named functions is exactly how production apps are structured. The function is the unit of behavior, the array is the state. This pattern — functions that accept an array and return the modified array — is the foundation of reducers, state managers (Redux, Vuex), and functional programming.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Lunch Selector · Lab 23 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Arrays · Array Methods · Math.random() · Lab 23",
+    hero_sub:"A real-world array manager combining 7 functions. The same pattern powers restaurant apps, playlist builders, and recommendation engines.",
+    card_label:"// Manage the lunch menu",btn_end:"+ End",btn_start:"+ Start",
+    btn_rm_last:"Remove Last",btn_rm_first:"Remove First",btn_random:"🎲 Pick Random Lunch",
+    rand_empty:"Click above to pick a random lunch",list_title:"// lunches [ ]",
+    empty_state:"Menu is empty — add a lunch item",
+    f1:"Uses .push() — adds to the end, logs confirmation, returns updated array.",
+    f2:"Uses .unshift() — adds to the start, logs confirmation, returns updated array.",
+    f3:"Uses .pop() — removes last, handles empty array guard, returns updated array.",
+    f4:"Uses .shift() — removes first, handles empty array guard, returns updated array.",
+    f5:"Math.floor(Math.random() * arr.length) — picks a random index, non-destructive.",
+    f6:'Uses .join(", ") to display array as a comma-separated readable string.',
+    ctx_title:"Pattern: array manager",
+    ctx_text:"wrapping array mutations in named functions is exactly how production apps are structured. This pattern — functions that accept an array and return the modified array — is the foundation of reducers and state managers.",
+    footer:"Lunch Selector · Lab 23 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Arrays · Métodos de Array · Math.random() · Lab 23",
+    hero_sub:"Un gestor de arrays del mundo real combinando 7 funciones. El mismo patrón impulsa apps de restaurantes, listas de reproducción y motores de recomendación.",
+    card_label:"// Gestionar el menú de almuerzos",btn_end:"+ Final",btn_start:"+ Inicio",
+    btn_rm_last:"Eliminar Último",btn_rm_first:"Eliminar Primero",btn_random:"🎲 Elegir Almuerzo Aleatorio",
+    rand_empty:"Haz clic arriba para elegir un almuerzo aleatorio",list_title:"// lunches [ ]",
+    empty_state:"Menú vacío — agrega un elemento",
+    f1:"Usa .push() — agrega al final, registra confirmación, retorna array actualizado.",
+    f2:"Usa .unshift() — agrega al inicio, registra confirmación, retorna array actualizado.",
+    f3:"Usa .pop() — elimina el último, maneja array vacío, retorna array actualizado.",
+    f4:"Usa .shift() — elimina el primero, maneja array vacío, retorna array actualizado.",
+    f5:"Math.floor(Math.random() * arr.length) — elige un índice aleatorio, no destructivo.",
+    f6:'Usa .join(", ") para mostrar el array como cadena legible separada por comas.',
+    ctx_title:"Patrón: gestor de arrays",
+    ctx_text:"envolver mutaciones de arrays en funciones nombradas es exactamente cómo se estructuran las apps en producción. Este patrón es la base de los reducers y gestores de estado.",
+    footer:"Selector de Almuerzos · Lab 23 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Tableaux · Méthodes · Math.random() · Lab 23",
+    hero_sub:"Un gestionnaire de tableaux réel combinant 7 fonctions. Le même modèle alimente les apps de restaurant, les créateurs de playlists et les moteurs de recommandation.",
+    card_label:"// Gérer le menu du déjeuner",btn_end:"+ Fin",btn_start:"+ Début",
+    btn_rm_last:"Supprimer Dernier",btn_rm_first:"Supprimer Premier",btn_random:"🎲 Choisir un Déjeuner Aléatoire",
+    rand_empty:"Cliquez ci-dessus pour choisir un déjeuner aléatoire",list_title:"// lunches [ ]",
+    empty_state:"Menu vide — ajoutez un élément",
+    f1:"Utilise .push() — ajoute à la fin, enregistre la confirmation, retourne le tableau mis à jour.",
+    f2:"Utilise .unshift() — ajoute au début, retourne le tableau mis à jour.",
+    f3:"Utilise .pop() — supprime le dernier, gère le tableau vide, retourne le tableau.",
+    f4:"Utilise .shift() — supprime le premier, gère le tableau vide, retourne le tableau.",
+    f5:"Math.floor(Math.random() * arr.length) — choisit un index aléatoire, non destructif.",
+    f6:'Utilise .join(", ") pour afficher le tableau comme une chaîne lisible.',
+    ctx_title:"Modèle : gestionnaire de tableaux",
+    ctx_text:"envelopper les mutations de tableaux dans des fonctions nommées est exactement ainsi que les apps en production sont structurées. Ce modèle est la base des reducers et gestionnaires d'état.",
+    footer:"Sélecteur de Déjeuner · Lab 23 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+let lunches=[];
+
+function addLunchToEnd(arr,item){arr.push(item);return arr;}
+function addLunchToStart(arr,item){arr.unshift(item);return arr;}
+function removeLastLunch(arr){if(arr.length>0)arr.pop();return arr;}
+function removeFirstLunch(arr){if(arr.length>0)arr.shift();return arr;}
+function getRandomLunch(arr){if(!arr.length)return null;return arr[Math.floor(Math.random()*arr.length)];}
+function showLunchMenu(arr){return arr.length?arr.join(', '):'(empty)';}
+
+function getInput(){return document.getElementById('lunch-input').value.trim()||'Item';}
+
+function render(){
+  const container=document.getElementById('menu-items');
+  document.getElementById('item-count').textContent=lunches.length+' item'+(lunches.length!==1?'s':'');
+  if(!lunches.length){container.innerHTML='<div class="empty-state">Menu is empty — add a lunch item</div>';return;}
+  container.innerHTML='';
+  lunches.forEach((item,i)=>{
+    const el=document.createElement('div');el.className='menu-item';
+    let tag='';
+    if(i===0)tag='<span class="pos-tag pt-first">first</span>';
+    if(i===lunches.length-1&&lunches.length>1)tag='<span class="pos-tag pt-last">last</span>';
+    el.innerHTML=`<span class="mi-idx">${i}</span><span class="mi-name">${item}</span>${tag}`;
+    container.appendChild(el);
+  });
+}
+
+function addEnd(){
+  const item=getInput();
+  addLunchToEnd(lunches,item);
+  render();
+}
+function addStart(){
+  const item=getInput();
+  addLunchToStart(lunches,item);
+  render();
+}
+function removeLast(){
+  removeLastLunch(lunches);
+  render();
+  document.getElementById('random-result').innerHTML='<span class="rand-empty">Pick a random lunch</span>';
+}
+function removeFirst(){
+  removeFirstLunch(lunches);
+  render();
+  document.getElementById('random-result').innerHTML='<span class="rand-empty">Pick a random lunch</span>';
+}
+function pickRandom(){
+  const result=getRandomLunch(lunches);
+  const el=document.getElementById('random-result');
+  if(!result){el.innerHTML='<span class="rand-empty">Add items first</span>';return;}
+  el.innerHTML=`<span class="rand-text">🍽️ ${result}</span>`;
+}
+
+['Pizza','Sushi','Tacos','Salad'].forEach(i=>addLunchToEnd(lunches,i));
+render();
+</script>
+</body>
+</html>

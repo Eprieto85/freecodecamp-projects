@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirm Ending — EP JS Lab 21</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#001a1a,#003333,#001a1a);min-height:100vh;color:#ccfbf1;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(45,212,191,0.1);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#2dd4bf;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);color:#2dd4bf;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#2dd4bf;border-color:#2dd4bf;color:#001a1a;font-weight:700;}
+
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#2dd4bf;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#2dd4bf;}
+    .hero p{color:rgba(204,251,241,0.5);font-size:0.92rem;max-width:500px;margin:0 auto;}
+
+    /* TOOL */
+    .tool-wrap{max-width:800px;margin:0 auto 28px;padding:0 20px;}
+    .tool-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(45,212,191,0.12);border-radius:24px;padding:28px 32px;}
+    .tl-label{font-size:0.78rem;color:#2dd4bf;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+    .inputs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+    .inp-group label{display:block;font-size:0.7rem;color:rgba(204,251,241,0.4);font-family:'JetBrains Mono',monospace;margin-bottom:6px;}
+    .inp-field{width:100%;background:rgba(0,0,0,0.4);border:2px solid rgba(45,212,191,0.15);border-radius:10px;padding:12px 14px;color:#ccfbf1;font-size:0.95rem;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s;}
+    .inp-field:focus{border-color:#2dd4bf;}
+    .result-panel{background:rgba(0,0,0,0.3);border-radius:16px;padding:22px 24px;text-align:center;}
+    .res-bool{font-size:4rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1;transition:all .2s;}
+    .res-true{color:#2dd4bf;} .res-false{color:#f87171;}
+    .res-line{font-size:0.85rem;color:rgba(204,251,241,0.5);margin-top:8px;font-family:'JetBrains Mono',monospace;}
+
+    /* STRING VIZ */
+    .viz-wrap{max-width:800px;margin:0 auto 28px;padding:0 20px;}
+    .viz-title{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(204,251,241,0.3);margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
+    .str-visual{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px 20px;}
+    .sv-label{font-size:0.7rem;color:rgba(204,251,241,0.3);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+    .sv-chars{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:14px;}
+    .sv-ch{font-family:'JetBrains Mono',monospace;font-size:0.78rem;padding:4px 6px;border-radius:5px;}
+    .sv-normal{background:rgba(255,255,255,0.04);color:rgba(204,251,241,0.4);}
+    .sv-match{background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.3);color:#2dd4bf;font-weight:700;}
+    .sv-mismatch{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#f87171;}
+    .sv-slice{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:rgba(204,251,241,0.4);margin-top:8px;}
+    .sv-slice strong{color:#2dd4bf;}
+
+    /* EXAMPLES */
+    .ex-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;}
+    .ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .ex-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .2s;}
+    .ex-card:hover{background:rgba(45,212,191,0.06);border-color:rgba(45,212,191,0.15);}
+    .ex-str{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:rgba(204,251,241,0.4);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .ex-tgt{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#2dd4bf;margin-bottom:4px;}
+    .ex-bool{font-family:'JetBrains Mono',monospace;font-size:0.82rem;font-weight:700;}
+    .ex-t{color:#2dd4bf;} .ex-f{color:#f87171;}
+
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(45,212,191,0.1);border-radius:16px;max-width:900px;margin:0 auto 28px;padding:16px 22px;}
+    .ctx p{color:rgba(204,251,241,0.5);font-size:0.85rem;line-height:1.7;}
+    .ctx strong{color:#2dd4bf;}
+
+    footer{text-align:center;padding:20px;color:rgba(204,251,241,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#2dd4bf;text-decoration:none;}
+    @media(max-width:580px){.inputs-grid{grid-template-columns:1fr;}.ex-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 21</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">.slice() · String Comparison · Lab 21</div>
+  <h1>Confirm <span>Ending</span></h1>
+  <p data-i18n="hero_sub">Checking if a string ends with a target is used in file type validation, URL routing and input sanitization. Without .endsWith() — pure slice logic.</p>
+</div>
+
+<div class="tool-wrap">
+  <div class="tool-card">
+    <div class="tl-label" data-i18n="tl_label">// confirmEnding(str, target)</div>
+    <div class="inputs-grid">
+      <div class="inp-group">
+        <label data-i18n="label_str">str (main string)</label>
+        <input class="inp-field" id="str-input" value="Abstraction" oninput="update()"/>
+      </div>
+      <div class="inp-group">
+        <label data-i18n="label_tgt">target (ending to check)</label>
+        <input class="inp-field" id="tgt-input" value="action" oninput="update()"/>
+      </div>
+    </div>
+    <div class="result-panel">
+      <div class="res-bool" id="res-bool">true</div>
+      <div class="res-line" id="res-line">confirmEnding("Abstraction", "action") → true</div>
+    </div>
+  </div>
+</div>
+
+<div class="viz-wrap">
+  <div class="viz-title" data-i18n="viz_title">// Visual breakdown — str.slice(-target.length) === target</div>
+  <div class="str-visual">
+    <div class="sv-label" data-i18n="sv_full">str (full string)</div>
+    <div class="sv-chars" id="sv-full"></div>
+    <div class="sv-slice" id="sv-slice-info"></div>
+  </div>
+</div>
+
+<div class="ex-wrap">
+  <div class="viz-title" data-i18n="ex_title">// Click an example</div>
+  <div class="ex-grid" id="ex-grid"></div>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">Why not .endsWith()?</strong> — <span data-i18n="ctx_text">freeCodeCamp specifically bans it here to teach you that .endsWith() is just sugar for str.slice(-target.length) === target. Understanding what a built-in method does under the hood is what separates a junior from a senior developer. This exact pattern validates file extensions, URL suffixes, API versioning strings and DNS names.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Confirm Ending · Lab 21 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:".slice() · String Comparison · Lab 21",
+    hero_sub:"Checking if a string ends with a target is used in file type validation, URL routing and input sanitization. Without .endsWith() — pure slice logic.",
+    tl_label:"// confirmEnding(str, target)",label_str:"str (main string)",label_tgt:"target (ending to check)",
+    viz_title:"// Visual breakdown — str.slice(-target.length) === target",sv_full:"str (full string)",
+    ex_title:"// Click an example",
+    ctx_title:"Why not .endsWith()?",
+    ctx_text:"freeCodeCamp specifically bans it here to teach you that .endsWith() is just sugar for str.slice(-target.length) === target. Understanding what a built-in method does under the hood separates a junior from a senior developer.",
+    footer:"Confirm Ending · Lab 21 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:".slice() · Comparación de Cadenas · Lab 21",
+    hero_sub:"Verificar si una cadena termina con un objetivo se usa en validación de tipos de archivo, enrutamiento de URL y saneamiento de entradas.",
+    tl_label:"// confirmEnding(str, target)",label_str:"str (cadena principal)",label_tgt:"target (final a verificar)",
+    viz_title:"// Desglose visual — str.slice(-target.length) === target",sv_full:"str (cadena completa)",
+    ex_title:"// Haz clic en un ejemplo",
+    ctx_title:"¿Por qué no .endsWith()?",
+    ctx_text:"freeCodeCamp lo prohíbe específicamente para enseñarte que .endsWith() es solo azúcar sintáctico para str.slice(-target.length) === target. Entender qué hace un método integrado es lo que separa a un junior de un senior.",
+    footer:"Confirmar Final · Lab 21 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:".slice() · Comparaison de Chaînes · Lab 21",
+    hero_sub:"Vérifier si une chaîne se termine par une cible est utilisé dans la validation de type de fichier, le routage d'URL et la désinfection des entrées.",
+    tl_label:"// confirmEnding(str, target)",label_str:"str (chaîne principale)",label_tgt:"target (fin à vérifier)",
+    viz_title:"// Décomposition visuelle — str.slice(-target.length) === target",sv_full:"str (chaîne complète)",
+    ex_title:"// Cliquez sur un exemple",
+    ctx_title:"Pourquoi pas .endsWith()?",
+    ctx_text:"freeCodeCamp l'interdit spécifiquement pour vous apprendre que .endsWith() est du sucre syntaxique pour str.slice(-target.length) === target. Comprendre ce que fait une méthode intégrée sépare un junior d'un senior.",
+    footer:"Confirmer la Fin · Lab 21 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+function confirmEnding(str,target){return str.slice(-target.length)===target;}
+
+const examples=[
+  {str:"Bastian",tgt:"in"},{str:"Congratulation",tgt:"on"},{str:"Open sesame",tgt:"same"},
+  {str:"Abstraction",tgt:"action"},{str:"Open sesame",tgt:"game"},{str:"Walking on water",tgt:"Walking on water"}
+];
+const grid=document.getElementById('ex-grid');
+examples.forEach(e=>{
+  const r=confirmEnding(e.str,e.tgt);
+  const c=document.createElement('div');c.className='ex-card';
+  c.innerHTML=`<div class="ex-str">"${e.str}"</div><div class="ex-tgt">ends with "${e.tgt}"?</div><div class="ex-bool ${r?'ex-t':'ex-f'}">${r}</div>`;
+  c.onclick=()=>{document.getElementById('str-input').value=e.str;document.getElementById('tgt-input').value=e.tgt;update();};
+  grid.appendChild(c);
+});
+
+function update(){
+  const str=document.getElementById('str-input').value;
+  const tgt=document.getElementById('tgt-input').value;
+  if(!str||!tgt)return;
+  const result=confirmEnding(str,tgt);
+  const boolEl=document.getElementById('res-bool');
+  boolEl.textContent=result.toString();
+  boolEl.className='res-bool '+(result?'res-true':'res-false');
+  document.getElementById('res-line').textContent=`confirmEnding("${str}", "${tgt}") → ${result}`;
+
+  // Visualize
+  const container=document.getElementById('sv-full');
+  container.innerHTML='';
+  const sliceStart=str.length-tgt.length;
+  const sliced=str.slice(-tgt.length);
+  for(let i=0;i<str.length&&i<60;i++){
+    const ch=document.createElement('span');
+    let cls='sv-ch sv-normal';
+    if(i>=sliceStart){cls='sv-ch '+(result?'sv-match':'sv-mismatch');}
+    ch.className=cls;
+    ch.textContent=str[i];
+    container.appendChild(ch);
+  }
+  const info=document.getElementById('sv-slice-info');
+  info.innerHTML=`str.slice(-${tgt.length}) → <strong>"${sliced}"</strong> ${result?'=== ✓':'!== ✗'} target <strong>"${tgt}"</strong>`;
+}
+update();
+</script>
+</body>
+</html>

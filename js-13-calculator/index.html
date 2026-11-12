@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JS Calculator — EP Lab 13</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --g1:#1a1a2e;--g2:#16213e;--g3:#0f3460;
+      --accent:#e94560;--accent2:#f5a623;--blue:#4fc3f7;
+      --glass:rgba(255,255,255,0.07);--glass-border:rgba(255,255,255,0.12);
+    }
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--g1),var(--g2),var(--g3));min-height:100vh;color:#fff;}
+
+    /* NAV */
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(233,69,96,0.15);border:1px solid rgba(233,69,96,0.4);color:var(--accent);font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid var(--glass-border);color:rgba(255,255,255,0.6);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
+
+    /* HERO */
+    .hero{text-align:center;padding:48px 20px 32px;}
+    .hero-label{display:inline-block;background:linear-gradient(90deg,rgba(233,69,96,0.2),rgba(79,195,247,0.2));border:1px solid rgba(255,255,255,0.1);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:rgba(255,255,255,0.7);margin-bottom:16px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.6rem;font-weight:900;background:linear-gradient(90deg,#fff,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
+    .hero p{color:rgba(255,255,255,0.5);font-size:0.95rem;max-width:500px;margin:0 auto;}
+
+    /* MAIN LAYOUT */
+    .main{max-width:1000px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:1fr 1.1fr;gap:24px;align-items:start;}
+
+    /* CALCULATOR */
+    .calc-wrap{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:24px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+    .calc-screen{background:rgba(0,0,0,0.5);border-radius:16px;padding:20px 20px 12px;margin-bottom:16px;min-height:90px;text-align:right;}
+    .calc-expr{color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;font-size:0.82rem;min-height:20px;}
+    .calc-result{font-size:2.4rem;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff;line-height:1.1;}
+    .calc-fn-tag{font-size:0.7rem;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-top:4px;min-height:16px;}
+    .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+    .btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:16px 8px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
+    .btn:hover{background:rgba(255,255,255,0.18);transform:translateY(-1px);}
+    .btn:active{transform:scale(0.96);}
+    .btn.op{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.3);color:var(--accent);}
+    .btn.op:hover{background:rgba(233,69,96,0.3);}
+    .btn.eq{background:linear-gradient(135deg,var(--accent),#c73652);border:none;color:#fff;grid-column:span 2;}
+    .btn.eq:hover{filter:brightness(1.15);}
+    .btn.clear{background:rgba(79,195,247,0.12);border-color:rgba(79,195,247,0.3);color:var(--blue);}
+    .btn.spec{background:rgba(245,166,35,0.12);border-color:rgba(245,166,35,0.3);color:var(--accent2);font-size:0.78rem;}
+
+    /* RIGHT PANEL */
+    .right-col{display:flex;flex-direction:column;gap:16px;}
+
+    /* Live trace */
+    .trace-box{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;padding:20px;}
+    .trace-box h3{font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;font-family:'JetBrains Mono',monospace;}
+    .trace-line{background:rgba(0,0,0,0.3);border-radius:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;margin-bottom:8px;border-left:3px solid transparent;transition:all .3s;}
+    .trace-line.active{border-left-color:var(--accent);background:rgba(233,69,96,0.08);}
+    .tl-fn{color:var(--accent2);}
+    .tl-args{color:var(--blue);}
+    .tl-ret{color:#a8ff78;}
+    .tl-idle{color:rgba(255,255,255,0.3);}
+
+    /* Functions reference */
+    .fns-box{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;padding:20px;}
+    .fns-box h3{font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;font-family:'JetBrains Mono',monospace;}
+    .fn-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-family:'JetBrains Mono',monospace;font-size:0.78rem;}
+    .fn-row:last-child{border-bottom:none;}
+    .fn-name{color:var(--accent2);}
+    .fn-desc{color:rgba(255,255,255,0.4);font-size:0.72rem;}
+    .fn-op{color:#a8ff78;font-weight:700;}
+
+    /* Context banner */
+    .context{background:linear-gradient(135deg,rgba(233,69,96,0.12),rgba(79,195,247,0.08));border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:18px 22px;margin:0 20px 32px;max-width:1000px;margin-left:auto;margin-right:auto;}
+    .context p{color:rgba(255,255,255,0.65);font-size:0.88rem;line-height:1.7;}
+    .context strong{color:#fff;}
+
+    footer{text-align:center;padding:20px;color:rgba(255,255,255,0.2);font-size:0.78rem;border-top:1px solid var(--glass-border);}
+    footer a{color:var(--accent);text-decoration:none;}
+
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+    .live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:6px;animation:pulse 1.5s infinite;}
+
+    @media(max-width:680px){.main{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">EP · JS Lab 13</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Functions · Arithmetic · Lab 13</div>
+  <h1 data-i18n="hero_title">JS Calculator</h1>
+  <p data-i18n="hero_sub">Every e-commerce checkout, financial dashboard and scientific app runs on these six math functions. Try them live.</p>
+</div>
+
+<div class="main">
+  <!-- CALCULATOR -->
+  <div class="calc-wrap">
+    <div class="calc-screen">
+      <div class="calc-expr" id="expr"></div>
+      <div class="calc-result" id="display">0</div>
+      <div class="calc-fn-tag" id="fn-tag"></div>
+    </div>
+    <div class="calc-grid">
+      <button class="btn clear" onclick="clearCalc()">C</button>
+      <button class="btn spec" onclick="calcSqrt()">√x</button>
+      <button class="btn spec" onclick="calcSq()">x²</button>
+      <button class="btn op" onclick="setOp('÷')">÷</button>
+
+      <button class="btn" onclick="inp('7')">7</button>
+      <button class="btn" onclick="inp('8')">8</button>
+      <button class="btn" onclick="inp('9')">9</button>
+      <button class="btn op" onclick="setOp('×')">×</button>
+
+      <button class="btn" onclick="inp('4')">4</button>
+      <button class="btn" onclick="inp('5')">5</button>
+      <button class="btn" onclick="inp('6')">6</button>
+      <button class="btn op" onclick="setOp('−')">−</button>
+
+      <button class="btn" onclick="inp('1')">1</button>
+      <button class="btn" onclick="inp('2')">2</button>
+      <button class="btn" onclick="inp('3')">3</button>
+      <button class="btn op" onclick="setOp('+')">+</button>
+
+      <button class="btn" onclick="inp('0')">0</button>
+      <button class="btn" onclick="inp('.')">.</button>
+      <button class="btn eq" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-col">
+    <div class="trace-box">
+      <h3><span class="live-dot"></span><span data-i18n="trace_title">Live Function Trace</span></h3>
+      <div class="trace-line" id="tl-sum"><span class="tl-fn">calculateSum</span><span class="tl-args tl-idle">(_, _)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+      <div class="trace-line" id="tl-diff"><span class="tl-fn">calculateDifference</span><span class="tl-args tl-idle">(_, _)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+      <div class="trace-line" id="tl-prod"><span class="tl-fn">calculateProduct</span><span class="tl-args tl-idle">(_, _)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+      <div class="trace-line" id="tl-quot"><span class="tl-fn">calculateQuotient</span><span class="tl-args tl-idle">(_, _)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+      <div class="trace-line" id="tl-sq"><span class="tl-fn">calculateSquare</span><span class="tl-args tl-idle">(_)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+      <div class="trace-line" id="tl-sqrt"><span class="tl-fn">calculateSquareRoot</span><span class="tl-args tl-idle">(_)</span> <span class="tl-ret tl-idle">→ ?</span></div>
+    </div>
+    <div class="fns-box">
+      <h3 data-i18n="fns_title">Functions Reference</h3>
+      <div class="fn-row"><span class="fn-name">calculateSum</span><span class="fn-op">a + b</span><span class="fn-desc" data-i18n="f1">addition</span></div>
+      <div class="fn-row"><span class="fn-name">calculateDifference</span><span class="fn-op">a - b</span><span class="fn-desc" data-i18n="f2">subtraction</span></div>
+      <div class="fn-row"><span class="fn-name">calculateProduct</span><span class="fn-op">a * b</span><span class="fn-desc" data-i18n="f3">multiplication</span></div>
+      <div class="fn-row"><span class="fn-name">calculateQuotient</span><span class="fn-op">a / b</span><span class="fn-desc" data-i18n="f4">division (÷0 safe)</span></div>
+      <div class="fn-row"><span class="fn-name">calculateSquare</span><span class="fn-op">n ** 2</span><span class="fn-desc" data-i18n="f5">exponentiation</span></div>
+      <div class="fn-row"><span class="fn-name">calculateSquareRoot</span><span class="fn-op">√n</span><span class="fn-desc" data-i18n="f6">Math.sqrt()</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="context">
+  <p data-i18n="context">💡 <strong data-i18n="context_bold">Real-world applications:</strong> <span data-i18n="context_text">These 6 functions power e-commerce carts, currency converters, mortgage calculators and scientific tools. Notice how <code>calculateQuotient</code> handles division by zero — that's production-ready defensive programming.</span></p>
+</div>
+
+<footer><span data-i18n="footer">JS Calculator · Lab 13 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T = {
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Functions · Arithmetic · Lab 13",hero_title:"JS Calculator",
+    hero_sub:"Every e-commerce checkout, financial dashboard and scientific app runs on these six math functions. Try them live.",
+    trace_title:"Live Function Trace",fns_title:"Functions Reference",f1:"addition",f2:"subtraction",f3:"multiplication",f4:"division (÷0 safe)",f5:"exponentiation",f6:"Math.sqrt()",
+    context_bold:"Real-world applications:",context_text:"These 6 functions power e-commerce carts, currency converters, mortgage calculators and scientific tools. Notice how calculateQuotient handles division by zero — that's production-ready defensive programming.",
+    footer:"JS Calculator · Lab 13 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Funciones · Aritmética · Lab 13",hero_title:"Calculadora JS",
+    hero_sub:"Cada checkout de e-commerce, dashboard financiero y app científica usa estas seis funciones matemáticas. Pruébalas en vivo.",
+    trace_title:"Traza de Funciones en Vivo",fns_title:"Referencia de Funciones",f1:"suma",f2:"resta",f3:"multiplicación",f4:"división (÷0 segura)",f5:"exponenciación",f6:"Math.sqrt()",
+    context_bold:"Aplicaciones reales:",context_text:"Estas 6 funciones impulsan carritos de e-commerce, conversores de divisas, calculadoras de hipotecas y herramientas científicas. Nota cómo calculateQuotient maneja la división por cero.",
+    footer:"Calculadora JS · Lab 13 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Fonctions · Arithmétique · Lab 13",hero_title:"Calculatrice JS",
+    hero_sub:"Chaque caisse e-commerce, tableau de bord financier et application scientifique utilise ces six fonctions mathématiques. Essayez-les.",
+    trace_title:"Trace de Fonctions en Direct",fns_title:"Référence des Fonctions",f1:"addition",f2:"soustraction",f3:"multiplication",f4:"division (÷0 sûre)",f5:"exponentiation",f6:"Math.sqrt()",
+    context_bold:"Applications réelles:",context_text:"Ces 6 fonctions alimentent les paniers e-commerce, les convertisseurs de devises et les calculateurs hypothécaires. Remarquez comment calculateQuotient gère la division par zéro.",
+    footer:"Calculatrice JS · Lab 13 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+  document.documentElement.lang=l;
+}
+setLang('en');
+
+// JS functions from the lab
+function calculateSum(a,b){return a+b;}
+function calculateDifference(a,b){return a-b;}
+function calculateProduct(a,b){return a*b;}
+function calculateQuotient(a,b){return b===0?"Error: ÷ 0":a/b;}
+function calculateSquare(n){return n**2;}
+function calculateSquareRoot(n){return Math.sqrt(n);}
+
+let current='',op=null,prev=null,dotUsed=false;
+
+function inp(v){
+  if(v==='.'&&dotUsed)return;
+  if(v==='.')dotUsed=true;
+  if(current==='0'&&v!=='.')current='';
+  current+=v;
+  document.getElementById('display').textContent=current||'0';
+}
+function setOp(o){
+  if(current==='')return;
+  prev=parseFloat(current);op=o;current='';dotUsed=false;
+  document.getElementById('expr').textContent=prev+' '+o;
+  document.getElementById('fn-tag').textContent='';
+}
+function clearCalc(){
+  current='';op=null;prev=null;dotUsed=false;
+  document.getElementById('display').textContent='0';
+  document.getElementById('expr').textContent='';
+  document.getElementById('fn-tag').textContent='';
+  document.querySelectorAll('.trace-line').forEach(l=>l.classList.remove('active'));
+}
+function resetTrace(){document.querySelectorAll('.trace-line').forEach(l=>l.classList.remove('active'));}
+
+function updateTrace(id,args,ret){
+  resetTrace();
+  const el=document.getElementById(id);
+  el.classList.add('active');
+  el.innerHTML=el.innerHTML.replace(/\(.*?\)/,`<span class="tl-args">(${args})</span>`).replace(/→.*/,`→ <span class="tl-ret">${ret}</span>`);
+}
+
+function calculate(){
+  if(op===null){
+    // Single arg ops already handled
+    return;
+  }
+  const b=parseFloat(current);
+  if(isNaN(b))return;
+  let result,fnId,fnName;
+  document.getElementById('expr').textContent=prev+' '+op+' '+b+' =';
+  if(op==='+'){result=calculateSum(prev,b);fnId='tl-sum';fnName='calculateSum';}
+  else if(op==='−'){result=calculateDifference(prev,b);fnId='tl-diff';fnName='calculateDifference';}
+  else if(op==='×'){result=calculateProduct(prev,b);fnId='tl-prod';fnName='calculateProduct';}
+  else if(op==='÷'){result=calculateQuotient(prev,b);fnId='tl-quot';fnName='calculateQuotient';}
+  document.getElementById('display').textContent=typeof result==='number'?parseFloat(result.toFixed(10)).toString():result;
+  document.getElementById('fn-tag').textContent=fnName+'('+prev+', '+b+')';
+  resetTrace();
+  document.getElementById(fnId).classList.add('active');
+  current=typeof result==='number'?result.toString():'0';
+  op=null;prev=null;dotUsed=false;
+}
+function calcSq(){
+  const n=parseFloat(current||document.getElementById('display').textContent);
+  if(isNaN(n))return;
+  const r=calculateSquare(n);
+  document.getElementById('expr').textContent=n+'²';
+  document.getElementById('display').textContent=r;
+  document.getElementById('fn-tag').textContent='calculateSquare('+n+')';
+  resetTrace();document.getElementById('tl-sq').classList.add('active');
+  current=r.toString();
+}
+function calcSqrt(){
+  const n=parseFloat(current||document.getElementById('display').textContent);
+  if(isNaN(n)||n<0)return;
+  const r=parseFloat(calculateSquareRoot(n).toFixed(8));
+  document.getElementById('expr').textContent='√'+n;
+  document.getElementById('display').textContent=r;
+  document.getElementById('fn-tag').textContent='calculateSquareRoot('+n+')';
+  resetTrace();document.getElementById('tl-sqrt').classList.add('active');
+  current=r.toString();
+}
+</script>
+</body>
+</html>

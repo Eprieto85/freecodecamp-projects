@@ -33,7 +33,7 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 
 ## 🟡 Certification 2 — JavaScript Algorithms & Data Structures
 
-> **Status: In progress — Booleans, Numbers & Conditionals module**
+> **Status: In progress — Arrays module**
 
 | # | Lab | Live Demo | Concepts |
 |---|-----|-----------|----------|
@@ -49,6 +49,18 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 | JS-10 | [Logic Verifier](./js-10-logic-verifier/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-10-logic-verifier/) | `if`, `else`, boolean conditions, `>=` operator |
 | JS-11 | [MathBot](./js-11-mathbot/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-11-mathbot/) | `Math.random()`, `Math.floor()`, `Math.ceil()`, `Math.round()`, `Math.max()`, `Math.min()` |
 | JS-12 | [Fortune Teller](./js-12-fortune-teller/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-12-fortune-teller/) | `Math.random()`, `Math.floor()`, `if / else if` chain, conditional assignment |
+| JS-13 | [Calculator](./js-13-calculator/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-13-calculator/) | Named functions, parameters, return values, arithmetic operators |
+| JS-14 | [Type Detective](./js-14-boolean-checker/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-14-boolean-checker/) | `typeof`, boolean detection, `booWho()` function |
+| JS-15 | [Privacy Shield](./js-15-email-masker/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-15-email-masker/) | `.indexOf()`, `.slice()`, `.repeat()`, string building, `maskEmail()` |
+| JS-16 | [Loan Qualifier](./js-16-loan-qualifier/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-16-loan-qualifier/) | `if / else if` chain, compound conditions, `&&`, `getLoanMessage()` |
+| JS-17 | [Temp Converter](./js-17-temp-converter/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-17-temp-converter/) | Arithmetic formula, return value, `convertCtoF()` pure function |
+| JS-18 | [Card Counter](./js-18-card-counter/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-18-card-counter/) | `switch` statement, global scope, state across calls, `cardCounter()` |
+| JS-19 | [Leap Year Calculator](./js-19-leap-year/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-19-leap-year/) | Compound boolean logic, `&&`, `\|\|`, `%` modulo, `isLeapYear()` |
+| JS-20 | [String Truncator](./js-20-truncate-string/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-20-truncate-string/) | `if / else`, `.slice()`, string concatenation, `truncateString()` |
+| JS-21 | [Confirm Ending](./js-21-confirm-ending/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-21-confirm-ending/) | `.slice(-n)`, strict equality `===`, `confirmEnding()` without `.endsWith()` |
+| JS-22 | [Shopping List](./js-22-shopping-list/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-22-shopping-list/) | `push()`, `unshift()`, `pop()`, `shift()`, `join()`, array mutation, `getShoppingListMsg()` |
+| JS-23 | [Lunch Selector](./js-23-lunch-selector/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-23-lunch-selector/) | Array methods as named functions, `Math.random()` for random array element, menu management |
+| JS-24 | [Golf Score](./js-24-golf-score/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-24-golf-score/) | Arrays as lookup tables, `if / else if` chain, `golfScore(par, strokes)`, `names[index]` pattern |
 
 > More labs added as modules are completed.
 
@@ -68,6 +80,10 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 - `.replace()` · `.replaceAll()` · `.repeat()` · Method chaining
 - Type coercion · `++`/`--` prefix & postfix · `if` / `else` / `else if`
 - `Math.random()` · `Math.floor()` · `Math.ceil()` · `Math.round()` · `Math.max()` · `Math.min()`
+- Named functions · parameters · return values · `typeof` · `switch` statements
+- Global scope & state · compound boolean logic (`&&`, `||`) · modulo `%`
+- `.indexOf()` · `.slice(-n)` · `.repeat()` · string building & truncation
+- Arrays: `push()` · `pop()` · `shift()` · `unshift()` · `join()` · array as lookup table · random array element
 
 ## Author
 

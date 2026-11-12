@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Shield — EP JS Lab 15</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0d1117,#161b22,#1c2333);min-height:100vh;color:#e6edf3;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(88,166,255,0.1);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#58a6ff;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.3);color:#58a6ff;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#58a6ff;border-color:#58a6ff;color:#0d1117;font-weight:700;}
+
+    .hero{text-align:center;padding:48px 20px 32px;}
+    .hero-label{display:inline-block;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#58a6ff;margin-bottom:16px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.6rem;font-weight:900;color:#fff;margin-bottom:10px;}
+    .hero h1 span{color:#58a6ff;}
+    .hero p{color:rgba(230,237,243,0.5);font-size:0.95rem;max-width:540px;margin:0 auto;}
+
+    /* LIVE TOOL */
+    .tool-wrap{max-width:720px;margin:0 auto 32px;padding:0 20px;}
+    .tool-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(88,166,255,0.15);border-radius:24px;padding:30px 32px;}
+    .tool-label{font-size:0.8rem;color:#58a6ff;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+    .input-row{display:flex;gap:12px;margin-bottom:20px;}
+    .email-input{flex:1;background:rgba(0,0,0,0.5);border:2px solid rgba(88,166,255,0.2);border-radius:12px;padding:14px 18px;color:#e6edf3;font-size:1rem;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s;}
+    .email-input:focus{border-color:#58a6ff;}
+    .mask-btn{background:linear-gradient(135deg,#58a6ff,#1f6feb);color:#fff;border:none;padding:14px 22px;border-radius:12px;font-weight:700;cursor:pointer;font-size:0.9rem;transition:all .2s;white-space:nowrap;}
+    .mask-btn:hover{filter:brightness(1.15);transform:translateY(-1px);}
+
+    .output-panel{background:rgba(0,0,0,0.3);border-radius:16px;padding:20px 24px;}
+    .output-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .output-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+    .output-key{font-size:0.75rem;color:rgba(230,237,243,0.4);font-family:'JetBrains Mono',monospace;}
+    .output-val{font-family:'JetBrains Mono',monospace;font-size:0.9rem;font-weight:600;}
+    .val-original{color:#e6edf3;}
+    .val-masked{color:#58a6ff;font-size:1.05rem;}
+    .val-step{color:rgba(230,237,243,0.6);font-size:0.8rem;}
+
+    /* ALGO STEPS */
+    .algo-wrap{max-width:900px;margin:0 auto 32px;padding:0 20px;}
+    .algo-title{font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:rgba(230,237,243,0.4);margin-bottom:16px;font-family:'JetBrains Mono',monospace;}
+    .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+    .step-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:16px;}
+    .step-num{font-size:0.7rem;color:#58a6ff;font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+    .step-code{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:#79c0ff;margin-bottom:6px;}
+    .step-desc{font-size:0.75rem;color:rgba(230,237,243,0.45);line-height:1.5;}
+
+    /* QUICK EXAMPLES */
+    .examples-wrap{max-width:900px;margin:0 auto 32px;padding:0 20px;}
+    .ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .ex-card{background:rgba(255,255,255,0.03);border:1px solid rgba(88,166,255,0.08);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .2s;}
+    .ex-card:hover{background:rgba(88,166,255,0.06);border-color:rgba(88,166,255,0.2);}
+    .ex-in{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:rgba(230,237,243,0.5);margin-bottom:4px;}
+    .ex-out{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:#58a6ff;font-weight:600;}
+
+    /* Context */
+    .ctx{background:linear-gradient(135deg,rgba(88,166,255,0.04),rgba(31,111,235,0.02));border:1px solid rgba(88,166,255,0.1);border-radius:20px;max-width:900px;margin:0 auto 32px;padding:18px 24px;}
+    .ctx p{color:rgba(230,237,243,0.55);font-size:0.88rem;line-height:1.7;}
+    .ctx strong{color:#58a6ff;}
+
+    footer{text-align:center;padding:20px;color:rgba(230,237,243,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#58a6ff;text-decoration:none;}
+    @media(max-width:640px){.steps-grid{grid-template-columns:1fr 1fr;}.ex-grid{grid-template-columns:1fr 1fr;}.input-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 15</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Functions · String Methods · Lab 15</div>
+  <h1>Privacy <span>Shield</span></h1>
+  <p data-i18n="hero_sub">Email masking protects user privacy in logs, confirmations and dashboards. Type any email to see it masked in real time.</p>
+</div>
+
+<div class="tool-wrap">
+  <div class="tool-card">
+    <div class="tool-label" data-i18n="tool_label">// maskEmail(email) — live demo</div>
+    <div class="input-row">
+      <input class="email-input" id="email-input" type="email" placeholder="user@example.com" oninput="onType()" onkeydown="if(event.key==='Enter')runMask()"/>
+      <button class="mask-btn" onclick="runMask()" data-i18n="mask_btn">Mask →</button>
+    </div>
+    <div class="output-panel" id="output-panel">
+      <div class="output-row">
+        <span class="output-key">input</span>
+        <span class="output-val val-original" id="out-input">apple.pie@example.com</span>
+      </div>
+      <div class="output-row">
+        <span class="output-key">username</span>
+        <span class="output-val val-step" id="out-user">apple.pie</span>
+      </div>
+      <div class="output-row">
+        <span class="output-key">domain</span>
+        <span class="output-val val-step" id="out-domain">@example.com</span>
+      </div>
+      <div class="output-row">
+        <span class="output-key">masked</span>
+        <span class="output-val val-masked" id="out-masked">a*******e@example.com</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="algo-wrap">
+  <div class="algo-title" data-i18n="algo_title">// How the algorithm works</div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">STEP 1</div>
+      <div class="step-code">indexOf("@")</div>
+      <div class="step-desc" data-i18n="step1">Find the @ position to split username from domain</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 2</div>
+      <div class="step-code">slice(0, atIndex)</div>
+      <div class="step-desc" data-i18n="step2">Extract the username part before the @ symbol</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 3</div>
+      <div class="step-code">"*".repeat(n-2)</div>
+      <div class="step-desc" data-i18n="step3">Build the asterisk middle — length minus first and last characters</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 4</div>
+      <div class="step-code">first + *** + last</div>
+      <div class="step-desc" data-i18n="step4">Concatenate first char + asterisks + last char + domain</div>
+    </div>
+  </div>
+</div>
+
+<div class="examples-wrap">
+  <div class="algo-title" data-i18n="ex_title">// Click an example to try it</div>
+  <div class="ex-grid" id="ex-grid"></div>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">Real-world use</strong> — <span data-i18n="ctx_text">email masking appears in confirmation pages ("We sent a code to a*****e@gmail.com"), user logs, and admin dashboards. It is built from the same string methods you use every day: <strong>.indexOf()</strong>, <strong>.slice()</strong>, and <strong>.repeat()</strong>.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Privacy Shield · Lab 15 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Functions · String Methods · Lab 15",
+    hero_sub:"Email masking protects user privacy in logs, confirmations and dashboards. Type any email to see it masked in real time.",
+    tool_label:"// maskEmail(email) — live demo",mask_btn:"Mask →",
+    algo_title:"// How the algorithm works",
+    step1:"Find the @ position to split username from domain",
+    step2:"Extract the username part before the @ symbol",
+    step3:"Build the asterisk middle — length minus first and last characters",
+    step4:"Concatenate first char + asterisks + last char + domain",
+    ex_title:"// Click an example to try it",
+    ctx_title:"Real-world use",
+    ctx_text:'email masking appears in confirmation pages ("We sent a code to a*****e@gmail.com"), user logs, and admin dashboards. It is built from the same string methods you use every day: .indexOf(), .slice(), and .repeat().',
+    footer:"Privacy Shield · Lab 15 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Funciones · Métodos de Cadena · Lab 15",
+    hero_sub:"El enmascaramiento de email protege la privacidad del usuario en logs, confirmaciones y paneles. Escribe cualquier email para verlo enmascarado en tiempo real.",
+    tool_label:"// maskEmail(email) — demo en vivo",mask_btn:"Enmascarar →",
+    algo_title:"// Cómo funciona el algoritmo",
+    step1:"Encontrar la posición del @ para separar el usuario del dominio",
+    step2:"Extraer la parte del usuario antes del símbolo @",
+    step3:"Construir los asteriscos del medio — longitud menos primer y último carácter",
+    step4:"Concatenar primer carácter + asteriscos + último carácter + dominio",
+    ex_title:"// Haz clic en un ejemplo para probarlo",
+    ctx_title:"Uso en el mundo real",
+    ctx_text:'El enmascaramiento de email aparece en páginas de confirmación, logs de usuario y paneles de administración. Se construye con los mismos métodos de cadena: .indexOf(), .slice() y .repeat().',
+    footer:"Privacy Shield · Lab 15 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Fonctions · Méthodes de Chaîne · Lab 15",
+    hero_sub:"Le masquage d'email protège la confidentialité des utilisateurs dans les logs et les tableaux de bord. Tapez n'importe quel email pour le voir masqué en temps réel.",
+    tool_label:"// maskEmail(email) — démo en direct",mask_btn:"Masquer →",
+    algo_title:"// Comment l'algorithme fonctionne",
+    step1:"Trouver la position du @ pour séparer le nom d'utilisateur du domaine",
+    step2:"Extraire la partie nom d'utilisateur avant le symbole @",
+    step3:"Construire les astérisques du milieu — longueur moins le premier et dernier caractère",
+    step4:"Concaténer premier caractère + astérisques + dernier caractère + domaine",
+    ex_title:"// Cliquez sur un exemple pour l'essayer",
+    ctx_title:"Usage réel",
+    ctx_text:"Le masquage d'email apparaît dans les pages de confirmation, les logs utilisateur et les tableaux de bord. Il est construit avec les mêmes méthodes de chaîne : .indexOf(), .slice() et .repeat().",
+    footer:"Privacy Shield · Lab 15 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+function maskEmail(email){
+  const atIndex=email.indexOf("@");
+  const username=email.slice(0,atIndex);
+  const domain=email.slice(atIndex);
+  if(username.length<=2){return username[0]+"*"+domain;}
+  const firstChar=username[0];
+  const lastChar=username[username.length-1];
+  const asterisks="*".repeat(username.length-2);
+  return firstChar+asterisks+lastChar+domain;
+}
+
+const examples=[
+  "apple.pie@example.com","john.doe@gmail.com","ed@domain.com",
+  "contact@company.org","x@y.com","hello.world@dev.io"
+];
+const grid=document.getElementById('ex-grid');
+examples.forEach(em=>{
+  const c=document.createElement('div');c.className='ex-card';
+  c.innerHTML=`<div class="ex-in">${em}</div><div class="ex-out">${maskEmail(em)}</div>`;
+  c.onclick=()=>setEmail(em);
+  grid.appendChild(c);
+});
+
+function setEmail(em){
+  document.getElementById('email-input').value=em;
+  updateOutput(em);
+}
+
+function updateOutput(email){
+  const atIdx=email.indexOf("@");
+  if(atIdx<1){return;}
+  const user=email.slice(0,atIdx);
+  const domain=email.slice(atIdx);
+  const masked=maskEmail(email);
+  document.getElementById('out-input').textContent=email;
+  document.getElementById('out-user').textContent=user;
+  document.getElementById('out-domain').textContent=domain;
+  document.getElementById('out-masked').textContent=masked;
+}
+
+function onType(){
+  const v=document.getElementById('email-input').value;
+  if(v.includes('@')&&v.indexOf('@')>0)updateOutput(v);
+}
+function runMask(){
+  const v=document.getElementById('email-input').value.trim();
+  if(v)updateOutput(v);
+}
+// Init with default
+updateOutput("apple.pie@example.com");
+</script>
+</body>
+</html>

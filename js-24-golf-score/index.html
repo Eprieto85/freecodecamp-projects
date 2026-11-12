@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Golf Score — EP JS Lab 24</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0a2e0a,#166534,#0a2e0a);min-height:100vh;color:#f0fdf4;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(134,239,172,0.1);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#86efac;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(134,239,172,0.1);border:1px solid rgba(134,239,172,0.3);color:#86efac;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#86efac;border-color:#86efac;color:#0a2e0a;font-weight:700;}
+
+    .hero{text-align:center;padding:40px 20px 24px;}
+    .hero-label{display:inline-block;background:rgba(134,239,172,0.08);border:1px solid rgba(134,239,172,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#86efac;margin-bottom:12px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#86efac;}
+    .hero p{color:rgba(240,253,244,0.5);font-size:0.9rem;max-width:520px;margin:0 auto;}
+
+    /* SLIDERS */
+    .sliders{max-width:900px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .sl-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(134,239,172,0.12);border-radius:20px;padding:22px 26px;}
+    .sl-label{font-size:0.75rem;color:#86efac;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:10px;}
+    .sl-val{font-size:3rem;font-weight:900;color:#fff;margin-bottom:14px;}
+    input[type=range]{width:100%;appearance:none;height:6px;border-radius:3px;background:rgba(134,239,172,0.15);outline:none;}
+    input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:#86efac;cursor:pointer;box-shadow:0 0 8px rgba(134,239,172,0.4);}
+    .sl-range{display:flex;justify-content:space-between;font-size:0.68rem;color:rgba(240,253,244,0.3);font-family:'JetBrains Mono',monospace;margin-top:6px;}
+
+    /* RESULT */
+    .result-wrap{max-width:900px;margin:0 auto 24px;padding:0 20px;}
+    .result-card{border-radius:20px;padding:28px 32px;text-align:center;transition:all .3s;border:2px solid transparent;background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);}
+    .res-emoji{font-size:3rem;margin-bottom:10px;}
+    .res-name{font-size:2rem;font-weight:900;color:#fff;margin-bottom:6px;}
+    .res-desc{font-size:0.85rem;color:rgba(240,253,244,0.5);margin-bottom:12px;}
+    .res-formula{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:#86efac;}
+
+    /* SCORE TABLE */
+    .table-wrap{max-width:900px;margin:0 auto 24px;padding:0 20px;}
+    .t-title{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,253,244,0.3);margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
+    .scores-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+    .sc-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 8px;text-align:center;transition:all .3s;}
+    .sc-card.active{border-color:rgba(134,239,172,0.4);background:rgba(134,239,172,0.08);}
+    .sc-emoji{font-size:1.2rem;margin-bottom:4px;}
+    .sc-name{font-size:0.68rem;font-weight:700;color:rgba(240,253,244,0.6);margin-bottom:4px;}
+    .sc-cond{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(240,253,244,0.3);line-height:1.4;}
+
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(134,239,172,0.08);border-radius:14px;max-width:900px;margin:0 auto 24px;padding:14px 20px;}
+    .ctx p{color:rgba(240,253,244,0.5);font-size:0.84rem;line-height:1.6;}
+    .ctx strong{color:#86efac;}
+
+    footer{text-align:center;padding:18px;color:rgba(240,253,244,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#86efac;text-decoration:none;}
+    @media(max-width:580px){.sliders{grid-template-columns:1fr;}.scores-grid{grid-template-columns:repeat(4,1fr);}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 24</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Arrays · if/else if · Array Indexing · Lab 24</div>
+  <h1>Golf Score <span>Translator</span></h1>
+  <p data-i18n="hero_sub">Arrays as lookup tables — a classic pattern that replaces complex switch statements. Adjust par and strokes to see the score name live.</p>
+</div>
+
+<div class="sliders">
+  <div class="sl-card">
+    <div class="sl-label" data-i18n="par_label">PAR (hole target)</div>
+    <div class="sl-val" id="par-val">4</div>
+    <input type="range" id="par-slider" min="1" max="10" value="4" oninput="update()"/>
+    <div class="sl-range"><span>1</span><span>5</span><span>10</span></div>
+  </div>
+  <div class="sl-card">
+    <div class="sl-label" data-i18n="strokes_label">STROKES (shots taken)</div>
+    <div class="sl-val" id="strokes-val">4</div>
+    <input type="range" id="strokes-slider" min="1" max="12" value="4" oninput="update()"/>
+    <div class="sl-range"><span>1</span><span>6</span><span>12</span></div>
+  </div>
+</div>
+
+<div class="result-wrap">
+  <div class="result-card" id="result-card">
+    <div class="res-emoji" id="res-emoji">⛳</div>
+    <div class="res-name" id="res-name">Par</div>
+    <div class="res-desc" id="res-desc"></div>
+    <div class="res-formula" id="res-formula"></div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <div class="t-title" data-i18n="t_title">// names[] array — all 7 score categories</div>
+  <div class="scores-grid" id="scores-grid"></div>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">Array as lookup table</strong> — <span data-i18n="ctx_text">instead of returning string literals inside each if/else branch, we store them in an array and return names[index]. This pattern is called a lookup table or dictionary pattern. It is used in translation systems, state machines, scoring engines, HTTP status code maps and everywhere else a value needs to be mapped to a label.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Golf Score Translator · Lab 24 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Arrays · if/else if · Array Indexing · Lab 24",
+    hero_sub:"Arrays as lookup tables — a classic pattern that replaces complex switch statements. Adjust par and strokes to see the score name live.",
+    par_label:"PAR (hole target)",strokes_label:"STROKES (shots taken)",
+    t_title:"// names[] array — all 7 score categories",
+    ctx_title:"Array as lookup table",
+    ctx_text:"instead of returning string literals inside each if/else branch, we store them in an array and return names[index]. This pattern is used in translation systems, state machines, scoring engines, HTTP status code maps and everywhere else a value needs to be mapped to a label.",
+    footer:"Golf Score Translator · Lab 24 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Arrays · if/else if · Indexación · Lab 24",
+    hero_sub:"Arrays como tablas de búsqueda — un patrón clásico que reemplaza switch complejos. Ajusta par y golpes para ver el nombre de la puntuación en vivo.",
+    par_label:"PAR (objetivo del hoyo)",strokes_label:"GOLPES (tiros realizados)",
+    t_title:"// array names[] — las 7 categorías de puntuación",
+    ctx_title:"Array como tabla de búsqueda",
+    ctx_text:"en lugar de retornar literales de cadena dentro de cada rama if/else, los almacenamos en un array y retornamos names[índice]. Este patrón se usa en sistemas de traducción, máquinas de estado, motores de puntuación y mapas de códigos HTTP.",
+    footer:"Traductor de Puntuaciones · Lab 24 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Tableaux · if/else if · Indexation · Lab 24",
+    hero_sub:"Tableaux comme tables de recherche — un modèle classique qui remplace les switch complexes. Ajustez le par et les coups pour voir le nom du score en direct.",
+    par_label:"PAR (objectif du trou)",strokes_label:"COUPS (tirs effectués)",
+    t_title:"// tableau names[] — les 7 catégories de score",
+    ctx_title:"Tableau comme table de recherche",
+    ctx_text:"au lieu de retourner des littéraux de chaîne dans chaque branche if/else, on les stocke dans un tableau et retourne names[index]. Ce modèle est utilisé dans les systèmes de traduction, machines d'état, moteurs de score et cartes de codes HTTP.",
+    footer:"Traducteur de Score de Golf · Lab 24 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+const names=["Hole-in-one!","Eagle","Birdie","Par","Bogey","Double Bogey","Go Home!"];
+const scoreData=[
+  {emoji:'🏆',name:'Hole-in-one!',cond:'strokes === 1',color:'#fbbf24'},
+  {emoji:'🦅',name:'Eagle',cond:'strokes ≤ par-2',color:'#60a5fa'},
+  {emoji:'🐦',name:'Birdie',cond:'strokes === par-1',color:'#34d399'},
+  {emoji:'⛳',name:'Par',cond:'strokes === par',color:'#86efac'},
+  {emoji:'😅',name:'Bogey',cond:'strokes === par+1',color:'#fb923c'},
+  {emoji:'😬',name:'Double Bogey',cond:'strokes === par+2',color:'#f87171'},
+  {emoji:'🏠',name:'Go Home!',cond:'strokes > par+2',color:'#c084fc'}
+];
+
+const grid=document.getElementById('scores-grid');
+scoreData.forEach((s,i)=>{
+  const c=document.createElement('div');c.className='sc-card';c.id='sc-'+i;
+  c.innerHTML=`<div class="sc-emoji">${s.emoji}</div><div class="sc-name">${s.name}</div><div class="sc-cond">${s.cond}</div>`;
+  grid.appendChild(c);
+});
+
+const descMap={
+  0:'A single shot to sink the ball!',
+  1:'2+ under par — exceptional play',
+  2:'1 under par — great shot',
+  3:'Exactly on par — steady play',
+  4:'1 over par — close',
+  5:'2 over par — needs work',
+  6:'More than 2 over par — time to go home'
+};
+
+function golfScore(par,strokes){
+  if(strokes===1)return 0;
+  else if(strokes<=par-2)return 1;
+  else if(strokes===par-1)return 2;
+  else if(strokes===par)return 3;
+  else if(strokes===par+1)return 4;
+  else if(strokes===par+2)return 5;
+  else return 6;
+}
+
+function update(){
+  const par=parseInt(document.getElementById('par-slider').value);
+  const strokes=parseInt(document.getElementById('strokes-slider').value);
+  document.getElementById('par-val').textContent=par;
+  document.getElementById('strokes-val').textContent=strokes;
+  const idx=golfScore(par,strokes);
+  const s=scoreData[idx];
+  document.getElementById('res-emoji').textContent=s.emoji;
+  document.getElementById('res-name').textContent=s.name;
+  document.getElementById('res-name').style.color=s.color;
+  document.getElementById('res-desc').textContent=descMap[idx];
+  document.getElementById('res-formula').textContent=`golfScore(${par}, ${strokes}) → names[${idx}] → "${names[idx]}"`;
+  document.querySelectorAll('.sc-card').forEach((c,i)=>c.classList.toggle('active',i===idx));
+}
+update();
+</script>
+</body>
+</html>

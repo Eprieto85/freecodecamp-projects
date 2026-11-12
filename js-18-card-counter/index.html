@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Card Counter — EP JS Lab 18</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#1a0a00,#2d1200,#1a0a00);min-height:100vh;color:#fef3c7;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.4);backdrop-filter:blur(12px);border-bottom:1px solid rgba(251,191,36,0.15);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#fbbf24;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#fbbf24;border-color:#fbbf24;color:#1a0a00;font-weight:700;}
+
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#fbbf24;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#fbbf24;}
+    .hero p{color:rgba(254,243,199,0.5);font-size:0.92rem;max-width:500px;margin:0 auto;}
+
+    /* TABLE */
+    .table-wrap{max-width:900px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+    /* DECK */
+    .deck-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(251,191,36,0.12);border-radius:20px;padding:24px 28px;}
+    .deck-label{font-size:0.75rem;color:#fbbf24;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:16px;}
+    .cards-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
+    .card-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 4px;cursor:pointer;text-align:center;transition:all .2s;font-size:0.85rem;font-family:'JetBrains Mono',monospace;color:#fef3c7;}
+    .card-btn:hover{transform:translateY(-2px);border-color:#fbbf24;}
+    .card-btn.low{background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);color:#34d399;}
+    .card-btn.mid{background:rgba(156,163,175,0.08);border-color:rgba(156,163,175,0.2);color:rgba(254,243,199,0.4);}
+    .card-btn.high{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#f87171;}
+    .card-label{font-size:0.62rem;color:rgba(254,243,199,0.3);margin-top:3px;}
+
+    /* SCOREBOARD */
+    .score-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(251,191,36,0.12);border-radius:20px;padding:24px 28px;display:flex;flex-direction:column;justify-content:space-between;}
+    .count-display{text-align:center;padding:20px 0;}
+    .count-num{font-size:4rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1;transition:all .2s;}
+    .count-label{font-size:0.75rem;color:rgba(254,243,199,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:8px;}
+    .decision-badge{text-align:center;padding:14px 20px;border-radius:14px;font-size:1.3rem;font-weight:800;transition:all .3s;margin-bottom:12px;}
+    .dec-bet{background:rgba(52,211,153,0.15);border:2px solid rgba(52,211,153,0.3);color:#34d399;}
+    .dec-hold{background:rgba(239,68,68,0.1);border:2px solid rgba(239,68,68,0.2);color:#f87171;}
+    .last-card{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:rgba(254,243,199,0.35);text-align:center;}
+    .reset-btn{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:#fbbf24;padding:10px;border-radius:10px;cursor:pointer;font-size:0.82rem;width:100%;transition:all .2s;margin-top:8px;}
+    .reset-btn:hover{background:rgba(251,191,36,0.2);}
+
+    /* HISTORY */
+    .history-wrap{max-width:900px;margin:0 auto 24px;padding:0 20px;}
+    .history-title{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(254,243,199,0.3);margin-bottom:10px;font-family:'JetBrains Mono',monospace;}
+    .history-row{display:flex;gap:6px;flex-wrap:wrap;}
+    .h-chip{padding:4px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;animation:popIn .2s ease;}
+    @keyframes popIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+    .h-low{background:rgba(52,211,153,0.15);color:#34d399;}
+    .h-mid{background:rgba(156,163,175,0.1);color:rgba(254,243,199,0.4);}
+    .h-high{background:rgba(239,68,68,0.15);color:#f87171;}
+
+    /* LEGEND */
+    .legend-wrap{max-width:900px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .leg-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 16px;text-align:center;}
+    .leg-title{font-size:0.7rem;color:rgba(254,243,199,0.35);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+    .leg-cards{font-family:'JetBrains Mono',monospace;font-size:0.82rem;font-weight:700;margin-bottom:4px;}
+    .leg-effect{font-size:0.72rem;color:rgba(254,243,199,0.4);}
+    .green{color:#34d399;} .gray{color:rgba(254,243,199,0.3);} .red{color:#f87171;}
+
+    .ctx{background:rgba(0,0,0,0.3);border:1px solid rgba(251,191,36,0.1);border-radius:16px;max-width:900px;margin:0 auto 24px;padding:16px 22px;}
+    .ctx p{color:rgba(254,243,199,0.5);font-size:0.85rem;line-height:1.7;}
+    .ctx strong{color:#fbbf24;}
+
+    footer{text-align:center;padding:20px;color:rgba(254,243,199,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#fbbf24;text-decoration:none;}
+    @media(max-width:640px){.table-wrap{grid-template-columns:1fr;}.legend-wrap{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 18</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Switch Statement · Global Scope · Lab 18</div>
+  <h1>Card <span>Counter</span></h1>
+  <p data-i18n="hero_sub">Card counting is a real strategy used in blackjack. The switch statement tracks a running count across all cards dealt.</p>
+</div>
+
+<div class="table-wrap">
+  <div class="deck-card">
+    <div class="deck-label" data-i18n="deck_label">// Click a card to deal it</div>
+    <div class="cards-grid" id="cards-grid"></div>
+    <div style="font-size:0.72rem;color:rgba(254,243,199,0.25);font-family:'JetBrains Mono',monospace;" data-i18n="deck_hint">Green = count+1 · Gray = no change · Red = count-1</div>
+  </div>
+  <div class="score-card">
+    <div>
+      <div class="count-display">
+        <div class="count-num" id="count-num">0</div>
+        <div class="count-label" data-i18n="count_label">Running Count</div>
+      </div>
+      <div class="decision-badge dec-hold" id="decision-badge">HOLD</div>
+      <div class="last-card" id="last-card" data-i18n="last_card_init">— deal a card to begin —</div>
+    </div>
+    <button class="reset-btn" onclick="resetCount()" data-i18n="reset_btn">↺ Reset Count</button>
+  </div>
+</div>
+
+<div class="history-wrap">
+  <div class="history-title" data-i18n="history_title">// Cards dealt this round</div>
+  <div class="history-row" id="history-row"><span style="font-size:0.75rem;color:rgba(254,243,199,0.2)">None yet</span></div>
+</div>
+
+<div class="legend-wrap">
+  <div class="leg-card">
+    <div class="leg-title" data-i18n="leg_low_title">Low cards</div>
+    <div class="leg-cards green">2 · 3 · 4 · 5 · 6</div>
+    <div class="leg-effect">count <strong class="green">+1</strong></div>
+  </div>
+  <div class="leg-card">
+    <div class="leg-title" data-i18n="leg_mid_title">Neutral cards</div>
+    <div class="leg-cards gray">7 · 8 · 9</div>
+    <div class="leg-effect">count <strong class="gray">±0</strong></div>
+  </div>
+  <div class="leg-card">
+    <div class="leg-title" data-i18n="leg_high_title">High cards</div>
+    <div class="leg-cards red">10 · J · Q · K · A</div>
+    <div class="leg-effect">count <strong class="red">-1</strong></div>
+  </div>
+</div>
+
+<div class="ctx">
+  <p>💡 <strong data-i18n="ctx_title">switch vs if/else</strong> — <span data-i18n="ctx_text">a switch statement is cleaner than chained if/else when matching a single value against many cases. Here the global variable <code>count</code> persists across function calls — a key lesson about scope, state management and how closures work in real apps.</span></p>
+</div>
+
+<footer><span data-i18n="footer">Card Counter · Lab 18 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+
+<script>
+const T={
+  en:{badge:"freeCodeCamp · JS Certification",hero_label:"Switch Statement · Global Scope · Lab 18",
+    hero_sub:"Card counting is a real strategy used in blackjack. The switch statement tracks a running count across all cards dealt.",
+    deck_label:"// Click a card to deal it",deck_hint:"Green = count+1 · Gray = no change · Red = count-1",
+    count_label:"Running Count",last_card_init:"— deal a card to begin —",reset_btn:"↺ Reset Count",
+    history_title:"// Cards dealt this round",
+    leg_low_title:"Low cards",leg_mid_title:"Neutral cards",leg_high_title:"High cards",
+    ctx_title:"switch vs if/else",
+    ctx_text:"a switch statement is cleaner than chained if/else when matching a single value against many cases. Here the global variable count persists across function calls — a key lesson about scope, state management and how closures work in real apps.",
+    footer:"Card Counter · Lab 18 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Switch · Alcance Global · Lab 18",
+    hero_sub:"Contar cartas es una estrategia real del blackjack. El switch rastrea un conteo acumulado a través de todas las cartas repartidas.",
+    deck_label:"// Haz clic en una carta para repartirla",deck_hint:"Verde = conteo+1 · Gris = sin cambio · Rojo = conteo-1",
+    count_label:"Conteo Acumulado",last_card_init:"— reparte una carta para comenzar —",reset_btn:"↺ Reiniciar Conteo",
+    history_title:"// Cartas repartidas en esta ronda",
+    leg_low_title:"Cartas bajas",leg_mid_title:"Cartas neutras",leg_high_title:"Cartas altas",
+    ctx_title:"switch vs if/else",
+    ctx_text:"un switch es más limpio que cadenas if/else cuando se compara un único valor con muchos casos. La variable global count persiste entre llamadas — lección clave sobre alcance y gestión de estado.",
+    footer:"Contador de Cartas · Lab 18 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},
+  fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Switch · Portée Globale · Lab 18",
+    hero_sub:"Compter les cartes est une vraie stratégie de blackjack. Le switch suit un comptage courant sur toutes les cartes distribuées.",
+    deck_label:"// Cliquez sur une carte pour la distribuer",deck_hint:"Vert = comptage+1 · Gris = aucun changement · Rouge = comptage-1",
+    count_label:"Comptage Courant",last_card_init:"— distribuez une carte pour commencer —",reset_btn:"↺ Réinitialiser",
+    history_title:"// Cartes distribuées ce tour",
+    leg_low_title:"Cartes basses",leg_mid_title:"Cartes neutres",leg_high_title:"Cartes hautes",
+    ctx_title:"switch vs if/else",
+    ctx_text:"un switch est plus lisible que des if/else chaînés pour faire correspondre une valeur unique à de nombreux cas. La variable globale count persiste entre les appels — leçon clé sur la portée et la gestion d'état.",
+    footer:"Compteur de Cartes · Lab 18 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+l).classList.add('active');
+}
+setLang('en');
+
+let count=0;
+const history=[];
+
+function cardCounter(card){
+  switch(card){
+    case 2:case 3:case 4:case 5:case 6: count+=1; break;
+    case 7:case 8:case 9: break;
+    case 10:case"J":case"Q":case"K":case"A": count-=1; break;
+  }
+  return count>0?count+" Bet":count+" Hold";
+}
+
+const cardDefs=[
+  {val:2,label:'2',cls:'low'},{val:3,label:'3',cls:'low'},{val:4,label:'4',cls:'low'},
+  {val:5,label:'5',cls:'low'},{val:6,label:'6',cls:'low'},
+  {val:7,label:'7',cls:'mid'},{val:8,label:'8',cls:'mid'},{val:9,label:'9',cls:'mid'},
+  {val:10,label:'10',cls:'high'},{val:'J',label:'J',cls:'high'},
+  {val:'Q',label:'Q',cls:'high'},{val:'K',label:'K',cls:'high'},{val:'A',label:'A',cls:'high'}
+];
+
+const grid=document.getElementById('cards-grid');
+cardDefs.forEach(d=>{
+  const b=document.createElement('button');b.className='card-btn '+d.cls;
+  b.innerHTML=d.label+'<div class="card-label">'+(d.cls==='low'?'+1':d.cls==='mid'?'±0':'-1')+'</div>';
+  b.onclick=()=>dealCard(d);
+  grid.appendChild(b);
+});
+
+function dealCard(d){
+  history.push(d);
+  const result=cardCounter(d.val);
+  document.getElementById('count-num').textContent=count;
+  document.getElementById('count-num').style.color=count>0?'#34d399':count<0?'#f87171':'#fbbf24';
+  const badge=document.getElementById('decision-badge');
+  badge.textContent=count>0?'BET':'HOLD';
+  badge.className='decision-badge '+(count>0?'dec-bet':'dec-hold');
+  document.getElementById('last-card').textContent=`cardCounter(${typeof d.val==='string'?'"'+d.val+'"':d.val}) → "${result}"`;
+  renderHistory();
+}
+
+function renderHistory(){
+  const row=document.getElementById('history-row');
+  row.innerHTML=history.map(d=>`<span class="h-chip h-${d.cls}">${d.label}</span>`).join('');
+}
+
+function resetCount(){
+  count=0;history.length=0;
+  document.getElementById('count-num').textContent='0';
+  document.getElementById('count-num').style.color='#fbbf24';
+  document.getElementById('decision-badge').textContent='HOLD';
+  document.getElementById('decision-badge').className='decision-badge dec-hold';
+  document.getElementById('last-card').innerHTML='<span data-i18n="last_card_init">— deal a card to begin —</span>';
+  document.getElementById('history-row').innerHTML='<span style="font-size:0.75rem;color:rgba(254,243,199,0.2)">None yet</span>';
+}
+</script>
+</body>
+</html>
