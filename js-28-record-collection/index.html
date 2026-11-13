@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Record Collection — EP JS Lab 28</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#200a1a,#380d2a,#200a1a);min-height:100vh;color:#fce7f3;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(244,63,94,0.12);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#fb7185;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.3);color:#fb7185;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#fb7185;border-color:#fb7185;color:#200a1a;font-weight:700;}
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#fb7185;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#fb7185;}
+    .hero p{color:rgba(252,231,243,0.5);font-size:0.92rem;max-width:520px;margin:0 auto;}
+    .main-wrap{max-width:960px;margin:0 auto 20px;padding:0 20px;display:grid;grid-template-columns:1fr 1.4fr;gap:16px;}
+    .ctrl-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(244,63,94,0.14);border-radius:24px;padding:22px 26px;}
+    .card-title{font-size:0.75rem;color:#fb7185;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:14px;}
+    .fg{margin-bottom:10px;}
+    .fg label{display:block;font-size:0.68rem;color:rgba(252,231,243,0.4);font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+    .fg input,.fg select{width:100%;background:rgba(0,0,0,0.4);border:2px solid rgba(244,63,94,0.15);border-radius:8px;padding:9px 10px;color:#fce7f3;font-size:0.85rem;outline:none;transition:border-color .2s;}
+    .fg input:focus,.fg select:focus{border-color:#fb7185;}
+    .update-btn{width:100%;background:linear-gradient(135deg,#fb7185,#e11d48);border:none;border-radius:10px;padding:12px;color:#200a1a;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all .2s;margin-top:4px;}
+    .update-btn:hover{filter:brightness(1.1);}
+    .log-box{background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;margin-top:12px;max-height:120px;overflow-y:auto;}
+    .log-title{font-size:0.65rem;font-family:'JetBrains Mono',monospace;color:rgba(252,231,243,0.3);margin-bottom:6px;}
+    .log-entry{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(252,231,243,0.5);padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+    .log-entry.ok{color:#34d399;}
+    .log-entry.del{color:#f87171;}
+    .collection-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(244,63,94,0.14);border-radius:24px;padding:22px 26px;overflow-y:auto;max-height:460px;}
+    .album-row{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .album-row:last-child{border-bottom:none;}
+    .album-id{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:rgba(252,231,243,0.3);margin-bottom:4px;}
+    .album-name{font-size:0.95rem;font-weight:700;color:#fff;}
+    .album-artist{font-size:0.78rem;color:rgba(252,231,243,0.5);margin-bottom:6px;}
+    .album-tracks{display:flex;flex-wrap:wrap;gap:4px;}
+    .t-tag{background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.15);border-radius:4px;padding:1px 7px;font-size:0.65rem;color:#fb7185;}
+    .concepts-wrap{max-width:960px;margin:0 auto 28px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .c-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 12px;}
+    .c-kw{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#fb7185;font-weight:700;margin-bottom:5px;}
+    .c-desc{font-size:0.68rem;color:rgba(252,231,243,0.4);line-height:1.4;}
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(244,63,94,0.08);border-radius:14px;max-width:960px;margin:0 auto 28px;padding:14px 20px;}
+    .ctx p{color:rgba(252,231,243,0.5);font-size:0.84rem;line-height:1.6;}
+    .ctx strong{color:#fb7185;}
+    footer{text-align:center;padding:20px;color:rgba(252,231,243,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#fb7185;text-decoration:none;}
+    @media(max-width:640px){.main-wrap{grid-template-columns:1fr}.concepts-wrap{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 28</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Objects · delete · bracket notation · Lab 28</div>
+  <h1>Record <span>Collection</span></h1>
+  <p data-i18n="hero_sub">Use updateRecords() to add, update, or delete properties on a music collection. Watch the object change in real time.</p>
+</div>
+<div class="main-wrap">
+  <div class="ctrl-card">
+    <div class="card-title" data-i18n="ctrl_title">// updateRecords(id, prop, value)</div>
+    <div class="fg">
+      <label data-i18n="id_label">id</label>
+      <select id="u-id">
+        <option value="2548">2548 — Sgt. Pepper's</option>
+        <option value="2468">2468 — 1999</option>
+        <option value="1245">1245 — Thriller</option>
+        <option value="5439">5439 — ABBA Gold</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label data-i18n="prop_label">prop</label>
+      <input id="u-prop" type="text" placeholder="e.g. artist, tracks"/>
+    </div>
+    <div class="fg">
+      <label data-i18n="val_label">value (empty string = delete)</label>
+      <input id="u-val" type="text" placeholder='e.g. "Come Together"'/>
+    </div>
+    <button class="update-btn" onclick="runUpdate()" data-i18n="update_btn">Update Record →</button>
+    <div class="log-box">
+      <div class="log-title">// change log</div>
+      <div id="log-entries"></div>
+    </div>
+  </div>
+  <div class="collection-card">
+    <div class="card-title" data-i18n="coll_title">// recordCollection live state</div>
+    <div id="coll-view"></div>
+  </div>
+</div>
+<div class="concepts-wrap">
+  <div class="c-card"><div class="c-kw">delete records[id][prop]</div><div class="c-desc" data-i18n="c1">The delete operator removes a property entirely. Called when value is an empty string — the "clear" operation.</div></div>
+  <div class="c-card"><div class="c-kw">bracket notation</div><div class="c-desc" data-i18n="c2">records[id][prop] uses variables as keys — essential when the property name is not known at write time.</div></div>
+  <div class="c-card"><div class="c-kw">array.push(value)</div><div class="c-desc" data-i18n="c3">When prop is "tracks" and a tracks array exists, push appends. If not, create [value] first.</div></div>
+</div>
+<div class="ctx"><p>💡 <strong data-i18n="ctx_title">Real-world use</strong> — <span data-i18n="ctx_text">this exact function pattern — accept (record, id, prop, value), branch on the value and prop, return the mutated record — is the core of every CRUD operation in a REST API and every Redux reducer in a React app.</span></p></div>
+<footer><span data-i18n="footer">Record Collection · Lab 28 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+<script>
+const T={en:{badge:"freeCodeCamp · JS Certification",hero_label:"Objects · delete · bracket notation · Lab 28",hero_sub:"Use updateRecords() to add, update, or delete properties on a music collection. Watch the object change in real time.",ctrl_title:"// updateRecords(id, prop, value)",id_label:"id",prop_label:"prop",val_label:"value (empty string = delete)",update_btn:"Update Record →",coll_title:"// recordCollection live state",c1:"The delete operator removes a property entirely. Called when value is an empty string — the \"clear\" operation.",c2:"records[id][prop] uses variables as keys — essential when the property name is not known at write time.",c3:"When prop is \"tracks\" and a tracks array exists, push appends. If not, create [value] first.",ctx_title:"Real-world use",ctx_text:"this exact function pattern is the core of every CRUD operation in a REST API and every Redux reducer in a React app.",footer:"Record Collection · Lab 28 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Objetos · delete · notación de corchetes · Lab 28",hero_sub:"Usa updateRecords() para agregar, actualizar o eliminar propiedades en una colección musical. Observa el objeto cambiar en tiempo real.",ctrl_title:"// updateRecords(id, prop, value)",id_label:"id",prop_label:"prop",val_label:"value (cadena vacía = eliminar)",update_btn:"Actualizar Registro →",coll_title:"// recordCollection estado en vivo",c1:"El operador delete elimina una propiedad completamente. Se llama cuando value es cadena vacía.",c2:"records[id][prop] usa variables como claves — esencial cuando el nombre de propiedad no se conoce al escribir.",c3:"Cuando prop es \"tracks\" y ya existe el array, push agrega. Si no, crea [value] primero.",ctx_title:"Uso en el mundo real",ctx_text:"este patrón exacto es el núcleo de cada operación CRUD en una API REST y cada reducer de Redux en React.",footer:"Colección de Discos · Lab 28 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Objets · delete · notation par crochets · Lab 28",hero_sub:"Utilisez updateRecords() pour ajouter, mettre à jour ou supprimer des propriétés dans une collection musicale.",ctrl_title:"// updateRecords(id, prop, value)",id_label:"id",prop_label:"prop",val_label:"value (chaîne vide = supprimer)",update_btn:"Mettre à jour l'Enregistrement →",coll_title:"// recordCollection état en direct",c1:"L'opérateur delete supprime entièrement une propriété. Appelé quand value est une chaîne vide.",c2:"records[id][prop] utilise des variables comme clés — essentiel quand le nom de propriété n'est pas connu à l'écriture.",c3:"Quand prop est \"tracks\" et qu'un tableau tracks existe, push ajoute. Sinon, créez [value] d'abord.",ctx_title:"Usage réel",ctx_text:"ce modèle de fonction exact est le cœur de chaque opération CRUD dans une API REST et chaque réducteur Redux dans React.",footer:"Collection de Disques · Lab 28 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}};
+function setLang(l){document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');}
+setLang('en');
+const recordCollection={2548:{albumTitle:"Sgt. Pepper's Lonely Hearts Club Band",artist:"The Beatles",tracks:["Drive My Car","Norwegian Wood"]},2468:{albumTitle:"1999",artist:"Prince",tracks:["1999","Little Red Corvette"]},1245:{albumTitle:"Thriller",artist:"Michael Jackson",tracks:["Wanna Be Startin' Somethin'","Thriller","Beat It"]},5439:{albumTitle:"ABBA Gold"}};
+function updateRecords(records,id,prop,value){if(value===''){delete records[id][prop];}else if(prop!=='tracks'){records[id][prop]=value;}else{if(!records[id].tracks){records[id].tracks=[];}records[id].tracks.push(value);}return records;}
+function renderCollection(){
+  const view=document.getElementById('coll-view');
+  view.innerHTML=Object.entries(recordCollection).map(([id,rec])=>`
+    <div class="album-row">
+      <div class="album-id">#${id}</div>
+      <div class="album-name">${rec.albumTitle||'<em style="opacity:.4">no title</em>'}</div>
+      ${rec.artist?`<div class="album-artist">${rec.artist}</div>`:''}
+      ${rec.tracks?`<div class="album-tracks">${rec.tracks.map(t=>`<span class="t-tag">${t}</span>`).join('')}</div>`:''}
+    </div>`).join('');
+}
+function runUpdate(){
+  const id=parseInt(document.getElementById('u-id').value);
+  const prop=document.getElementById('u-prop').value.trim();
+  const val=document.getElementById('u-val').value.trim();
+  if(!prop)return;
+  if(!recordCollection[id])return;
+  updateRecords(recordCollection,id,prop,val);
+  const log=document.getElementById('log-entries');
+  const entry=document.createElement('div');
+  entry.className='log-entry '+(val===''?'del':'ok');
+  entry.textContent=val===''?`delete [${id}].${prop}`:`set [${id}].${prop} = "${val}"`;
+  log.prepend(entry);
+  renderCollection();
+  document.getElementById('u-prop').value='';
+  document.getElementById('u-val').value='';
+}
+renderCollection();
+</script>
+</body>
+</html>

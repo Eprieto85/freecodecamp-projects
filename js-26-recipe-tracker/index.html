@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Tracker — EP JS Lab 26</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#021a0e,#042d18,#021a0e);min-height:100vh;color:#d1fae5;}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(0,0,0,0.3);backdrop-filter:blur(12px);border-bottom:1px solid rgba(34,197,94,0.12);}
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#22c55e;font-family:'JetBrains Mono',monospace;}
+    .nav-badge{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e;font-size:0.72rem;padding:3px 12px;border-radius:20px;}
+    .lang-btns{display:flex;gap:6px;}
+    .lb{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;transition:all .2s;}
+    .lb:hover,.lb.active{background:#22c55e;border-color:#22c55e;color:#021a0e;font-weight:700;}
+    .hero{text-align:center;padding:44px 20px 28px;}
+    .hero-label{display:inline-block;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);padding:4px 16px;border-radius:20px;font-size:0.75rem;color:#22c55e;margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;}
+    .hero h1{font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .hero h1 span{color:#22c55e;}
+    .hero p{color:rgba(209,250,229,0.5);font-size:0.92rem;max-width:520px;margin:0 auto;}
+    .add-wrap{max-width:900px;margin:0 auto 20px;padding:0 20px;}
+    .add-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(34,197,94,0.14);border-radius:24px;padding:22px 28px;}
+    .card-title{font-size:0.75rem;color:#22c55e;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:14px;}
+    .input-row{display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end;}
+    .fg label{display:block;font-size:0.68rem;color:rgba(209,250,229,0.4);font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+    .fg input{width:100%;background:rgba(0,0,0,0.4);border:2px solid rgba(34,197,94,0.15);border-radius:8px;padding:9px 10px;color:#d1fae5;font-size:0.85rem;outline:none;transition:border-color .2s;}
+    .fg input:focus{border-color:#22c55e;}
+    .add-btn{background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:8px;padding:11px 20px;color:#021a0e;font-weight:700;font-size:0.85rem;cursor:pointer;white-space:nowrap;transition:all .2s;}
+    .add-btn:hover{filter:brightness(1.1);}
+    .recipes-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;}
+    .r-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+    .r-card{background:rgba(255,255,255,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:18px;padding:18px 20px;transition:border-color .2s;}
+    .r-card:hover{border-color:rgba(34,197,94,0.3);}
+    .r-name{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px;}
+    .r-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;margin-bottom:10px;}
+    .easy{background:rgba(52,211,153,0.15);color:#34d399;}
+    .medium{background:rgba(251,191,36,0.15);color:#fbbf24;}
+    .hard{background:rgba(248,113,113,0.15);color:#f87171;}
+    .r-meta{font-size:0.72rem;color:rgba(209,250,229,0.4);font-family:'JetBrains Mono',monospace;margin-bottom:6px;}
+    .r-ings{font-size:0.72rem;color:rgba(209,250,229,0.5);line-height:1.5;}
+    .r-ings span{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.1);border-radius:4px;padding:1px 6px;margin:1px;display:inline-block;}
+    .concepts-wrap{max-width:900px;margin:0 auto 28px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .c-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 12px;}
+    .c-kw{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#22c55e;font-weight:700;margin-bottom:5px;}
+    .c-desc{font-size:0.68rem;color:rgba(209,250,229,0.4);line-height:1.4;}
+    .ctx{background:rgba(0,0,0,0.2);border:1px solid rgba(34,197,94,0.08);border-radius:14px;max-width:900px;margin:0 auto 28px;padding:14px 20px;}
+    .ctx p{color:rgba(209,250,229,0.5);font-size:0.84rem;line-height:1.6;}
+    .ctx strong{color:#22c55e;}
+    footer{text-align:center;padding:20px;color:rgba(209,250,229,0.15);font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.05);}
+    footer a{color:#22c55e;text-decoration:none;}
+    @media(max-width:580px){.input-row{grid-template-columns:1fr};.concepts-wrap{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">EP · JS Lab 26</div>
+  <div class="nav-badge" data-i18n="badge">freeCodeCamp · JavaScript Certification</div>
+  <div class="lang-btns">
+    <button onclick="setLang('en')" class="lb" id="btn-en">EN</button>
+    <button onclick="setLang('es')" class="lb" id="btn-es">ES</button>
+    <button onclick="setLang('fr')" class="lb" id="btn-fr">FR</button>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-label" data-i18n="hero_label">Objects · Arrays · Functions · Workshop Lab 26</div>
+  <h1>Recipe <span>Tracker</span></h1>
+  <p data-i18n="hero_sub">Add recipes and watch two functions automatically calculate total ingredients and difficulty level based on cooking time.</p>
+</div>
+<div class="add-wrap">
+  <div class="add-card">
+    <div class="card-title" data-i18n="add_title">// Add a new recipe</div>
+    <div class="input-row">
+      <div class="fg"><label data-i18n="name_label">name</label><input id="r-name" type="text" placeholder="e.g. Beef Tacos"/></div>
+      <div class="fg"><label data-i18n="time_label">cookingTime (min)</label><input id="r-time" type="number" value="25" min="1"/></div>
+      <button class="add-btn" onclick="addRecipe()" data-i18n="add_btn">Add →</button>
+    </div>
+    <div style="margin-top:10px;">
+      <label style="font-size:0.68rem;color:rgba(209,250,229,0.4);font-family:'JetBrains Mono',monospace;display:block;margin-bottom:4px" data-i18n="ing_label">ingredients (comma-separated)</label>
+      <input id="r-ings" style="width:100%;background:rgba(0,0,0,0.4);border:2px solid rgba(34,197,94,0.15);border-radius:8px;padding:9px 10px;color:#d1fae5;font-size:0.85rem;outline:none;" type="text" placeholder="e.g. beef, tortillas, salsa, cheese"/>
+    </div>
+  </div>
+</div>
+<div class="recipes-wrap">
+  <div class="card-title" style="margin-bottom:12px;padding-left:4px" data-i18n="list_title">// recipes[] — live collection</div>
+  <div class="r-grid" id="r-grid"></div>
+</div>
+<div class="concepts-wrap">
+  <div class="c-card"><div class="c-kw">getTotalIngredients()</div><div class="c-desc" data-i18n="c1">Returns ingredients.length. A function that reads an object property and returns a derived value.</div></div>
+  <div class="c-card"><div class="c-kw">getDifficultyLevel()</div><div class="c-desc" data-i18n="c2">if/else if chain: ≤30min=easy, ≤60min=medium, else hard. Maps a number to a string category.</div></div>
+  <div class="c-card"><div class="c-kw">array.push()</div><div class="c-desc" data-i18n="c3">Adds one or more items to the end of an array in place. Used to build the recipes[] collection.</div></div>
+</div>
+<div class="ctx"><p>💡 <strong data-i18n="ctx_title">Real-world use</strong> — <span data-i18n="ctx_text">computing derived properties from raw data (difficulty, risk score, price tier) is one of the most common patterns in backend services. The object collects the raw facts; pure functions compute the derived values.</span></p></div>
+<footer><span data-i18n="footer">Recipe Tracker · Lab 26 · <strong>Edisson Prieto</strong> · <a href="https://github.com/Eprieto85">GitHub</a></span></footer>
+<script>
+const T={en:{badge:"freeCodeCamp · JS Certification",hero_label:"Objects · Arrays · Functions · Workshop Lab 26",hero_sub:"Add recipes and watch two functions automatically calculate total ingredients and difficulty level based on cooking time.",add_title:"// Add a new recipe",name_label:"name",time_label:"cookingTime (min)",add_btn:"Add →",ing_label:"ingredients (comma-separated)",list_title:"// recipes[] — live collection",c1:"Returns ingredients.length. A function that reads an object property and returns a derived value.",c2:"if/else if chain: ≤30min=easy, ≤60min=medium, else hard. Maps a number to a string category.",c3:"Adds one or more items to the end of an array in place. Used to build the recipes[] collection.",ctx_title:"Real-world use",ctx_text:"computing derived properties from raw data (difficulty, risk score, price tier) is one of the most common patterns in backend services.",footer:"Recipe Tracker · Lab 26 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},es:{badge:"freeCodeCamp · Certificación JS",hero_label:"Objetos · Arrays · Funciones · Taller Lab 26",hero_sub:"Agrega recetas y observa dos funciones calcular automáticamente ingredientes totales y nivel de dificultad.",add_title:"// Agregar nueva receta",name_label:"nombre",time_label:"tiempo de cocción (min)",add_btn:"Agregar →",ing_label:"ingredientes (separados por coma)",list_title:"// recipes[] — colección en vivo",c1:"Retorna ingredients.length. Función que lee una propiedad del objeto y retorna un valor derivado.",c2:"Cadena if/else if: ≤30min=easy, ≤60min=medium, else hard. Mapea número a categoría de texto.",c3:"Agrega uno o más ítems al final de un array en su lugar. Usado para construir recipes[].",ctx_title:"Uso en el mundo real",ctx_text:"calcular propiedades derivadas de datos crudos (dificultad, puntaje de riesgo, nivel de precio) es uno de los patrones más comunes en servicios backend.",footer:"Rastreador de Recetas · Lab 26 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"},fr:{badge:"freeCodeCamp · Certification JS",hero_label:"Objets · Tableaux · Fonctions · Atelier Lab 26",hero_sub:"Ajoutez des recettes et regardez deux fonctions calculer automatiquement les ingrédients totaux et le niveau de difficulté.",add_title:"// Ajouter une nouvelle recette",name_label:"nom",time_label:"temps de cuisson (min)",add_btn:"Ajouter →",ing_label:"ingrédients (séparés par virgule)",list_title:"// recipes[] — collection en direct",c1:"Retourne ingredients.length. Une fonction qui lit une propriété d'objet et retourne une valeur dérivée.",c2:"Chaîne if/else if : ≤30min=easy, ≤60min=medium, sinon hard.",c3:"Ajoute un ou plusieurs éléments à la fin d'un tableau. Utilisé pour construire recipes[].",ctx_title:"Usage réel",ctx_text:"calculer des propriétés dérivées de données brutes est l'un des modèles les plus courants dans les services backend.",footer:"Suivi de Recettes · Lab 26 · <strong>Edisson Prieto</strong> · <a href='https://github.com/Eprieto85'>GitHub</a>"}};
+function setLang(l){document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[l][k]!==undefined)el.innerHTML=T[l][k];});document.querySelectorAll('.lb').forEach(b=>b.classList.remove('active'));document.getElementById('btn-'+l).classList.add('active');}
+setLang('en');
+function getTotalIngredients(ingredients){return ingredients.length;}
+function getDifficultyLevel(cookingTime){if(cookingTime<=30)return'easy';else if(cookingTime<=60)return'medium';else return'hard';}
+const recipes=[
+  {name:"Spaghetti Carbonara",ingredients:["spaghetti","Parmesan cheese","pancetta","black pepper"],cookingTime:22},
+  {name:"Chicken Curry",ingredients:["chicken breast","coconut milk","curry powder","onion","garlic"],cookingTime:42},
+  {name:"Vegetable Stir Fry",ingredients:["broccoli","carrot","bell pepper"],cookingTime:15}
+];
+recipes.forEach(r=>{r.totalIngredients=getTotalIngredients(r.ingredients);r.difficultyLevel=getDifficultyLevel(r.cookingTime);});
+function renderRecipes(){
+  const grid=document.getElementById('r-grid');
+  grid.innerHTML=recipes.map(r=>`<div class="r-card">
+    <div class="r-name">${r.name}</div>
+    <div class="r-badge ${r.difficultyLevel}">${r.difficultyLevel}</div>
+    <div class="r-meta">⏱ ${r.cookingTime} min &nbsp;·&nbsp; 🧂 ${r.totalIngredients} ingredients</div>
+    <div class="r-ings">${r.ingredients.map(i=>`<span>${i}</span>`).join('')}</div>
+  </div>`).join('');
+}
+function addRecipe(){
+  const name=document.getElementById('r-name').value.trim();
+  const time=parseInt(document.getElementById('r-time').value)||20;
+  const ingsRaw=document.getElementById('r-ings').value;
+  if(!name)return;
+  const ingredients=ingsRaw?ingsRaw.split(',').map(s=>s.trim()).filter(Boolean):['ingredient'];
+  const r={name,ingredients,cookingTime:time};
+  r.totalIngredients=getTotalIngredients(r.ingredients);
+  r.difficultyLevel=getDifficultyLevel(r.cookingTime);
+  recipes.push(r);
+  renderRecipes();
+  document.getElementById('r-name').value='';
+  document.getElementById('r-ings').value='';
+}
+renderRecipes();
+</script>
+</body>
+</html>

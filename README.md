@@ -33,7 +33,7 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 
 ## 🟡 Certification 2 — JavaScript Algorithms & Data Structures
 
-> **Status: In progress — Arrays module**
+> **Status: In progress — Loops module**
 
 | # | Lab | Live Demo | Concepts |
 |---|-----|-----------|----------|
@@ -61,6 +61,11 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 | JS-22 | [Shopping List](./js-22-shopping-list/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-22-shopping-list/) | `push()`, `unshift()`, `pop()`, `shift()`, `join()`, array mutation, `getShoppingListMsg()` |
 | JS-23 | [Lunch Selector](./js-23-lunch-selector/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-23-lunch-selector/) | Array methods as named functions, `Math.random()` for random array element, menu management |
 | JS-24 | [Golf Score](./js-24-golf-score/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-24-golf-score/) | Arrays as lookup tables, `if / else if` chain, `golfScore(par, strokes)`, `names[index]` pattern |
+| JS-25 | [Cargo Manifest Validator](./js-25-cargo-manifest/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-25-cargo-manifest/) | Objects, `validateManifest()`, `normalizeUnits()`, `processManifest()`, `Number.isInteger()`, spread `{...obj}` |
+| JS-26 | [Recipe Tracker](./js-26-recipe-tracker/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-26-recipe-tracker/) | Objects + arrays, `getTotalIngredients()`, `getDifficultyLevel()`, computed properties, `array.push()` |
+| JS-27 | [Quiz Game](./js-27-quiz-game/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-27-quiz-game/) | Object arrays, `getRandomQuestion()`, `getRandomComputerChoice()`, `getResults()`, `Math.random()` |
+| JS-28 | [Record Collection](./js-28-record-collection/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-28-record-collection/) | `updateRecords()`, bracket notation, `delete` operator, nested object mutation, CRUD pattern |
+| JS-29 | [Artifact Provenance Auditor](./js-29-artifact-auditor/) | [▶ View](https://eprieto85.github.io/freecodecamp-projects/js-29-artifact-auditor/) | Nested objects, optional chaining `?.`, `array.includes()`, template literals, single-purpose functions |
 
 > More labs added as modules are completed.
 
@@ -84,6 +89,9 @@ Web development projects built while completing freeCodeCamp certifications. Eac
 - Global scope & state · compound boolean logic (`&&`, `||`) · modulo `%`
 - `.indexOf()` · `.slice(-n)` · `.repeat()` · string building & truncation
 - Arrays: `push()` · `pop()` · `shift()` · `unshift()` · `join()` · array as lookup table · random array element
+- Objects: property access · bracket notation · `delete` · `Number.isInteger()` · spread `{...obj}` · nested objects
+- Object methods: `hasOwnProperty()` · optional chaining `?.` · destructuring · `JSON.parse()` · `JSON.stringify()`
+- Patterns: validate → normalize → process · CRUD with `updateRecords()` · single-purpose functions · template literal reports
 
 ## Author
 
